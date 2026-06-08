@@ -74,3 +74,56 @@ O cloud-infra-basics: AWS/GCP primitives · regions/AZs · object storage · IaC
 build-your-own-x repo · CodeCrafters (Redis/Git/SQLite/Docker/HTTP server/shell/interpreter) ·
 own database · own Redis · own Git · own shell · own Docker · own TCP/IP stack ·
 own compiler/interpreter · own search engine · own message queue · own coding-agent harness.
+
+────────────────────────────────────────────────────────
+# Phase 1 expansions (researchers append below; primary sources first)
+────────────────────────────────────────────────────────
+
+## Wave 1 — new/confirmed primary sources (sub-courses 01, 02, 03)
+
+### 01 computers-from-first-principles
+- nand2tetris free chapters 1–5 PDFs (Boolean logic, Boolean arithmetic/ALU, memory, machine
+  language, computer architecture) — nand2tetris.org; the Hack ISA `111a cccc ccdd djjj` encoding.
+- Petzold *Code* 2nd-ed companion site (Ch.17 et al.); note chapter numbers differ from 1st ed.
+- J. Clark Scott *But How Do It Know?* — CPU GitHub implementation + author design write-up
+  (exact per-step control wiring is in the paywalled book).
+- Ben Eater 8-bit = **SAP-1 (Malvino "Simple-As-Possible")** architecture; eater.net/8bit/{clock,
+  registers,alu,ram,pc,output,control}; SAP-1 control-word signal reference mirror at
+  ullright.org (community, [UNVERIFIED] vs eater.net page text).
+- Ben Eater 6502: eater.net/6502; address-decoding WHY at wilsonminesco.com/6502primer/addr_decoding.html.
+- CS:APP 3e (csapp.cs.cmu.edu/3e) + 15-213 F15 lecture→chapter schedule + labs page (Data/Bomb/
+  Attack/Cache/Arch). Memory mountain = ch.6 signature demo. System V AMD64 ABI for calling convention.
+- XarkLabs/BenEaterVHDL (FPGA/sim port) as a no-breadboard build path.
+
+### 02 terminal-shell-and-dev-environment
+- **Bash Reference Manual** (gnu.org/software/bash/manual) — *Shell Expansions* (canonical expansion
+  ORDER), *Word Splitting* (IFS), *Environment* (export→child inheritance). The spec-level WHY.
+- MIT Missing Semester 2020 lecture URLs (course-shell, shell-tools, command-line, data-wrangling,
+  version-control). Shotts TLCL free chapters (linuxcommand.org lc3_* pages).
+- POSIX man pages (man7.org): fork(2), execve(2), wait(2), pipe(2), dup2(2).
+- Stephen Brennan "Write a Shell in C" (brennan.io). GNU libc manual *Job Control* +
+  *Implementing a Shell* (sourceware.org mirror; gnu.org 302-redirects there).
+- xv6 sh.c (github mit-pdos/xv6) as a tiny real shell. CodeCrafters "Build your own shell" track.
+- Julia Evans jvns.ca — correct live post is 2016/10/04 "exec-will-eat-your-brain"
+  (the 2016/02/20 "how-to-run-a-program" URL 404s).
+
+### 03 networking-from-first-principles
+- Stanford CS144 cs144.github.io — current framework is **Minnow** (rewrite of older **Sponge**);
+  build ladder ByteStream→Reassembler→Wrap32+TCPReceiver→TCPSender; check0–3 lab PDFs.
+  Sponge "Lab 4: the summit" (hand-authored TCPConnection state machine) was DROPPED in Minnow.
+  Use github.io PDFs (cs144.keithw.org mirror has a TLS cert-name mismatch).
+- **RFC 9293** (TCP, consolidated; supersedes RFC 793) — state machine, 3-way handshake, ISN,
+  TIME-WAIT=2·MSL. **RFC 6298** (RTO computation; CS144 simplifies it: fixed initial RTO + doubling,
+  no adaptive SRTT/RTTVAR).
+- Kurose & Ross free companion gaia.cs.umass.edu (online_lectures index + per-section videos +
+  downloadable .pptx slide decks; full text paywalled). Beej's Guide to Network Programming
+  (beej.us/guide/bgnet) — sockets API, byte order, select/poll (epoll/kqueue light/platform-specific).
+- **HPBN free at hpbn.co** (Grigorik) — latency primer, building-blocks-of-tcp, TLS, http2 chapters.
+- Stevens *TCP/IP Illustrated v1* (cite by chapter title; 2nd-ed Fall&Stevens renumbers).
+- **RFC 8446** (TLS 1.3, 1-RTT/0-RTT). **RFCs 9000/9001/9002** (QUIC) + **9114** (HTTP/3) — the
+  QUIC/HTTP-3 gap not covered by HPBN/Stevens; ADD as cross-cutting transport sources.
+- Saltzer/Reed/Clark "End-to-End Arguments in System Design" (1984) MIT PDF — the layering WHY.
+
+## Cross-cutting additions discovered (promote as needed)
+- CUBIC (Linux default) and BBR (Google) congestion control — name alongside Reno/AIMD in 03/11/13.
+- QUIC/HTTP-3 transport (RFC 9000/9114) — relevant to 03, 16, and appendix O.

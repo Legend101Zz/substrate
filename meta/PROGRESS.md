@@ -5,3 +5,53 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 
 | id | title | state | next action | owner |
 |----|-------|-------|-------------|-------|
+| 00 | how-to-use-this-course | TODO | Phase 2 design | — |
+| 01 | computers-from-first-principles | RESEARCHING | briefs done (2 clusters); factcheck deferred (ADR-002) | brain |
+| 02 | terminal-shell-and-dev-environment | RESEARCHING | briefs done (2 clusters); factcheck deferred (ADR-002) | brain |
+| 03 | networking-from-first-principles | RESEARCHING | briefs done (3 clusters); factcheck deferred (ADR-002) | brain |
+| 04 | operating-systems-internals | TODO | wave 2 (next session, after limit raised) | — |
+| 05 | programming-language-runtime-internals | TODO | wave 2 | — |
+| 06 | data-structures-for-systems | TODO | wave 2 | — |
+| 07 | database-internals | TODO | wave 3 | — |
+| 08 | caches-and-storage-systems | TODO | wave 3 | — |
+| 09 | message-queues-logs-and-kafka | TODO | wave 3 | — |
+| 10 | nginx-proxies-and-load-balancing | TODO | wave 4 | — |
+| 11 | distributed-systems-foundations | TODO | wave 4 | — |
+| 12 | research-papers-for-engineers | TODO | wave 4 | — |
+| 13 | scaling-fundamentals | TODO | Phase 1 batch 2 | — |
+| 14 | data-modeling-partitioning-sharding | TODO | Phase 1 batch 2 | — |
+| 15 | replication-and-consistency-in-practice | TODO | Phase 1 batch 2 | — |
+| 16 | caching-and-cdn-strategies | TODO | Phase 1 batch 2 | — |
+| 17 | async-queues-and-event-driven-architecture | TODO | Phase 1 batch 2 | — |
+| 18 | rate-limiting-backpressure-and-load-shedding | TODO | Phase 1 batch 2 | — |
+| 19 | observability-tracing-and-slos | TODO | Phase 1 batch 2 | — |
+| 20 | resilience-failure-and-capacity-planning | TODO | Phase 1 batch 2 | — |
+| 21 | design-case-studies | TODO | Phase 1 batch 2 | — |
+| 22 | the-agent-loop | TODO | Phase 1 batch 3 | — |
+| 23 | tools-and-tool-contracts | TODO | Phase 1 batch 3 | — |
+| 24 | prompts-and-context-engineering | TODO | Phase 1 batch 3 | — |
+| 25 | memory-short-term-long-term-and-safety | TODO | Phase 1 batch 3 | — |
+| 26 | state-persistence-and-resume | TODO | Phase 1 batch 3 | — |
+| 27 | planning-and-multi-agent-orchestration | TODO | Phase 1 batch 3 | — |
+| 28 | build-your-own-coding-harness | TODO | Phase 1 batch 3 | — |
+| 29 | mcp-skills-and-connectors | TODO | Phase 1 batch 3 | — |
+| 30 | rag-retrieval-and-grounding | TODO | Phase 1 batch 3 | — |
+| 31 | evaluation-tracing-and-guardrails | TODO | Phase 1 batch 3 | — |
+| 32 | cost-observability-and-ops | TODO | Phase 1 batch 3 | — |
+| 33 | safety-and-proactive-self-evolving-agents | TODO | Phase 1 batch 3 | — |
+| 34 | design-your-own-agentic-system | TODO | Phase 1 batch 3 | — |
+| A | computer-architecture | TODO | Phase 1 batch 4 (appendices) | — |
+| B | linux-internals | TODO | Phase 1 batch 4 | — |
+| C | python-internals | TODO | Phase 1 batch 4 | — |
+| D | javascript-v8-nodejs-internals | TODO | Phase 1 batch 4 | — |
+| E | java-jvm-internals | TODO | Phase 1 batch 4 | — |
+| F | postgres-internals | TODO | Phase 1 batch 4 | — |
+| G | redis-internals | TODO | Phase 1 batch 4 | — |
+| H | kafka-internals | TODO | Phase 1 batch 4 | — |
+| I | docker-containers-cgroups-namespaces | TODO | Phase 1 batch 4 | — |
+| J | kubernetes-internals | TODO | Phase 1 batch 4 | — |
+| K | compilers-interpreters-and-jit | TODO | Phase 1 batch 4 | — |
+| L | consensus-replication-and-transactions | TODO | Phase 1 batch 4 | — |
+| M | ai-agent-memory-tools-and-evaluation | TODO | Phase 1 batch 4 | — |
+| N | math-for-systems | TODO | Phase 1 batch 4 | — |
+| O | cloud-infra-basics | TODO | Phase 1 batch 4 | — |
