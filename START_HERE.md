@@ -1,4 +1,4 @@
-# START_HERE.md — Forge: A First-Principles Course in System & Agentic System Design
+# START_HERE.md — Substrate: A First-Principles Course in System & Agentic System Design
 
 You are the BRAIN agent for a long-running (1–2 month, many-session) project: building
 the deepest first-principles course on system design and agentic system design in

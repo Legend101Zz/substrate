@@ -1,8 +1,10 @@
-# Forge — A First-Principles Course in System & Agentic System Design
+# Substrate — A First-Principles Course in System & Agentic System Design
 
+> *Understand the layer everything else is built on.*
+>
 > Status: **Phase 0 (scaffold) complete.** No course content yet. Research begins in Phase 1.
 
-Forge is a long-running effort to build the deepest first-principles course on system
+Substrate is a long-running effort to build the deepest first-principles course on system
 design and agentic system design that exists — complete enough that a serious learner
 needs no other resource.
 
