@@ -23,10 +23,11 @@ system design. This file is the entry point; the binding rules live in `meta/`.
   and NEXT_SESSION.md, commit.
 
 ## code-puppy specifics (this harness)
-- No parallel sub-agents — research source clusters **sequentially**, or run multiple terminals.
-  Use `/model` round-robin to avoid rate limits.
-- No built-in web tools — connect a web fetch/search **MCP** via `/mcp` before researching; primary
-  sources are mandatory. Without web access, do not research.
-- Subagent personas in `meta/subagents/*.md` are the role specs; instantiate them as code-puppy JSON
-  agents (`/agent agent-creator`) or paste inline. Keep "briefs only, no prose" for researchers.
+- Create the project agents FIRST: materialize `researcher`/`factchecker` (later critic/writer/
+  diagrammer) from `meta/subagents/*.md` as code-puppy JSON agents via `/agent agent-creator`, then
+  `/agent <name>` to use them. Keep "briefs only, no prose" in the researcher's system_prompt.
+- No parallel sub-agents — research source clusters **sequentially** (switch agents), or run multiple
+  terminals. Use `/model` round-robin to avoid rate limits.
+- Web research works via `agent_run_shell_command` (`curl`, etc.) and/or a web **MCP** (`/mcp`) —
+  primary sources are mandatory; pull them by whichever path is available.
 - Tool map: read_file / create_file / replace_in_file / grep / list_files / agent_run_shell_command.

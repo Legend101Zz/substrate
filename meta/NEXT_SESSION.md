@@ -59,16 +59,20 @@ change HOW Phase 1 runs. Adapt the protocol's *intent*, not its Claude-specific 
   `_research_<cluster>.md` per cluster, then reconcile into `_research.md`. For real parallelism,
   the human can run **multiple `code-puppy` terminals**, one per cluster. Use `/model` round-robin
   (`~/.code_puppy/extra_models.json`) to dodge rate limits.
-- **NO built-in web search/fetch.** This is critical — researchers need primary sources. code-puppy's
-  built-in tools are file/shell only (`read_file`, `create_file`, `replace_in_file`, `grep`,
-  `list_files`, `delete_file`, `agent_run_shell_command`, `agent_share_your_reasoning`). **Configure
-  a web fetch/search MCP server via `/mcp`** before any research (e.g. a fetch MCP + a search MCP),
-  or research degrades to shell `curl`/`agent_run_shell_command`. Verify web access works before Wave 2.
-- **Subagent personas → code-puppy agents.** `meta/subagents/{researcher,factchecker,critic,...}.md`
-  were Claude-Code agents (they reference WebSearch/WebFetch). To reuse them here, create JSON agents
-  in `~/.code_puppy/agents/` via `/agent agent-creator` (fields: name, system_prompt, tools,
-  display_name), mapping their web steps onto the MCP web tools; or just paste the persona text as
-  the run prompt and `/agent` into a research-tuned agent. Keep "briefs only, no prose" intact.
+- **Web research works.** code-puppy reaches the web through `agent_run_shell_command` (e.g. `curl`,
+  and any CLIs you have like `lynx`/`ddgr`) and/or a web MCP via `/mcp`. Either is fine for pulling
+  primary sources — no special blocker. (Optionally add a fetch/search MCP for cleaner page→markdown,
+  but it's not required.) Built-in file/shell tools: `read_file`, `create_file`, `replace_in_file`,
+  `grep`, `list_files`, `delete_snippet`, `delete_file`, `agent_run_shell_command`,
+  `agent_share_your_reasoning`.
+- **Create the project agents FIRST, then run.** `meta/subagents/{researcher,factchecker,critic,
+  writer,diagrammer}.md` are the role specs. At the start of the next session, use
+  `/agent agent-creator` to materialize project-specific code-puppy JSON agents in
+  `~/.code_puppy/agents/` from those personas (fields: name, display_name, description,
+  system_prompt, tools). Give `researcher`/`factchecker` the file + shell tools (web via shell/MCP);
+  keep "briefs only, no prose" in the researcher's system_prompt. Then `/agent researcher` to work,
+  `/agent factchecker` to verify, switching as the protocol requires. (No parallel fan-out — switch
+  sequentially, or open extra terminals for parallelism.)
 - **Tool-name map (Claude → code-puppy):** Read→`read_file`, Write→`create_file`, Edit→
   `replace_in_file`, Grep→`grep`, LS→`list_files`, Bash→`agent_run_shell_command`,
   WebSearch/WebFetch→(MCP web tools).
@@ -88,15 +92,17 @@ RESEARCH_INDEX.md, PROGRESS.md, SESSION_LOG.md, DECISIONS.md (ADR-001/002), and 
 meta/NEXT_SESSION.md. Confirm in 3–4 lines: current state, that Wave 1 (01–03) briefs are committed,
 and the exact plan you're about to run. Then proceed.
 
-PRECHECK (code-puppy specifics): confirm a web fetch/search MCP is connected via /mcp (researchers
-need primary sources). If not, set one up or fall back to curl via agent_run_shell_command — do NOT
-research without web access. Remember: no parallel agents here, so do clusters sequentially (or tell
-me to open extra terminals); use /model round-robin to avoid rate limits.
+STEP 0 — create the project agents first: use `/agent agent-creator` to build code-puppy JSON agents
+in ~/.code_puppy/agents/ from meta/subagents/researcher.md and meta/subagents/factchecker.md (later
+also critic/writer/diagrammer). Give them file + shell tools (web via curl in agent_run_shell_command
+and/or a /mcp web server); keep the researcher's "briefs only, no prose" rule in its system_prompt.
+Then `/agent researcher` to research and `/agent factchecker` to verify. No parallel agents — switch
+sequentially, or open extra terminals; use /model round-robin to avoid rate limits.
 
 Continue Phase 1 deep research per RESEARCH_PROTOCOL.md (adapt mechanics to code-puppy):
-- FIRST clear the factcheck debt: run the factchecker persona (meta/subagents/factchecker.md) over
-  the most load-bearing / [UNVERIFIED]-flagged claims in 01–03's _research files. Record verdicts;
-  fix or escalate any UNSUPPORTED/MISATTRIBUTED before they harden.
+- FIRST clear the factcheck debt: with the factchecker agent, verify the most load-bearing /
+  [UNVERIFIED]-flagged claims in 01–03's _research files. Record verdicts; fix or escalate any
+  UNSUPPORTED/MISATTRIBUTED before they harden.
 - THEN Wave 2 = sub-courses 04, 05, 06. For each, research one source cluster from RESEARCH_INDEX at
   a time (sequentially), writing _research_<cluster>.md; reconcile into each _research.md; validate
   before accepting (reject thin/uncited, redo); expand RESEARCH_INDEX with new finds.
