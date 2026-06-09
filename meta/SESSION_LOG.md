@@ -2,6 +2,33 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-09 — Recovery checkpoint after code-puppy cwd-permission crash; Wave 3 sub-course 07 cluster 1
+- shipped: recovered the repo state after a Code Puppy callback crash triggered immediately after
+  `curl -s --max-time 15 https://raw.githubusercontent.com/sqlite/sqlite/master/src/pager.c | sed -n 1,120p`.
+  The crash was in Code Puppy prompt callbacks calling `os.getcwd()` / `Path.cwd()`
+  (`PermissionError: [Errno 1] Operation not permitted`), not in course content.
+- shipped: confirmed latest committed work `4a1cc71` = Phase 1 Wave 2 research and factcheck fixes:
+  - Wave 1 factcheck report: `meta/factcheck_wave1_01-03.md`; applied fixes to 02/03 briefs and left
+    source gaps logged for Eater/Scott/Petzold, QUIC adoption/CPU, and Sponge Lab 4.
+  - Wave 2 briefs for 04/05/06 are reconciled in `_research.md` files; factcheck report
+    `meta/factcheck_wave2_04-06.md` exists and blockers were patched.
+- shipped: pre-checkpoint Wave 3 artifact identified and committed:
+  `07-database-internals/_research_storage-query-exec.md` (463 lines). It covers slotted pages,
+  tuple layout, buffer pool/ARC, disk scheduler, WAL, B+ tree pages, Volcano/batched executors,
+  core operators, rule optimizer, and BusTub MVCC. Verified facts include BusTub 8192B pages,
+  TablePage/TupleInfo sizes, Postgres 24B page header, 4B ItemIdData, 23B HeapTupleHeaderData,
+  WAL LogRecord 20B header, and BusTub `BUSTUB_BATCH_SIZE=20`.
+- shipped: updated `meta/PROGRESS.md` to reflect reality: 01–06 have briefs + factcheck reports;
+  07 is in progress with one cluster drafted; 08/09 are queued, not actually started. Updated
+  `meta/NEXT_SESSION.md` with a resume prompt and Code Puppy cwd-permission workaround.
+- decisions: no ADR; this is an operational recovery/checkpoint. Do not touch the Code Puppy install
+  directory (`~/.code-puppy-venv`). If the permission error recurs, launch from
+  `/Users/m0t0hu6/Desktop/substrate` or grant the terminal/Code Puppy process Desktop/OneDrive access;
+  the repo itself is readable and writable.
+- stopped-at: before validating the 07 database brief or creating `07-database-internals/_research.md`.
+  Next session should first spot-check/factcheck the 07 cluster, then finish remaining 07 clusters,
+  reconcile 07, and only then proceed to 08/09. No chapters. No Phase 2.
+
 ## 2026-06-09 — Phase 1 Wave 2: sub-course 06 (data-structures-for-systems), source cluster 1
 - shipped: `06-data-structures-for-systems/_research_indexes-lsm-bloom.md` (382 lines). Source cluster: B-trees/B+-trees + LSM-trees + Bloom filters. Primary sources: sqlite/sqlite btreeInt.h (cell layout, page header, overflow, intKey vs BLOBKEY), postgres/postgres nbtree/README (Lehman & Yao, suffix truncation, deduplication, L&Y extensions), google/leveldb doc/impl.md (write path, level sizes, compaction timing), google/leveldb doc/table_format.md (SST format, magic bytes, filter block), google/leveldb util/bloom.cc (k=bpk*0.69, double-hashing), facebook/rocksdb options.h (write_buffer_size=64MB, trigger=4, level_base=256MB), facebook/rocksdb dbformat.h (56-bit seq + 8-bit type internal key), facebook/rocksdb util/bloom_impl.h (FPR formula, cache-local Bloom, 3 implementations, AVX2), EighteenZi/rocksdb_wiki Tuning Guide (WA~34x, RA, SA), EighteenZi/rocksdb_wiki Leveled-Compaction.md (scoring, parallel sub-compaction). O'Neil LSM PDF fetched (www.cs.umb.edu/~poneil/lsmtree.pdf, HTTP 200) but not extractable without pdftotext — mechanisms verified from LevelDB implementation instead.
 - decisions: none (research-only session, no ADRs).

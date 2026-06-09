@@ -6,15 +6,15 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | id | title | state | next action | owner |
 |----|-------|-------|-------------|-------|
 | 00 | how-to-use-this-course | TODO | Phase 2 design | — |
-| 01 | computers-from-first-principles | RESEARCHING | briefs done (2 clusters); factcheck deferred (ADR-002) | brain |
-| 02 | terminal-shell-and-dev-environment | RESEARCHING | briefs done (2 clusters); factcheck deferred (ADR-002) | brain |
-| 03 | networking-from-first-principles | RESEARCHING | briefs done (3 clusters); factcheck deferred (ADR-002) | brain |
-| 04 | operating-systems-internals | RESEARCHING | Wave 2 briefs reconciled; factcheck spot-check pending | brain |
-| 05 | programming-language-runtime-internals | RESEARCHING | Wave 2 briefs reconciled; factcheck spot-check pending | brain |
-| 06 | data-structures-for-systems | RESEARCHING | Wave 2 briefs reconciled; factcheck spot-check pending | brain |
-| 07 | database-internals | TODO | wave 3 | — |
-| 08 | caches-and-storage-systems | TODO | wave 3 | — |
-| 09 | message-queues-logs-and-kafka | TODO | wave 3 | — |
+| 01 | computers-from-first-principles | RESEARCHING | Wave 1 briefs + factcheck report done; residual book/JS-rendered Eater/Scott/Petzold gaps logged | brain |
+| 02 | terminal-shell-and-dev-environment | RESEARCHING | Wave 1 briefs + factcheck fixes done; keep glibc posix_spawn wording version-qualified | brain |
+| 03 | networking-from-first-principles | RESEARCHING | Wave 1 briefs + factcheck fixes done; residual QUIC adoption/CPU and Sponge Lab 4 source gaps logged | brain |
+| 04 | operating-systems-internals | RESEARCHING | Wave 2 briefs reconciled + factcheck blockers patched; residual source gaps logged | brain |
+| 05 | programming-language-runtime-internals | RESEARCHING | Wave 2 briefs reconciled + factcheck blockers patched; residual moving-target runtime caveats logged | brain |
+| 06 | data-structures-for-systems | RESEARCHING | Wave 2 briefs reconciled + factcheck blockers patched; residual blocked-paper gaps logged | brain |
+| 07 | database-internals | RESEARCHING | Wave 3 started: storage/query-exec cluster brief drafted; validate, add remaining clusters, then reconcile | brain |
+| 08 | caches-and-storage-systems | TODO | wave 3 queued after 07 checkpoint/reconcile | — |
+| 09 | message-queues-logs-and-kafka | TODO | wave 3 queued after 07 checkpoint/reconcile | — |
 | 10 | nginx-proxies-and-load-balancing | TODO | wave 4 | — |
 | 11 | distributed-systems-foundations | TODO | wave 4 | — |
 | 12 | research-papers-for-engineers | TODO | wave 4 | — |
