@@ -9,9 +9,9 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 01 | computers-from-first-principles | RESEARCHING | briefs done (2 clusters); factcheck deferred (ADR-002) | brain |
 | 02 | terminal-shell-and-dev-environment | RESEARCHING | briefs done (2 clusters); factcheck deferred (ADR-002) | brain |
 | 03 | networking-from-first-principles | RESEARCHING | briefs done (3 clusters); factcheck deferred (ADR-002) | brain |
-| 04 | operating-systems-internals | TODO | wave 2 (next session, after limit raised) | — |
-| 05 | programming-language-runtime-internals | TODO | wave 2 | — |
-| 06 | data-structures-for-systems | TODO | wave 2 | — |
+| 04 | operating-systems-internals | RESEARCHING | Wave 2 briefs reconciled; factcheck spot-check pending | brain |
+| 05 | programming-language-runtime-internals | RESEARCHING | Wave 2 briefs reconciled; factcheck spot-check pending | brain |
+| 06 | data-structures-for-systems | RESEARCHING | Wave 2 briefs reconciled; factcheck spot-check pending | brain |
 | 07 | database-internals | TODO | wave 3 | — |
 | 08 | caches-and-storage-systems | TODO | wave 3 | — |
 | 09 | message-queues-logs-and-kafka | TODO | wave 3 | — |

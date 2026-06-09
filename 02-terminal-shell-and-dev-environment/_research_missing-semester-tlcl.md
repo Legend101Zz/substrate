@@ -146,9 +146,9 @@ Hooks for cluster 2's own-shell lab: argv tokenization (M1), fork/exec/wait + `$
 
 ## 6. Open questions / where sources disagree (bash vs POSIX sh vs zsh)
 
-- **Word splitting on unquoted expansion — bash vs zsh.** Bash (and POSIX sh) word-split *and* glob the result of an unquoted `$var` (M2). **Zsh does NOT word-split unquoted parameter expansions by default** — a major behavioral divergence that breaks/“fixes” scripts moving between shells. Missing Semester/TLCL teach the bash model; flag zsh's difference explicitly. [Confirm exact zsh semantics against the zsh manual before asserting in course text — UNVERIFIED at spec level here.]
+- **Word splitting on unquoted expansion — bash vs zsh.** Bash (and POSIX sh) word-split *and* glob the result of an unquoted `$var` (M2). **Zsh does NOT word-split unquoted parameter expansions by default** — a major behavioral divergence that breaks/“fixes” scripts moving between shells. Factcheck confirmed `SH_WORD_SPLIT` is a ksh/sh-emulation option in zsh `Doc/Zsh/options.yo`, so native zsh differs from the bash/POSIX-sh model.
 - **`&>` and `2>&1` ordering, `[[ ]]`, arrays, `$(< file)`, brace expansion, process substitution `<()`** are **bash/zsh extensions, NOT POSIX `sh`**. Scripts with `#!/bin/sh` (often dash on Debian/Ubuntu) will fail on these. Course should be explicit about which dialect a given example targets.
-- **`echo` portability**: flag/escape handling differs across shells/implementations; POSIX recommends `printf`. (General Unix lore — [UNVERIFIED] against a single canonical link in this pass.)
+- **`echo` portability**: flag/escape handling differs across shells/implementations; POSIX `echo` Application Usage says `printf` can portably emulate any traditional `echo` behavior. Prefer `printf` in portable scripts.
 - **Default `$IFS`**: space/tab/newline by both bash manual and POSIX — sources agree.
 - **Expansion order**: bash manual is canonical and POSIX matches it closely; treat the Bash Reference Manual order (M2) as the spec.
 - **Signal numbers** (2/9/15/1) are conventional and consistent across Linux in both sources, but are *not* guaranteed identical on all Unixes — use names (SIGINT/SIGKILL/SIGTERM/SIGHUP), not numbers, in portable text. Sources here agree on names.
@@ -158,9 +158,12 @@ Hooks for cluster 2's own-shell lab: argv tokenization (M1), fork/exec/wait + `$
 ### Coverage / gaps
 - **Distinct primary sources cited: 19** — 5 Missing Semester lecture URLs + 11 TLCL chapter/index URLs + 3 Bash Reference Manual pages (the one-hop spec for expansion order, word splitting, environment).
 - **Verified at spec level:** expansion ORDER and word-splitting (Bash manual, *Shell Expansions* / *Word Splitting*); quoting suppression rules (TLCL ch.8 + Bash manual); fds 0/1/2 and redirection (TLCL ch.7); signals incl. uncatchable SIGKILL (TLCL ch.15 + Missing Semester).
-- **Gaps / [UNVERIFIED]:**
-  1. TLCL ch.4 *Variables* page did **not** itself spell out `export`/child-inheritance — that claim (M7) is sourced to the Bash manual *Environment* page; the exact-quote fetch of that page returned HTTP 429 and was not re-pulled, so M7 rests on the canonical mechanism + URL, not a captured quote. Re-fetch to lift verbatim text if needed.
-  2. **zsh no-word-split-by-default** behavior (Section 6) is asserted from general shell knowledge, not pulled from the zsh manual in this pass — verify against https://zsh.sourceforge.io/Doc/ before putting in course prose.
-  3. `echo` vs `printf` portability ([UNVERIFIED] to a single canonical link here).
-  4. TLCL has no dedicated standalone "Environment" chapter in the Learning-the-Shell index pulled; env material is split between ch.4 (Variables) and the Bash manual hop. Note for structure cluster.
+- **Gaps / checked notes:**
+  1. TLCL ch.4 *Variables* page did **not** itself spell out `export`/child-inheritance; that claim
+     is sourced to the Bash manual *Environment* page, factchecked live at GNU Bash §3.7.4.
+  2. zsh no-word-split-by-default is factchecked against `zsh-users/zsh` `Doc/Zsh/options.yo`
+     (`SH_WORD_SPLIT` marked for ksh/sh emulation).
+  3. `echo` vs `printf` portability is factchecked against POSIX `echo` Application Usage.
+  4. TLCL has no dedicated standalone "Environment" chapter in the Learning-the-Shell index pulled;
+     env material is split between ch.4 (Variables) and the Bash manual hop. Note for structure cluster.
   5. setuid/special permission bits are **out of scope** of TLCL ch.9 (confirmed absent) — flag if the course wants them.

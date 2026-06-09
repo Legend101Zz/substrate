@@ -41,13 +41,17 @@ Backed by brennan.io, xv6 sh.c, CodeCrafters "Build your own shell". A data-wran
 exercise (`grep|sed -E|awk|sort|uniq -c|sort -nr`) proves composability/streaming.
 
 ## Consolidated open questions / gaps (verify before drafting)
-- [UNVERIFIED] Bash manual *Environment* page (export→child inheritance) cited by URL, not captured
-  quote (HTTP 429 on re-fetch). Re-pull for verbatim text if quoting.
-- [UNVERIFIED] zsh "no word-split by default" — assert from general knowledge, confirm against
-  https://zsh.sourceforge.io/Doc/ before course prose.
-- [UNVERIFIED] CodeCrafters stage slugs/wording paraphrased from a WebFetch summary, not line-quoted.
-- [UNVERIFIED] glibc `posix_spawn` fast-path (fork+exec vs clone/vfork) for current glibc.
-- [UNVERIFIED] Julia Evans exact quote phrasings — from summaries; note the correct live post is
-  jvns.ca 2016/10/04 "exec-will-eat-your-brain" (the 2016/02/20 URL 404s).
-- `echo` vs `printf` portability not pinned to a single canonical link.
+- Bash manual *Environment* page (export→child inheritance) confirmed by factcheck:
+  GNU Bash §3.7.4 says executed commands inherit the environment.
+- zsh native mode does **not** word-split unquoted parameter expansions by default; factcheck
+  confirmed `SH_WORD_SPLIT` is marked for ksh/sh emulation in zsh `options.yo`.
+- CodeCrafters shell stage slugs/wording confirmed against raw `course-definition.yml`: 8 core
+  stages plus extension tracks.
+- glibc `posix_spawn` implementation corrected: current Linux/glibc uses `clone(CLONE_VM|CLONE_VFORK)`
+  / `clone3` fast paths, not literal `fork()+exec`; teach it as conceptually spawn-like with
+  OS/libc-specific implementation details.
+- Julia Evans "brain eaten / turns into ls" phrasing confirmed in the live 2016/10/04 post; do not
+  quote unrelated phrasings without direct attribution.
+- POSIX `echo` portability confirmed: POSIX Application Usage recommends `printf` to emulate
+  traditional `echo` behaviors portably.
 - setuid/special permission bits are out of scope of TLCL ch.9 — decide if the course wants them.

@@ -156,7 +156,7 @@ PostgreSQL uses the **Lehman & Yao (1981)** high-concurrency B-tree algorithm (A
 - `kCompactionStyleFIFO = 0x2` — time-ordered, TTL-based, no compaction
 
 **Amplification factors** (RocksDB Tuning Guide, https://raw.githubusercontent.com/EighteenZi/rocksdb_wiki/master/RocksDB-Tuning-Guide.md):
-- **Write amplification (WA)**: ratio of bytes written to storage / bytes written by application. For 5-level RocksDB: ≈ 1 (WAL) + 1 (L0 flush) + 2 (L0→L1 compaction at 2x) + 10 + 10 + 10 = ~34. WA drives SSD wear and disk bandwidth.
+- **Write amplification (WA)**: ratio of bytes written to storage / bytes written by application. RocksDB's tuning guide gives a representative leveled-compaction calculation of `1 + 2 + 10 + 10 + 10 = 33` for a 5-level shape. WA drives SSD wear and disk bandwidth.
 - **Read amplification (RA)**: disk reads per point query. Without bloom filters: all L0 files + 1 file per level. With bloom filters: ~1 disk read for existing keys; ~0 for non-existing keys (filter eliminates SST read).
 - **Space amplification (SA)**: disk bytes / actual data bytes. Level-style: ~1.1× (data primarily in last level). Universal: up to 2× during compaction.
 
@@ -258,7 +258,7 @@ Three implementations in bloom_impl.h (each marked with their generation):
 | LevelDB Bloom filter implementation (double-hash, k=bpk*0.69) | https://raw.githubusercontent.com/google/leveldb/main/util/bloom.cc |
 | RocksDB default options (write_buffer_size=64MB, trigger=4 files, level_base=256MB) | https://raw.githubusercontent.com/facebook/rocksdb/main/include/rocksdb/options.h |
 | RocksDB compaction styles enum | https://raw.githubusercontent.com/facebook/rocksdb/main/include/rocksdb/advanced_options.h |
-| RocksDB amplification definitions, write amp ~34 for 5 levels | https://raw.githubusercontent.com/EighteenZi/rocksdb_wiki/master/RocksDB-Tuning-Guide.md |
+| RocksDB amplification definitions, write amp calculation `1 + 2 + 10 + 10 + 10 = 33` | https://raw.githubusercontent.com/EighteenZi/rocksdb_wiki/master/RocksDB-Tuning-Guide.md |
 | RocksDB leveled compaction scoring | https://raw.githubusercontent.com/facebook/rocksdb/main/db/compaction/compaction_picker_level.cc |
 | RocksDB internal key format (56-bit seq + 8-bit type) | https://raw.githubusercontent.com/facebook/rocksdb/main/db/dbformat.h |
 | Bloom filter FPR formula, cache-local vs standard | https://raw.githubusercontent.com/facebook/rocksdb/main/util/bloom_impl.h |
@@ -276,7 +276,7 @@ Three implementations in bloom_impl.h (each marked with their generation):
 
 ### LSM-trees
 - **In-memory buffer is mandatory**: the only way to convert random writes into sequential is to sort them first. A sorted in-memory structure (skiplist in LevelDB) accumulates writes and then flushes in key order.
-- **Levels with size ratios**: level sizing at 10x per level (not arbitrary) is chosen to make write amplification predictable. A key written at L0 is rewritten once per level compaction it participates in. With 10x ratios and ~5 levels, WA ≈ 10 per non-L0 level plus overheads ≈ ~34x. Smaller ratios (e.g., 5x) lower WA but increase the number of levels and raise read amplification.
+- **Levels with size ratios**: level sizing at 10x per level (not arbitrary) is chosen to make write amplification predictable. A key written at L0 is rewritten once per level compaction it participates in. With 10x ratios and a representative 5-level shape, the RocksDB tuning guide's explicit calculation is `1 + 2 + 10 + 10 + 10 = 33`. Smaller ratios (e.g., 5x) lower per-level rewrite cost but can increase the number of levels and raise read amplification.
 - **Non-overlapping files in L1+**: the requirement for sorted, non-overlapping ranges per level (except L0) allows a point read to check exactly ONE file per level using a simple range lookup — without this, a read might need to scan all files at that level.
 - **L0 files can overlap**: L0 is a special case because flushing memtables happens at write speed (can't wait for compaction). L0 file count is bounded (trigger=4 by default) to prevent read amplification from growing unboundedly.
 - **Compaction rotates through key space** (LevelDB verified): to avoid hot-spots where a single key range gets repeatedly compacted while others never are; each compaction advances a cursor, ensuring uniform coverage.

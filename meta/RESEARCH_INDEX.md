@@ -127,3 +127,41 @@ own compiler/interpreter · own search engine · own message queue · own coding
 ## Cross-cutting additions discovered (promote as needed)
 - CUBIC (Linux default) and BBR (Google) congestion control — name alongside Reno/AIMD in 03/11/13.
 - QUIC/HTTP-3 transport (RFC 9000/9114) — relevant to 03, 16, and appendix O.
+
+## Wave 2 — new/confirmed primary sources (sub-courses 04, 05, 06)
+
+### 04 operating-systems-internals
+- MIT 6.1810/xv6-riscv source + rev4 book + 2024 labs: syscall, pgtbl, traps, cow, lock, fs,
+  mmap. xv6 is the clean mechanism anchor for trap/trampoline, scheduler, Sv39, locks, WAL/fs.
+- OSTEP chapter corpus and projects via `remzi-arpacidusseau/ostep-homework` + `ostep-projects`;
+  direct PDFs were proxy-blocked, so quote exact OSTEP prose only after direct PDF access.
+- Berkeley CS162/Pintos + Anderson & Dahlin OSPP as broader OS project/reference anchors.
+- Linux current primaries: `mkerrisk/man-pages` for fork/mmap/signal/epoll/perf/proc; Linux kernel
+  docs/source for CFS/EEVDF, procfs, pagemap, cgroup v2, bpf verifier, perf security, memory alloc.
+- Brendan Gregg tooling via GitHub: FlameGraph, perf-tools, bpf-perf-tools-book. USE Method primary
+  page blocked; verify formal checklist before quoting.
+
+### 05 programming-language-runtime-internals
+- `munificent/craftinginterpreters` book/source as primary for scanner, recursive descent, Pratt,
+  AST visitor, bytecode chunk, stack VM, closures/upvalues, Obj header, NaN boxing, mark-sweep GC.
+- Thorsten Ball Monkey architecture verified through community ports; original book/code is paywalled,
+  so do not quote exact Ball text/stage order without access.
+- CPython primaries: `python/cpython` `Include/object.h`, `InternalDocs/interpreter.md`,
+  `InternalDocs/frames.md`, `Python/generated_cases.c.h`, `Python/ceval_gil.c`, `Python/gc.c`.
+- V8/libuv primaries: V8 Maps/FeedbackVector/Ignition/Maglev/Scavenger source; libuv design.rst and
+  `src/unix/core.c` for event-loop phases.
+- OpenJDK primaries: compiler levels, class parser/verifier, safepoint polling, G1 heap. Tier/JIT
+  thresholds and CPython Tier-2 JIT claims are version-sensitive.
+
+### 06 data-structures-for-systems
+- SQLite `btreeInt.h` + fileformat2, PostgreSQL `nbtree/README`, LevelDB `doc/impl.md` and
+  `doc/table_format.md`, RocksDB options/dbformat/compaction/Bloom sources as storage DS anchors.
+- Bloom filters: LevelDB `util/bloom.cc`, RocksDB `util/bloom_impl.h`; Bloom 1970 and some survey
+  papers were blocked, so implementation sources carry the exact mechanics.
+- Skip lists: Pugh 1990, Redis `t_zset.c`, RocksDB `memtable/skiplist.h`, OpenJDK
+  `ConcurrentSkipListMap.java`.
+- Ring buffers: LMAX Disruptor source (`Sequence`, RingBuffer, sequencers, wait strategies); whitepaper
+  benchmark numbers not fetched, keep [UNVERIFIED].
+- Consistent hashing/HLL: Karger 1997, groupcache implementation, Jump consistent hash paper,
+  Redis Cluster `cluster.h` (slots, not consistent hashing), Flajolet HLL 2007, Ertl 2017,
+  Redis `hyperloglog.c`.

@@ -57,13 +57,13 @@ Three altitudes that compose into the links→IP→TCP→TLS→HTTP arc:
 ## Consolidated open questions / gaps (verify before drafting)
 - [UNVERIFIED] Sponge Lab-4 `TCPConnection` handout not re-fetched directly (cross-checked via RFC
   9293 + doxygen/community). Minnow README "rewrite of Sponge" line 404'd — corroborated indirectly.
-- [UNVERIFIED] End-to-End Arguments PDF did not text-extract; thesis from verified ACM citation +
-  abstract, not page-level quotes. Re-pull MIT PDF for verbatim quotation.
-- [UNVERIFIED] Beej exact `epoll`/`kqueue` coverage depth (teaches select/poll thoroughly; epoll is
-  platform-specific/light) — add Linux man pages if the course teaches epoll directly.
+- End-to-End Arguments core thesis and bibliographic metadata factchecked against MIT plain-text
+  primary source; safe citation: https://web.mit.edu/Saltzer/www/publications/endtoend/endtoend.txt.
+- Beej exact `epoll`/`kqueue` coverage corrected: Beej §7 covers `select()` and `poll()` thoroughly
+  but does **not** cover `epoll`/`kqueue`; use Linux `epoll(7)` / BSD `kqueue(2)` if teaching them.
 - Date-sensitive numbers to re-check before teaching: HTTP/3 adoption %, HTTP/2 server-push
-  deprecation status, QUIC CPU-cost figures (~2–4× TCP, narrows with GSO/GRO) come from vendor
-  blogs/arXiv not one canonical source.
+  deprecation status, QUIC CPU-cost figures (~2–4× TCP, narrows with GSO/GRO) remain citation-needed
+  unless pinned to a specific measurement paper/data source with retrieval date.
 - K&R full prose paywalled (claims verified against free companion slides/videos, not running text);
   Stevens 2nd-ed (Fall & Stevens) chapter renumbering not re-verified — cite by chapter TITLE.
 - CS144 mirror cs144.keithw.org has a TLS cert-name mismatch — use the github.io PDFs.
