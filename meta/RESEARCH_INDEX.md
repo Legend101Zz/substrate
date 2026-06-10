@@ -374,3 +374,39 @@ own compiler/interpreter · own search engine · own message queue · own coding
   _Performance Modeling..._. Do NOT harden any attribution/exact wording into Phase-2 prose
   until fetched. Cross-link down into appendix N-math-for-systems for full queueing/probability
   derivations and B-linux-internals for the actual USE counters. Next Phase-1 batch: **14–21**.
+
+---
+
+## Wave 5 / 14 data-modeling-partitioning-sharding (RECONCILED; the AKF Z-axis from 13)
+
+- Reconciled `_research.md` synthesizes three factchecked clusters (six sections):
+  - Cluster A — `_research_data-modeling.md`: data model as access-pattern contract; logical
+    model (relational/document/wide-column/KV) orthogonal to storage engine (B-tree vs LSM,
+    reuse 06); normalization (one home per fact, join at read) vs denormalization (duplicate/
+    pre-join, write-time consistency tax); the read/write tradeoff as conservation (pay at read,
+    write, or async); schema-on-write vs schema-on-read.
+  - Cluster B — `_research_partitioning-sharding.md`: range vs hash vs directory partitioning;
+    consistent hashing REUSED from 06; the `mod N` trap and consistent-hashing/vnode movement
+    VERIFIED BY RECOMPUTATION this session (Python): `mod` 4->5 moves 0.800 of keys vs consistent
+    hashing add-1-to-N=10 moves 0.088 ~ 1/(N+1), vnode load spread 1.26x; shard-key properties;
+    hot shard / celebrity problem (30% hot key on 10 shards -> busiest 0.378, ratio 4.86x);
+    rebalancing (minimal-movement, serve-during-move, avoid cascade); local vs global secondary
+    indexes (cheap-write/scatter-read vs cheap-read/cross-partition-async-write).
+  - Cluster C — `_research_cross-partition-operations.md`: scatter-gather (slowest-shard tail =
+    13 fan-out `1-(1-q)^N`, recomputed `1-0.99^100=0.634` ~63% slow; + throughput amplification
+    loads every shard at f*QPS, constant in N); cross-shard joins (co-partition > broadcast >
+    shuffle) + distributed query planning (pushdown / two-phase aggregation); cross-shard
+    transactions handing off to 11 (avoid > saga > 2PC/Paxos-Commit, all REUSED from 11);
+    cross-partition read consistency (global snapshot or read a mix of versions).
+  - Factcheck: `14-data-modeling-partitioning-sharding/_factcheck_clusterAB.md` (math by
+    recomputation; mechanisms by reuse of 06/07/08/11/13; 0 blockers; 2 first-draft numeric
+    errors caught + patched: hot-shard ratio 3.9x->4.86x, fan-out 37%->63%).
+- Blocked `[UNVERIFIED from fetched source]` primaries (network HTTP 000, 6th consecutive
+  session): Codd CACM 1970 + normal forms + Kent 1983 (A); Bigtable OSDI 2006, Dynamo SOSP 2007,
+  Karger consistent-hashing STOC 1997 (A/B); Sagas SIGMOD 1987, MapReduce OSDI 2004, Tail at
+  Scale CACM 2013, Spanner re-pin (C); Avro/Protobuf/Thrift evolution; the DynamoDB/Cassandra/
+  HBase/Elasticsearch/Mongo/Vitess/Citus/Presto/Spark/CockroachDB docs; Kleppmann DDIA
+  ch.2-3/6/7/9. Do NOT harden any attribution into Phase-2 prose until fetched. Cross-link: 06
+  (storage engines / consistent hashing / HLL), 07 (optimizer), 11 (replication/consistency/
+  atomic commit), 13 (fan-out math / AKF Z-axis), 15 (replication in practice), 16 (caching),
+  17 (saga orchestration / CDC), 20 (hedged requests). Next Phase-1 batch: **15-21**.

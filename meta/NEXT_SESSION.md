@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (13 reconciled — ALL foundations 01-12 + first Part II sub-course 13 done) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (14 reconciled — ALL foundations 01-12 + Part II 13 & 14 done) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -99,6 +99,22 @@ to a non-OneDrive workspace and continue there.
   cache-line + consistent-hashing + replication/quorum + LB-peer-selection canon reused from verified 01/06/10/11.
   Empirical/historical attributions (Dean latency table, Drepper, Gregg USE+flame graphs, AKF cube, Tene CO,
   HdrHistogram/wrk2, NSDI-2006 open-vs-closed) stay `[UNVERIFIED]` — network-blocked. **ALL of 01-13 now reconciled.**
+- **Phase 1 / Wave 5 / 14 data-modeling-partitioning-sharding — Part II SECOND sub-course RECONCILED (three clusters
+  A–C); the AKF Z-axis handoff from 13.**
+  Artifacts:
+  - `14-data-modeling-partitioning-sharding/_research_data-modeling.md` (Cluster A — data model as access-pattern
+    contract; relational/document/wide-column/KV orthogonal to B-tree-vs-LSM engine; normalization vs denormalization;
+    read/write tradeoff; schema-on-write vs schema-on-read).
+  - `14-data-modeling-partitioning-sharding/_research_partitioning-sharding.md` (Cluster B — range/hash/directory
+    partitioning; consistent hashing reused from 06; shard keys; hot shard/celebrity; rebalancing; local vs global
+    secondary indexes).
+  - `14-data-modeling-partitioning-sharding/_research_cross-partition-operations.md` (Cluster C — scatter-gather;
+    cross-shard joins + distributed query planning; cross-shard transactions handing off to 11; read snapshot).
+  - `14-data-modeling-partitioning-sharding/_factcheck_clusterAB.md` (math by recomputation, mechanisms by reuse of
+    06/07/08/11/13; 0 blockers; 2 first-draft numeric errors caught + patched).
+  - `14-data-modeling-partitioning-sharding/_research.md` (RECONCILED, six sections).
+  All load-bearing math verified by recomputation; canonical/vendor attributions `[UNVERIFIED]` (network HTTP 000, 6th
+  session). **ALL of 01-14 now reconciled.**
 
 ---
 
@@ -136,8 +152,18 @@ to a non-OneDrive workspace and continue there.
     Twelve-Factor App factor VI; Fowler microservices/distributed-monolith.
   - Cluster D: Gil Tene "How NOT to Measure Latency"; HdrHistogram `recordValueWithExpectedInterval`; `wrk2`;
     Schroeder/Wierman/Harchol-Balter "Open Versus Closed" (NSDI 2006); Harchol-Balter _Performance Modeling..._.
-  Next Phase-1 work: **14-21** (Part II). 14 (data modeling/partitioning/sharding) is the natural next start — it is the
-  Z-axis handoff from 13's AKF cube.
+  Next Phase-1 work: **15-21** (Part II). 15 (replication-and-consistency-in-practice) is the natural next start — it
+  absorbs the consistency tax that 14's denormalization (A) and cross-partition operations (C) both hand off.
+
+- **14 data-modeling-partitioning-sharding is RECONCILED (three clusters A/B/C — do NOT erase carry-forward
+  `[UNVERIFIED]`):** all load-bearing math verified by recomputation this session (`mod N` 4->5 moves 0.800 vs
+  consistent-hashing add-1-to-N=10 moves 0.088 ~ 1/(N+1); vnode load spread 1.26x; hot key 30%-on-10-shards busiest
+  0.378 / ratio 4.86x; fan-out `1-0.99^100=0.634` ~63% slow; scatter throughput f*QPS per shard constant in N).
+  Mechanisms reused from line-verified 06/07/08/11/13. Carry-forward blocked primaries to fetch when network heals:
+  Codd CACM 1970 + normal forms + Kent 1983 (A); Bigtable OSDI 2006, Dynamo SOSP 2007, Karger consistent-hashing STOC
+  1997 (A/B); Sagas SIGMOD 1987, MapReduce OSDI 2004, Tail at Scale CACM 2013, Spanner re-pin (C); Avro/Protobuf/Thrift
+  evolution; DynamoDB/Cassandra/HBase/Elasticsearch/Mongo/Vitess/Citus/Presto/Spark/CockroachDB docs; Kleppmann DDIA
+  ch.2-3/6/7/9.
 
 ---
 
@@ -166,9 +192,9 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that ALL of 01-13 are reconciled/factchecked (all foundations 01-12 PLUS the first Part II
-  sub-course 13 scaling-fundamentals, four clusters A-D),
-- that Part II 14-21 are still untouched,
+- that ALL of 01-14 are reconciled/factchecked (all foundations 01-12 PLUS Part II sub-courses
+  13 scaling-fundamentals (clusters A-D) and 14 data-modeling-partitioning-sharding (clusters A-C)),
+- that Part II 15-21 are still untouched,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
@@ -176,16 +202,23 @@ stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneD
 Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 13 is reconciled; ALL its math is VERIFIED BY RECOMPUTATION (Little's Law, M/M/1 wall
-  `1/(1-rho)`, Amdahl, USL knee, fan-out tail, closed `N=X*R`, coordinated-omission percentiles).
-  Every empirical/historical ATTRIBUTION stays blocked `[UNVERIFIED]` (network HTTP 000, now 5
-  sessions): Dean latency table, Drepper, Little 1961/Kleinrock/Amdahl 1967/Gunther USL/Tail-at-
-  Scale (A); Gregg USE+flame graphs/RED/PSI (B); AKF Scale Cube/Art of Scalability/Twelve-Factor/
-  Fowler (C); Tene coordinated omission/HdrHistogram/wrk2/NSDI-2006 open-vs-closed (D).
-- Network reality (5 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
+- 14 is reconciled; ALL its math is VERIFIED BY RECOMPUTATION (mod-N vs consistent-hashing
+  movement, vnode load spread, hot-shard skew ratio, scatter-gather fan-out tail, scatter
+  throughput amplification). Every canonical/vendor/historical ATTRIBUTION stays blocked
+  `[UNVERIFIED]` (network HTTP 000, now 6 sessions): Codd CACM 1970 + normal forms + Kent 1983 (A);
+  Bigtable OSDI 2006, Dynamo SOSP 2007, Karger consistent-hashing STOC 1997 (A/B); Sagas SIGMOD
+  1987, MapReduce OSDI 2004, Tail at Scale CACM 2013, Spanner re-pin (C); Avro/Protobuf/Thrift
+  evolution; DynamoDB/Cassandra/HBase/Elasticsearch/Mongo/Vitess/Citus/Presto/Spark/CockroachDB
+  docs; Kleppmann DDIA ch.2-3/6/7/9.
+- 13 stays reconciled with its math verified by recomputation and its Dean/Drepper/Gregg/AKF/Tene
+  empirical+historical attributions still blocked `[UNVERIFIED]`.
+- Network reality (6 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
   resolve; academic/ACM/arXiv/raw.github/research.google/gregg/akfpartners = HTTP 000.
   Carried-forward blocked primaries to fetch when the network is healthier:
-  - 13: the A/B/C/D primaries listed above (see NEXT_SESSION "Things LEFT" for the full list).
+  - 14: the A/B/C primaries listed above (see NEXT_SESSION "Things LEFT" for the full list).
+  - 13: Dean latency table, Drepper, Little/Kleinrock/Amdahl/Gunther USL/Tail-at-Scale (A); Gregg
+    USE+flame graphs/RED/PSI (B); AKF Scale Cube/Art of Scalability/Twelve-Factor/Fowler (C); Tene
+    coordinated omission/HdrHistogram/wrk2/NSDI-2006 open-vs-closed (D).
   - 12: Keshav "How to Read a Paper" CCR 2007 (+ Roscoe/Mitzenmacher/Smith); MapReduce/GFS/
     Bigtable/Dynamo; Dapper/Tail-at-Scale/Chubby/ZooKeeper; Herlihy/Wing, Saltzer/Reed/Clark
     End-to-End, Lampson "Hints".
@@ -198,24 +231,29 @@ Run this plan, but only as much as can be completed well in one session. Prefer 
 multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. START 14-data-modeling-partitioning-sharding (Phase 1 briefs ONLY - no chapters, no Phase 2).
-   It is the Z-axis handoff from 13's AKF cube. Add tightly-scoped clusters, e.g.:
-   - data modeling: relational vs document vs wide-column vs KV; normalization vs denormalization;
-     access-pattern-driven modeling; the read/write tradeoff.
-   - partitioning/sharding: range vs hash vs directory partitioning; consistent hashing (reuse 06);
-     shard keys, hot shards/celebrity problem, rebalancing, secondary indexes (local vs global).
-   - cross-partition operations: scatter-gather, cross-shard joins/transactions (handoff to 11),
-     distributed query planning.
-   Reuse canon already verified in 06 (consistent hashing, B-trees/LSM) and 11 (replication,
-   consistency, atomic commit) where it overlaps. Prefer primary sources; fetch via `curl`; mark
-   anything unfetched `[UNVERIFIED]`.
-3. Factcheck each new cluster's load-bearing claims (recompute math; cite source for empirical/
+2. START 15-replication-and-consistency-in-practice (Phase 1 briefs ONLY - no chapters, no Phase 2).
+   It absorbs the consistency tax that 14's denormalization (Cluster A) and cross-partition
+   operations (Cluster C) both hand off, and turns 11's consistency THEORY into PRACTICE. Add
+   tightly-scoped clusters, e.g.:
+   - replication topologies: single-leader vs multi-leader vs leaderless; sync vs async; the
+     replication log (statement / WAL-ship / logical/row); read replicas + read-scaling.
+   - replication lag + read-your-writes / monotonic-reads / consistent-prefix anomalies and the
+     reads-from-leader / sticky-routing / causal fixes (reuse 11 consistency models).
+   - conflict handling: multi-leader/leaderless write conflicts, LWW vs version vectors vs CRDTs,
+     read-repair + anti-entropy + hinted handoff, quorum tuning (W+R>N) (reuse 11 quorums/Dynamo).
+   - failover + practice: leader election, split-brain/fencing, replication in real systems
+     (Postgres/MySQL/Raft-based/Dynamo-style), and the CAP/PACELC choice made concrete.
+   Reuse canon already verified in 11 (consistency models, quorum=majority-intersection,
+   leader/follower replication, Paxos/Raft, Spanner) and 14 (the denormalization + cross-partition
+   consistency obligations that land here). Prefer primary sources; fetch via `curl`; mark anything
+   unfetched `[UNVERIFIED]`.
+3. Factcheck each new cluster's load-bearing claims (recompute any math; cite source for empirical/
    historical claims). Patch blockers.
-4. If 14 coverage is honest, reconcile into `14-data-modeling-partitioning-sharding/_research.md`
-   (standard six sections), preserving every logged `[UNVERIFIED]`/residual gap. If thin or a
-   blocker can't clear, stop at a clean cluster checkpoint; do not fake completeness
-   (raccoon-shaped docs forbidden).
-5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 13 + 12 + 11
+4. If 15 coverage is honest, reconcile into
+   `15-replication-and-consistency-in-practice/_research.md` (standard six sections), preserving
+   every logged `[UNVERIFIED]`/residual gap. If thin or a blocker can't clear, stop at a clean
+   cluster checkpoint; do not fake completeness (raccoon-shaped docs forbidden).
+5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 14 + 13 + 12 + 11
    primaries above and upgrade the corresponding `[UNVERIFIED]` flags to verified, updating the
    relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md`

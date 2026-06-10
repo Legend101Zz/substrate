@@ -2,6 +2,51 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 5: START Part II 14 data-modeling-partitioning-sharding (A/B/C) + RECONCILE 14
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
+  checkpoint was `add4786`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
+  `/Users/m0t0hu6/.code-puppy-venv` was not modified; Code Puppy was not reinstalled. Confirmed Wave 2 milestone
+  `4a1cc71` still in history.
+- shipped: confirmed network reality (6th consecutive session): only `lamport.azurewebsites.net` resolves (HTTP 200);
+  `arxiv.org`, `raw.githubusercontent.com`, `allthingsdistributed.com`, `research.google` all HTTP 000. No new
+  primary fetchable; step-5 opportunistic fetch of the carried-forward 14/13/12/11 primaries failed identically.
+- shipped: created `14-data-modeling-partitioning-sharding/` and wrote THREE tightly-scoped clusters (standard six
+  sections each, briefs only) implementing the AKF Z-axis handoff from 13:
+  - `_research_data-modeling.md` (Cluster A — data model as access-pattern contract; logical model
+    relational/document/wide-column/KV ORTHOGONAL to storage engine B-tree-vs-LSM (reuse 06); normalization vs
+    denormalization; the read/write tradeoff as conservation; schema-on-write vs schema-on-read).
+  - `_research_partitioning-sharding.md` (Cluster B — range/hash/directory partitioning; consistent hashing reused
+    from 06; the `mod N` trap; shard-key properties; hot shard / celebrity problem; rebalancing; local vs global
+    secondary indexes).
+  - `_research_cross-partition-operations.md` (Cluster C — scatter-gather tail + throughput amplification; cross-shard
+    joins co-partition/broadcast/shuffle + distributed query planning/pushdown; cross-shard transactions handing off
+    to 11 via the avoid > saga > 2PC/Paxos-Commit ladder; cross-partition read snapshot consistency).
+- shipped: factchecked the load-bearing MATH by independent recomputation (pure Python, no deps) and saved
+  `14-data-modeling-partitioning-sharding/_factcheck_clusterAB.md`: `mod N` 4->5 moves 0.800 of keys (8->9 moves
+  0.888) vs consistent-hashing add-1-to-N=10 (200 vnodes) moves 0.088 ~ 1/(N+1); vnode load spread max/min 1.26x;
+  hot key 30% on 10 shards -> busiest 0.378 / others 0.078 / ratio 4.86x; fan-out `1-0.99^100=0.634` (~63% slow);
+  scatter throughput f*QPS per shard constant in N. 0 blockers. Mechanism claims verified by REUSE of line-verified
+  06/07/08/11/13 canon (cited per claim).
+- shipped: recomputation CAUGHT and I PATCHED two first-draft numeric errors (the point of recomputing): Cluster B
+  hot-shard ratio (first draft 3.9x; correct 4.86x because the busiest shard also carries its baseline share) and
+  Cluster C fan-out (first draft said `1-0.99^100~0.366`=37% slow; correct: 0.366 is the all-fast survival prob, slow
+  prob = 0.634 = 63%, consistent with 13's Cluster-A verified value).
+- shipped: RECONCILED all three 14 clusters into `14-data-modeling-partitioning-sharding/_research.md` (standard six
+  sections) with the cross-cluster thesis: A shapes data around access patterns -> B places that shape across N nodes
+  by a key -> C pays the bill whenever an op refuses to stay in one partition; the whole stack pushes work UPWARD to
+  modeling so the costly spanning ops stay rare. Every `[UNVERIFIED]`/residual gap and downstream boundary
+  (06/07/11/13/15/16/17/20 + appendices) preserved as cross-links, not duplicated.
+- shipped: expanded `meta/RESEARCH_INDEX.md` with the reconciled-14 anchors + the blocked A/B/C primary list; updated
+  `meta/PROGRESS.md` (14 = RESEARCHING/reconciled, three clusters; 15 = NEXT start).
+- decisions: no ADR. Reconciled 14 now (same discipline as 11/12/13): the load-bearing content is the *method/math* of
+  shaping+placing+spanning partitioned data, verified end-to-end by recomputation + reuse with 0 blockers; the blocked
+  items are canonical/vendor *attributions* that are NOT load-bearing for the method and stay flagged. Honest
+  reconciliation, not a raccoon-shaped doc.
+- stopped-at: Phase 1 with ALL foundations 01-12 + Part II 13 AND **14 now reconciled/factchecked** (three clusters).
+  Part II 15-21 remain untouched. Next session: start 15 (replication-and-consistency-in-practice) Phase-1 briefs —
+  it absorbs the consistency tax that 14's denormalization (A) and cross-partition operations (C) both hand off — and
+  opportunistically fetch the blocked 14/13/12/11 primaries when a healthier network exists. No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 5: 13 scaling-fundamentals clusters B/C/D + RECONCILE 13
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
   checkpoint was `8983e44`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
