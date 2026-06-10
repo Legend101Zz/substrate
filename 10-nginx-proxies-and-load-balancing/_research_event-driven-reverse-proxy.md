@@ -2,8 +2,8 @@
 ## Source cluster: master/worker model, event loop, nonblocking request/upstream path
 ## Researcher: researcher + brain validation | Date: 2026-06-10
 
-Status: **starter cluster only**. Not yet factchecked by the dedicated factchecker agent, and not reconciled into
-`_research.md`.
+Status: **starter cluster only**. Manually spot-checked against NGINX `release-1.31.1` source on
+2026-06-10; still not reconciled into `_research.md`.
 
 ---
 
@@ -19,7 +19,7 @@ Primary anchors:
 - AOSA NGINX chapter describes a single master and several workers/cache processes, with workers handling
   connections. Source: `https://raw.githubusercontent.com/aosabook/aosabook/master/aosabook.org/en/nginx.html`.
 - `ngx_master_process_cycle()` and `ngx_start_worker_processes()` in
-  `https://raw.githubusercontent.com/nginx/nginx/master/src/os/unix/ngx_process_cycle.c`.
+  `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/os/unix/ngx_process_cycle.c`.
 - `ngx_worker_process_cycle()` loops around `ngx_process_events_and_timers(cycle)`.
 
 Why it matters: the master can reload/restart workers without owning client request state; workers can be killed
@@ -34,11 +34,12 @@ process/thread per connection.
 `ngx_process_events_and_timers()` in `src/event/ngx_event.c` is the core loop:
 1. compute the next timer timeout,
 2. possibly acquire the accept mutex,
-3. call platform event processing (`ngx_process_events`, e.g. epoll),
-4. process posted accept events,
-5. release accept mutex,
-6. expire timers,
-7. process other posted events.
+3. if `ngx_posted_next_events` is non-empty, move it to the posted-events queue and clamp the timer to `0`,
+4. call platform event processing (`ngx_process_events`, e.g. epoll),
+5. process posted accept events,
+6. release accept mutex,
+7. expire timers,
+8. process other posted events.
 
 This design turns readiness notifications into callbacks instead of blocking one thread/process per connection.
 Do not attach exact context-switch or per-thread-memory numbers without a direct source; those are currently
@@ -52,8 +53,8 @@ NGINX represents readiness as `ngx_event_t` objects and sockets as `ngx_connecti
   generic `data` pointer.
 
 Sources:
-- `https://raw.githubusercontent.com/nginx/nginx/master/src/event/ngx_event.h`
-- `https://raw.githubusercontent.com/nginx/nginx/master/src/core/ngx_connection.h`
+- `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/event/ngx_event.h`
+- `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/core/ngx_connection.h`
 
 The generic pattern is: install the next handler on the event, register interest with the event module, return to
 the loop, and resume when the fd is ready. This is the NGINX state-machine style.
@@ -64,7 +65,7 @@ On Linux, `ngx_epoll_process_events()` calls `epoll_wait(...)`, then dispatches 
 connection pointer plus an instance bit in `epoll_event.data.ptr`; if the connection has been closed/reused and
 an old event arrives, the instance bit detects the stale event and drops it.
 
-Source: `https://raw.githubusercontent.com/nginx/nginx/master/src/event/modules/ngx_epoll_module.c`.
+Source: `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/event/modules/ngx_epoll_module.c`.
 
 The event module is abstracted behind `ngx_event_module_t`; other platforms use kqueue/event ports/etc. The HTTP
 layer should not need to know which kernel readiness primitive delivered the event.
@@ -72,18 +73,20 @@ layer should not need to know which kernel readiness primitive delivered the eve
 ### 1.5 Accept path and accept mutex
 
 Multiple workers may wait on the same listening sockets. NGINX includes an accept mutex path to reduce thundering
-herd effects. `ngx_process_events_and_timers()` attempts `ngx_trylock_accept_mutex(cycle)` when accept mutex is in
-use; accept events are posted separately and processed while the mutex is held.
+herd effects when that path is enabled. In `release-1.31.1`, `ngx_event_core_init_conf()` initializes
+`accept_mutex` to `0` and `accept_mutex_delay` to `500ms`; `ngx_process_events_and_timers()` attempts
+`ngx_trylock_accept_mutex(cycle)` only when `ngx_use_accept_mutex` is true. Accept events are posted separately and
+processed while the mutex is held.
 
 `ngx_event_accept.c` also maintains `ngx_accept_disabled`, computed from connection capacity and free
 connections, so a worker near its connection limit temporarily backs off accepting more connections.
 
 Sources:
-- `https://raw.githubusercontent.com/nginx/nginx/master/src/event/ngx_event.c`
-- `https://raw.githubusercontent.com/nginx/nginx/master/src/event/ngx_event_accept.c`
+- `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/event/ngx_event.c`
+- `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/event/ngx_event_accept.c`
 
-Modern deployments may use `SO_REUSEPORT`; exact defaults and interaction with `EPOLLEXCLUSIVE` need a separate
-pass before teaching operational guidance.
+Modern deployments may use `SO_REUSEPORT`; NGINX's epoll module also contains `EPOLLEXCLUSIVE` code paths.
+Operational guidance on `accept_mutex` vs. `reuseport`/`EPOLLEXCLUSIVE` needs a separate pass before final prose.
 
 ### 1.6 HTTP request path: connection handler → request phases → content handler
 
@@ -96,8 +99,8 @@ The exact phase names and module hooks are in the HTTP core/request source; this
 existence of the phased state-machine model, not every phase edge case.
 
 Sources:
-- `https://raw.githubusercontent.com/nginx/nginx/master/src/http/ngx_http_request.c`
-- `https://raw.githubusercontent.com/nginx/nginx/master/src/http/ngx_http_request.h`
+- `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/http/ngx_http_request.c`
+- `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/http/ngx_http_request.h`
 
 ### 1.7 Reverse proxy/upstream path is also nonblocking state-machine work
 
@@ -113,8 +116,8 @@ handlers:
   upstream round trip per client request.
 
 Sources:
-- `https://raw.githubusercontent.com/nginx/nginx/master/src/http/ngx_http_upstream.c`
-- `https://raw.githubusercontent.com/nginx/nginx/master/src/http/modules/ngx_http_proxy_module.c`
+- `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/http/ngx_http_upstream.c`
+- `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/http/modules/ngx_http_proxy_module.c`
 
 ### 1.8 Upstream keepalive avoids connection setup per request
 
@@ -122,7 +125,7 @@ The upstream keepalive module caches idle upstream connections per worker. It wr
 callbacks: `get` tries to reuse a matching cached connection; `free` saves a healthy connection back into the
 cache, subject to configuration limits.
 
-Source: `https://raw.githubusercontent.com/nginx/nginx/master/src/http/modules/ngx_http_upstream_keepalive_module.c`.
+Source: `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/http/modules/ngx_http_upstream_keepalive_module.c`.
 
 Do not state "proxy_pass always reuses upstream connections". Reuse depends on upstream keepalive configuration
 and protocol/header behavior.
@@ -134,17 +137,17 @@ and protocol/header behavior.
 | Area | Primary source | Status |
 |---|---|---|
 | Architecture overview, C10K motivation, master/workers, event-driven design, memory model | AOSA Vol. 2 NGINX chapter by Andrew Alexeev: `https://raw.githubusercontent.com/aosabook/aosabook/master/aosabook.org/en/nginx.html` | VERIFIED snippets |
-| Master/worker lifecycle | `https://raw.githubusercontent.com/nginx/nginx/master/src/os/unix/ngx_process_cycle.c` | VERIFIED snippets |
-| Event loop and accept mutex | `https://raw.githubusercontent.com/nginx/nginx/master/src/event/ngx_event.c` | VERIFIED snippets |
-| epoll implementation | `https://raw.githubusercontent.com/nginx/nginx/master/src/event/modules/ngx_epoll_module.c` | VERIFIED snippets |
-| Accept/backoff path | `https://raw.githubusercontent.com/nginx/nginx/master/src/event/ngx_event_accept.c` | VERIFIED snippets |
-| Event/connection structs | `ngx_event.h`, `ngx_connection.h` on NGINX master | VERIFIED reachable |
-| HTTP request handling | `ngx_http_request.c`, `ngx_http_request.h` on NGINX master | VERIFIED reachable |
-| Upstream/reverse proxy path | `ngx_http_upstream.c`, `ngx_http_proxy_module.c` on NGINX master | VERIFIED snippets |
-| Upstream keepalive | `ngx_http_upstream_keepalive_module.c` on NGINX master | VERIFIED snippets |
+| Master/worker lifecycle | `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/os/unix/ngx_process_cycle.c` | VERIFIED snippets |
+| Event loop and accept mutex | `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/event/ngx_event.c` | VERIFIED snippets |
+| epoll implementation | `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/event/modules/ngx_epoll_module.c` | VERIFIED snippets |
+| Accept/backoff path | `https://raw.githubusercontent.com/nginx/nginx/release-1.31.1/src/event/ngx_event_accept.c` | VERIFIED snippets |
+| Event/connection structs | `ngx_event.h`, `ngx_connection.h` on NGINX `release-1.31.1` | VERIFIED reachable |
+| HTTP request handling | `ngx_http_request.c`, `ngx_http_request.h` on NGINX `release-1.31.1` | VERIFIED reachable |
+| Upstream/reverse proxy path | `ngx_http_upstream.c`, `ngx_http_proxy_module.c` on NGINX `release-1.31.1` | VERIFIED snippets |
+| Upstream keepalive | `ngx_http_upstream_keepalive_module.c` on NGINX `release-1.31.1` | VERIFIED snippets |
 | C10K primary page | `http://www.kegel.com/c10k.html` | NOT fetched directly; AOSA cites it |
 
-Release-pin caveat: this brief uses NGINX `master` source URLs. Before final prose, pin to a release tag or commit.
+Release pin: source links in this brief use NGINX `release-1.31.1`.
 
 ---
 
@@ -179,7 +182,7 @@ Release-pin caveat: this brief uses NGINX `master` source URLs. Before final pro
    depend on configuration and response path; do not oversimplify.
 7. **“epoll magically makes all operations O(1).”** Epoll avoids scanning all fds for readiness; application handlers
    can still do expensive work.
-8. **“Follower source paths or master branch paths are stable forever.”** Use release-pinned NGINX sources before
+8. **“Follower source paths or moving branch paths are stable forever.”** Use release-pinned NGINX sources before
    final course prose.
 
 ---
@@ -201,9 +204,10 @@ Release-pin caveat: this brief uses NGINX `master` source URLs. Before final pro
 
 ## 6. Open Questions / Gaps
 
-- Factchecker has not yet reviewed this 10 starter brief.
-- Pin NGINX source URLs to a release tag/commit instead of `master`.
-- Verify current `accept_mutex`, `reuseport`, and `EPOLLEXCLUSIVE` defaults/selection in source.
+- Dedicated factchecker has not yet reviewed this 10 starter brief, though the BRAIN pass spot-checked it against
+  `release-1.31.1` source.
+- Verify `reuseport` and `EPOLLEXCLUSIVE` selection in source before writing operational guidance; `accept_mutex`
+  default is now source-checked as off (`0`) in `release-1.31.1`.
 - Trace `ngx_event_core_init_conf` for default event config values.
 - Trace `ngx_thread_pool.c` and epoll eventfd notification before teaching AIO/thread-pool integration.
 - Trace full HTTP phase engine source (`ngx_http_core_module.c`) before listing every phase as canonical course content.

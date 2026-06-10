@@ -42,48 +42,32 @@ to a non-OneDrive workspace and continue there.
 - **Phase 1 / Wave 2 — 04, 05, 06 researched, reconciled, and factchecked.** Factcheck report
   `meta/factcheck_wave2_04-06.md` exists; blockers were patched in milestone commit `4a1cc71`. Residual gaps remain
   logged.
-- **Phase 1 / Wave 3 / 07 database-internals — researched, factchecked, and reconciled.** Artifacts:
-  - `07-database-internals/_research_storage-query-exec.md`
-  - `07-database-internals/_research_transactions-recovery.md`
-  - `07-database-internals/_research_optimizer-external-exec.md`
-  - `07-database-internals/_factcheck_phase1.md`
-  - `07-database-internals/_research.md`
-- **Phase 1 / Wave 3 / 08 caches-and-storage-systems — researched, factchecked, and reconciled.** Artifacts:
-  - `08-caches-and-storage-systems/_research_cache-eviction-consistency.md`
-  - `08-caches-and-storage-systems/_research_memcached-internals.md`
-  - `08-caches-and-storage-systems/_research_admission-dogpile-consistency.md`
-  - `08-caches-and-storage-systems/_factcheck_phase1.md`
-  - `08-caches-and-storage-systems/_research.md`
-- **Phase 1 / Wave 3 / 09 message-queues-logs-and-kafka — researched, factchecked, and reconciled.** Artifacts:
-  - `09-message-queues-logs-and-kafka/_research_log-abstraction-kafka-storage.md`
-  - `09-message-queues-logs-and-kafka/_research_replication-availability.md`
-  - `09-message-queues-logs-and-kafka/_research_consumer-groups-offsets.md`
-  - `09-message-queues-logs-and-kafka/_research_delivery-semantics-transactions.md`
-  - `09-message-queues-logs-and-kafka/_factcheck_phase1.md`
-  - `09-message-queues-logs-and-kafka/_research.md`
-- 09 factcheck blocker patched: Kafka 3.9 `LocalLog` source path is
-  `core/src/main/scala/kafka/log/LocalLog.scala`, not trunk's later Java/storage path.
-- **Phase 1 / Wave 4 / 10 nginx-proxies-and-load-balancing — started only.** One starter cluster exists:
+- **Phase 1 / Wave 3 — 07, 08, and 09 researched, factchecked, and reconciled.** Artifacts include each sub-course's
+  cluster briefs, `_factcheck_phase1.md`, and `_research.md`.
+- **Phase 1 / Wave 4 / 10 nginx-proxies-and-load-balancing — core coverage researched, factchecked, and reconciled.**
+  Artifacts:
   - `10-nginx-proxies-and-load-balancing/_research_event-driven-reverse-proxy.md`
-- `meta/RESEARCH_INDEX.md` has Wave 3/4 additions for 09 Kafka and starter 10 NGINX sources.
+  - `10-nginx-proxies-and-load-balancing/_research_load-balancing-peer-selection.md`
+  - `10-nginx-proxies-and-load-balancing/_research_proxy-buffering-retries-timeouts.md`
+  - `10-nginx-proxies-and-load-balancing/_factcheck_phase1.md`
+  - `10-nginx-proxies-and-load-balancing/_research.md`
+- 10 factcheck checked 43 load-bearing claims against NGINX `release-1.31.1` source. No unsupported claims remain.
+  BRAIN patches applied after factcheck: release-pinned remaining URLs, added `ngx_posted_next_events` event-loop step,
+  and annotated nginx.org doc-wording caveats.
+- `meta/RESEARCH_INDEX.md` now includes verified 10 NGINX source anchors and residual 10 gaps.
 
 ---
 
 ## Things LEFT / current gaps
 
 - **Do not start chapters. Do not start Phase 2.** Phase 1 research corpus is still incomplete.
-- **09 residual gaps:** replace mirrored Kafka paper URL with canonical primary source if accessible; read
-  KIP-101, KIP-497, KIP-500/KRaft, KIP-848, and KIP-360 directly before quoting rationale; trace KRaft
-  eligible-leader-replica behavior, preferred-replica election, fetch-from-follower routing, coordinator runtime,
-  offset expiration, sticky assignor/static membership, transaction marker retry, `__transaction_state` expiry, and
-  long-open-transaction/log-cleaner interactions before Phase 2 prose.
-- **10 current state:** starter only; not factchecked or reconciled. Sources are mostly NGINX `master`, so pin to a
-  release tag/commit before final prose.
-- **10 gaps for next session:** factcheck the starter, deepen with load-balancing/peer selection source cluster,
-  deepen with proxy buffering/timeouts/retries/failure behavior source cluster, optionally TLS/HTTP2/HTTP3 only if
-  time remains, then reconcile 10 if coverage is solid.
-- **11 and 12 remain untouched.** Do not start them unless 10 is cleanly factchecked/reconciled and there is enough
-  time for one careful starter cluster.
+- **10 residual gaps:** reverify exact nginx.org wording before Phase 2 prose; trace `reuseport`/`EPOLLEXCLUSIVE`
+  operational interaction, `ngx_thread_pool.c`, full HTTP phase engine, `X-Accel-Buffering`, cache-specific proxy paths,
+  TLS termination/OpenSSL, HTTP/2 stream multiplexing/flow control, HTTP/3/QUIC, and commercial/open-source boundaries
+  for `slow_start`, active health checks, sticky, queue, random, least_time, and dynamic membership.
+- **11 distributed-systems-foundations is untouched.** Start with one careful source cluster only; do not rush the entire
+  distributed systems canon in one pass like a raccoon in a paper archive.
+- **12 research-papers-for-engineers is untouched.** Do not start 12 until 11 has at least one clean checkpoint.
 
 ---
 
@@ -112,8 +96,8 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3�
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that 07, 08, and 09 are reconciled/factchecked,
-- that 10 has exactly one starter cluster and is not factchecked/reconciled,
+- that 07, 08, 09, and 10 are reconciled/factchecked,
+- that 11 and 12 are untouched,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
@@ -133,34 +117,28 @@ Current state to preserve:
   - 09 message-queues-logs-and-kafka has four cluster briefs, `09-message-queues-logs-and-kafka/_factcheck_phase1.md`,
     and reconciled `09-message-queues-logs-and-kafka/_research.md`.
 - Wave 4:
-  - 10 nginx-proxies-and-load-balancing has exactly one starter brief:
-    `10-nginx-proxies-and-load-balancing/_research_event-driven-reverse-proxy.md`.
-  - 10 is not factchecked or reconciled yet.
-  - 11 and 12 are untouched.
+  - 10 nginx-proxies-and-load-balancing has three core cluster briefs, `_factcheck_phase1.md`, and reconciled
+    `_research.md`. Residual TLS/HTTP2/HTTP3/reuseport/docs wording gaps are logged; do not erase them.
+  - 11 distributed-systems-foundations and 12 research-papers-for-engineers are untouched.
 
-Run this plan, but only do as much as can be completed well in one session. Do not rush or half-bake research just
-to finish the whole list.
+Run this plan, but only do as much as can be completed well in one session. Prefer one clean, factchecked checkpoint
+over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. Factcheck 10 starter:
-   - Spot-check NGINX event-driven architecture, master/worker, `ngx_process_events_and_timers`, epoll dispatch,
-     accept mutex/backoff, HTTP request state, upstream reverse-proxy path, and upstream keepalive claims.
-   - Patch blockers before adding more 10 material.
-3. Deepen 10 with sequential source-cluster briefs:
-   1. Load-balancing and peer selection: round-robin, weighted round-robin, least_conn, ip_hash/hash/consistent hash,
-      upstream zones/shared state, health/failure accounting, `max_fails`, `fail_timeout`, slow_start if available.
-   2. Proxy buffering, retries, timeouts, and backpressure: request/response buffering, temp files, `proxy_next_upstream`,
-      connect/read/send timeouts, streaming vs buffering, client slow-read behavior.
-   3. If time permits only: TLS termination and HTTP/2/HTTP/3 request multiplexing caveats.
-4. Run/ask factchecker to spot-check the most load-bearing 10 claims. Patch blockers.
-5. If enough time remains and 10 coverage is solid, reconcile all 10 cluster briefs into
-   `10-nginx-proxies-and-load-balancing/_research.md` with the standard six sections:
-   key mechanisms, foundational sources, why-it’s-this-way constraints, misconceptions, build-your-own targets,
-   open questions/gaps.
-6. Expand `meta/RESEARCH_INDEX.md` with genuinely new 10 sources discovered.
-7. If, and only if, 10 is reconciled cleanly with no blockers and time remains, start 11 distributed-systems-foundations
-   with one source-cluster brief. Otherwise stop after the best clean 10 checkpoint. Do not start 12 or Phase 2.
-8. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md` with the exact
+2. Start 11 distributed-systems-foundations with the first source cluster: time, clocks, ordering, causality, and
+   partial failure foundations.
+   - Primary sources to prioritize: Lamport "Time, Clocks, and the Ordering of Events"; MIT 6.5840/6.824 lecture
+     notes where applicable; DDIA/source-backed excerpts only if directly accessible; van Steen/Tanenbaum only where
+     accessible; Jepsen/Aphyr only for failure intuition, not as replacement for primary papers.
+   - Cover logical clocks, happened-before, causality vs. wall time, clock skew, partial failure, timeouts, and why
+     distributed systems cannot observe a single global state without protocol assumptions.
+   - Cite source or mark `[UNVERIFIED]`; do not paraphrase inaccessible books as facts.
+3. Factcheck the 11 starter cluster's most load-bearing claims against primary sources. Patch blockers.
+4. If and only if the first 11 cluster is clean and time remains, add a second 11 cluster on replication basics and
+   consistency vocabulary (leader/follower, quorums, linearizability vs. sequential/eventual consistency) using primary
+   sources. Otherwise stop at the clean first-cluster checkpoint.
+5. Do not start 12 unless 11 has a clean reconciled checkpoint and there is meaningful time left. Do not start Phase 2.
+6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md` with the exact
    next-session prompt, ensure files stay under 600 lines where reasonable, run `git status --short`, commit, and
    report remaining gaps + next batch.
 

@@ -2,6 +2,34 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 4: factcheck/deepen/reconcile 10 NGINX core
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
+  checkpoint was `ef3528d`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
+  `/Users/m0t0hu6/.code-puppy-venv` was not touched.
+- shipped: manually spot-checked the existing 10 starter brief against NGINX `release-1.31.1`; patched it to pin NGINX
+  source URLs to the release tag, corrected/clarified `accept_mutex` default (`0`) and `accept_mutex_delay` (`500ms`),
+  and added the missing `ngx_posted_next_events` event-loop step after factchecker warning.
+- shipped: added `10-nginx-proxies-and-load-balancing/_research_load-balancing-peer-selection.md` covering smooth
+  weighted round-robin, passive failure accounting, `max_fails`, `fail_timeout`, `least_conn`, `ip_hash`, generic and
+  consistent hash, upstream zones/shared state, and `slow_start` availability caveats from NGINX `release-1.31.1`
+  source and official docs where available.
+- shipped: added `10-nginx-proxies-and-load-balancing/_research_proxy-buffering-retries-timeouts.md` covering request
+  buffering, response buffering, event-pipe temp files, `proxy_next_upstream`, connect/read/send timeouts, and slow
+  client/upstream backpressure behavior from NGINX source.
+- shipped: ran `factchecker` on 10; saved `10-nginx-proxies-and-load-balancing/_factcheck_phase1.md`. It checked 43
+  load-bearing claims against NGINX `release-1.31.1`; no unsupported/misattributed claims remained after patches.
+  nginx.org doc wording was blocked in the factchecker environment, so doc wording is explicitly flagged for Phase 2
+  recheck while source-level behavior is confirmed.
+- shipped: reconciled all 10 core clusters into `10-nginx-proxies-and-load-balancing/_research.md` with the standard
+  six sections; expanded `meta/RESEARCH_INDEX.md` with verified 10 source anchors and residual gaps.
+- decisions: no ADR. Chose not to force the optional TLS/HTTP2/HTTP3 cluster or start 11 in this session; stopped at a
+  clean 10 factchecked/reconciled checkpoint rather than doing drive-by distributed systems research. Shocking restraint,
+  frankly.
+- stopped-at: Phase 1 with 07, 08, 09, and 10 reconciled/factchecked. 10 residual gaps: nginx.org wording recheck,
+  `reuseport`/`EPOLLEXCLUSIVE`, thread pools, full HTTP phase engine, `X-Accel-Buffering`, cache-specific paths,
+  TLS/OpenSSL, HTTP/2, HTTP/3/QUIC, and product-boundary checks for commercial-only directives. 11 and 12 untouched.
+  No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 3/4: finish 09; start 10 starter cluster
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; confirmed git HEAD `f5e4069` and clean
   working tree before edits; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and

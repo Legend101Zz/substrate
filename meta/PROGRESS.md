@@ -15,9 +15,9 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 07 | database-internals | RESEARCHING | Wave 3 07 briefs drafted, factchecked, blockers patched, and reconciled into `_research.md`; residual paper/source gaps logged | brain |
 | 08 | caches-and-storage-systems | RESEARCHING | Phase 1 briefs deepened, factchecked via `_factcheck_phase1.md`, and reconciled into `_research.md`; residual taxonomy/source pinning gaps logged | brain |
 | 09 | message-queues-logs-and-kafka | RESEARCHING | Phase 1 briefs deepened, factchecked via `_factcheck_phase1.md`, blockers patched, and reconciled into `_research.md`; residual Kafka paper/KIP/source-tracing gaps logged | brain |
-| 10 | nginx-proxies-and-load-balancing | RESEARCHING | One starter cluster drafted: `_research_event-driven-reverse-proxy.md`; needs factcheck, release-pinned sources, deeper load-balancing/proxy buffering/TLS/HTTP2+ clusters, then reconcile | brain |
-| 11 | distributed-systems-foundations | TODO | wave 4 | — |
-| 12 | research-papers-for-engineers | TODO | wave 4 | — |
+| 10 | nginx-proxies-and-load-balancing | RESEARCHING | Phase 1 core briefs drafted, factchecked via `_factcheck_phase1.md`, blockers patched, and reconciled into `_research.md`; residual TLS/HTTP2/HTTP3/reuseport/docs wording gaps logged | brain |
+| 11 | distributed-systems-foundations | TODO | Start Wave 4 with one careful source-cluster brief, then factcheck/reconcile only when coverage is solid | — |
+| 12 | research-papers-for-engineers | TODO | wave 4 after 11; do not start until 11 has a clean checkpoint | — |
 | 13 | scaling-fundamentals | TODO | Phase 1 batch 2 | — |
 | 14 | data-modeling-partitioning-sharding | TODO | Phase 1 batch 2 | — |
 | 15 | replication-and-consistency-in-practice | TODO | Phase 1 batch 2 | — |

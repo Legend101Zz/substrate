@@ -242,14 +242,26 @@ own compiler/interpreter · own search engine · own message queue · own coding
   and long-open-transaction/log-cleaner interactions before Phase 2 prose.
 
 ### 10 nginx-proxies-and-load-balancing
-- Starter cluster only: NGINX event-driven reverse-proxy architecture. Primary anchors discovered/partially
-  verified: AOSA Vol. 2 NGINX chapter (`raw.githubusercontent.com/aosabook/.../nginx.html`), NGINX master
-  `src/os/unix/ngx_process_cycle.c` (master/worker lifecycle), `src/event/ngx_event.c` (event loop and accept
-  mutex), `src/event/modules/ngx_epoll_module.c` (epoll dispatch and stale event checks),
-  `src/event/ngx_event_accept.c` (accept/backoff), `src/event/ngx_event.h`, `src/core/ngx_connection.h`,
+- NGINX event-driven reverse-proxy anchors, factchecked against `nginx/nginx` `release-1.31.1`: AOSA Vol. 2
+  NGINX chapter (`raw.githubusercontent.com/aosabook/.../nginx.html`), `src/os/unix/ngx_process_cycle.c`
+  (master/worker lifecycle), `src/event/ngx_event.c` (`ngx_process_events_and_timers`, accept mutex defaults,
+  `ngx_posted_next_events`), `src/event/modules/ngx_epoll_module.c` (epoll dispatch and stale instance bit),
+  `src/event/ngx_event_accept.c` (`ngx_accept_disabled`), `src/event/ngx_event.h`, `src/core/ngx_connection.h`,
   `src/http/ngx_http_request.c/.h`, `src/http/ngx_http_upstream.c`, `src/http/modules/ngx_http_proxy_module.c`,
   and `src/http/modules/ngx_http_upstream_keepalive_module.c`.
-- Remaining 10 starter gaps: factcheck not yet run; pin NGINX source to a release tag/commit instead of `master`;
-  verify current `accept_mutex`/`reuseport`/`EPOLLEXCLUSIVE` defaults; trace `ngx_event_core_init_conf`,
-  `ngx_thread_pool.c`, HTTP phase engine, load-balancing peer selection modules, proxy buffering/streaming,
-  TLS, HTTP/2, and HTTP/3/QUIC in later source clusters.
+- NGINX upstream load-balancing anchors (`release-1.31.1`): `src/http/ngx_http_upstream_round_robin.h/.c`
+  (smooth weighted round-robin, `weight`/`effective_weight`/`current_weight`, passive failure accounting,
+  `max_fails=1`, `fail_timeout=10` defaults), `src/http/modules/ngx_http_upstream_least_conn_module.c`,
+  `src/http/modules/ngx_http_upstream_ip_hash_module.c`, `src/http/modules/ngx_http_upstream_hash_module.c`, and
+  `src/http/modules/ngx_http_upstream_zone_module.c` (shared-memory upstream zones). Official docs anchors:
+  `nginx.org/en/docs/http/ngx_http_upstream_module.html` and `nginx.org/en/docs/http/load_balancing.html`; factchecker
+  could not fetch nginx.org, so doc wording must be rechecked before Phase 2 prose.
+- NGINX proxy buffering/retry/timeout anchors (`release-1.31.1`): `src/http/modules/ngx_http_proxy_module.c`
+  (defaults: request/response buffering on, connect/send/read 60s, buffer sizes, temp-file max 1GiB,
+  `proxy_next_upstream` default `error timeout`), `src/http/ngx_http_upstream.c` (retry gates, non-buffered paths,
+  timers), and `src/event/ngx_event_pipe.c/.h` (buffer chains, temp files, slow-client backpressure). Official docs
+  anchor: `nginx.org/en/docs/http/ngx_http_proxy_module.html`; recheck wording before Phase 2 prose.
+- Remaining 10 gaps: trace `reuseport`/`EPOLLEXCLUSIVE` operational interaction, `ngx_thread_pool.c`, full HTTP phase
+  engine, `X-Accel-Buffering`, cache-specific proxy paths, TLS termination/OpenSSL, HTTP/2 stream multiplexing/flow
+  control, HTTP/3/QUIC, and exact commercial/open-source boundaries for `slow_start`, active health checks, sticky,
+  queue, random, least_time, and dynamic membership before operational config prose.
