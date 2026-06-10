@@ -29,6 +29,7 @@ MIT 6.172 Performance Engineering of Software Systems.
    pingcap · [build: own-database (cstack)] → appendix F.
 08 caches-storage: "Memcached at Facebook" · Redis design · LSM-vs-B-tree write paths → appendix G.
 09 mq-logs-kafka: Kreps "The Log" · Kafka paper · Kafka Definitive Guide · Kafka design docs ·
+   Kafka broker storage/log source (`LocalLog`, `LogSegment`, `LogCleaner`, `LogConfig`, `Partition`) ·
    [build: own-message-queue] → appendix H.
 10 nginx-proxies-lb: aosabook nginx chapter · nginx docs · SEDA paper · LB algorithms ·
    [build: own-http-server-and-load-balancer].
@@ -187,11 +188,23 @@ own compiler/interpreter · own search engine · own message queue · own coding
   Graefe 1993 query evaluation survey, Selinger 1979 System R (Duke scanned PDF fetched but not text
   extracted), Mohan 1992 ARIES, Crotty et al. 2022 mmap, MonetDB/X100, HyPer/Neumann 2011, PAX 2001.
 
-### 08 caches-and-storage-systems (started)
-- Redis current source/docs anchors: `src/server.h` (maxmemory policy constants, DB `keys`/`expires`,
-  LRU/LFU knobs), `src/expire.c` (active expiration loop/constants), official Redis eviction docs and
-  persistence docs (reachable; detailed claims still need reading pass).
-- Memcached anchors: `doc/protocol.txt` (TTL, CAS, touch/gat, metadata flags), `items.c` (segmented
-  HOT/WARM/COLD/TEMP LRU structures and stats), `slabs.c` (slab classes/chunk sizing), `doc/storage.txt`
-  (external storage optional path). Facebook Memcached NSDI 2013 PDF fetched from USENIX, but body text
-  not extracted; leases/gutter/regional-pool details remain `[UNVERIFIED from text]`.
+### 08 caches-and-storage-systems
+- Redis current source/docs anchors: `src/server.h` (maxmemory policy constants including LRU/LFU/LRM,
+  DB `keys`/`expires`, `maxmemory_samples`, LFU knobs), `src/evict.c` (candidate pool `EVPOOL_SIZE=16`,
+  sampled eviction with `kvstoreDictGetSomeKeys`, LRU/LFU/LRM/TTL scoring, `performEvictions()`),
+  `src/expire.c` (active expiration constants: 20 keys/loop, 1000µs fast duration, 25% slow CPU baseline,
+  10% acceptable stale baseline, effort tuning), official Redis eviction docs (approximate LRU/LFU,
+  `maxmemory-samples`, LRM), and persistence docs (RDB, AOF, fsync modes, rewrite, Redis 7 multi-part AOF).
+- Memcached anchors: `doc/protocol.txt` (TTL, CAS, touch/gat/gats, meta/stale metadata), `items.c`
+  (HOT/WARM/COLD/TEMP segmented LRU, `lru_pull_tail`, maintainer/crawler), `slabs.c` (slab classes,
+  chunk sizing, `perslab`), `slab_automove.c` (class rebalancing), `thread.c` (worker threads and item
+  locks), `doc/storage.txt` + `extstore.c` (optional external storage path). Facebook Memcached NSDI 2013
+  PDF text extracted via `/tmp` pypdf; leases, stale values, pools, Gutter, regional pools, and 17K/s→1.3K/s
+  lease experiment are verified from text.
+- Admission/dogpile/consistency anchors: TinyLFU/W-TinyLFU paper (`arxiv.org/abs/1512.00727`), Caffeine
+  `FrequencySketch.java`, `BoundedLocalCache.java`, simulator `TinyLfu.java`, Caffeine Efficiency wiki,
+  ARC FAST 2003 PDF (`usenix.org/legacy/events/fast03/.../megiddo.pdf`, extracted), Go
+  `x/sync/singleflight.go`, RFC 5861 (`stale-while-revalidate`, `stale-if-error`), and RFC 9111 (HTTP
+  cache keys/freshness/validation/stale constraints/unsafe-method invalidation). Remaining gaps: release-pin
+  Redis/Memcached source, ARC pseudo-code/patent status, Count-Min formal error bounds, write-through/write-back
+  taxonomy source, and XFetch/probabilistic early expiration primary source.

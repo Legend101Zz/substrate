@@ -50,10 +50,14 @@ background maintenance eventually reclaims memory.
 - Flags distinguish LRU, LFU, allkeys, and LRM policy families. `lruclock` tracks logical LRU time;
   LFU has `LFU_INIT_VAL = 5`, `lfu_log_factor`, and `lfu_decay_time`.
 
-**Important nuance:** Redis docs/source describe policies, but this brief has not yet traced the
-exact sampled-eviction algorithm in `evict.c` end-to-end. Do not claim “true LRU” unless source
-is traced; Redis eviction is known to be approximate/sampled, but exact current mechanics need a
-follow-up source pass.
+**Important nuance:** Redis eviction is approximate/sampled, not exact global LRU/LFU. `evict.c`
+keeps an eviction candidate pool of `EVPOOL_SIZE = 16`; `evictionPoolPopulate()` samples up to
+`server.maxmemory_samples` keys with `kvstoreDictGetSomeKeys()`. For LRU/LRM it estimates idle time;
+for LFU it uses `255 - LFUDecrAndReturn(kv)` so low-frequency keys sort as better eviction candidates;
+for `volatile-ttl` it scores by nearest expiry. `performEvictions()` repeatedly populates the pool and
+picks the best key until memory is below `maxmemory`. Sources: `src/evict.c` lines around the
+`EVPOOL_SIZE` define, `evictionPoolPopulate()`, and `performEvictions()`; Redis eviction docs section
+“Approximated LRU algorithm” and LFU section.
 
 **Memcached eviction / allocation** (verified from source/docs):
 - Memcached stores items in slab classes: `slabs.c` computes chunk sizes, items per slab, and per-class
@@ -68,24 +72,32 @@ follow-up source pass.
 ### 1.4 Admission and thundering herd control
 
 Eviction asks “which existing item leaves?” Admission asks “should this new/missed item enter?”
-Without admission control, one-time scans can evict the real hot set. This brief has not yet traced
-TinyLFU/ARC/admission papers directly, so keep exact algorithm claims `[UNVERIFIED]` until sourced.
+Without admission control, one-time scans can evict the real hot set. The follow-up cluster brief
+`_research_admission-dogpile-consistency.md` verifies TinyLFU/W-TinyLFU, ARC, Go singleflight,
+RFC 5861 stale controls, and RFC 9111 HTTP cache semantics from primary sources.
 
-**Facebook Memcached paper status:** The NSDI 2013 PDF `memcache-fb` was fetched successfully
-from USENIX, but this session lacked `pdftotext`; strings extraction did not reveal body text.
-Known claims such as leases, stale sets, gutter pools, regional pools, and thundering-herd control
-must remain `[UNVERIFIED from text]` until the PDF can be read directly.
+**Facebook Memcached paper status:** The NSDI 2013 PDF was extracted with a throwaway `/tmp`
+`uv run --with pypdf` environment, not the Code Puppy venv. The text verifies the core claims:
+leases address stale sets and thundering herds; a lease is a 64-bit token bound to a key; the paper's
+one-week lease experiment reduced peak database query rate from 17K/s to 1.3K/s; stale values let
+some clients use marked-stale data; Gutter is about 1% of memcached servers in a cluster and absorbs
+some failed-server traffic with short-lived entries; regional pools hold one copy per region for some
+classes of data. Source: Nishtala et al., “Scaling Memcache at Facebook,” NSDI 2013,
+`https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf`.
 
 ### 1.5 Persistence and write paths
 
 Caches range from purely ephemeral to durable-ish.
 
-**Redis persistence docs (reachable):** Redis official docs page for persistence was fetched (HTTP
-200). High-level Redis mechanisms to verify in a deeper pass:
-- RDB snapshots: point-in-time compact snapshots.
-- AOF: append-only command log with fsync policy and rewrite/compaction.
-- Persistence choice changes cache semantics: ephemeral cache can drop data; Redis-as-primary-store
-  needs durability and recovery settings.
+**Redis persistence docs (verified):** Official Redis persistence docs define four durability modes:
+no persistence; RDB point-in-time snapshots; AOF logging every write operation so startup can replay
+commands; and combined RDB+AOF. RDB is compact and uses a child process after `fork()` to write a
+temporary RDB and replace the old file, but it can lose data between snapshots and fork can pause large
+datasets. AOF supports `appendfsync always`, `everysec`, and `no`; Redis docs describe `everysec` as
+the default practical tradeoff and note possible loss of about one second on disaster. Since Redis 7.0,
+AOF is multi-part: a base file plus incremental files tracked by a manifest. AOF rewrite creates a new
+base file while the parent continues writing to a new incremental AOF. Source:
+`https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/`.
 
 **Memcached:** protocol/source in this pass focus on in-memory items/slabs/LRU. `doc/storage.txt`
 describes an external storage design with items moved to storage and recached on repeated hits, but
@@ -100,7 +112,8 @@ Every cache coherence design chooses where staleness can appear:
 - **Write-through:** write cache and DB synchronously. Lower staleness, higher write latency and more failure modes. `[UNVERIFIED taxonomy]`
 - **Write-back:** write cache first, flush DB later. Fast writes but durability risk if cache fails. `[UNVERIFIED taxonomy]`
 - **Lease/token approaches:** one client is granted permission to refill; others wait/use stale value.
-  Facebook Memcached details remain `[UNVERIFIED from text]` pending PDF extraction.
+  Facebook Memcached lease details are now verified from the extracted NSDI 2013 paper text; exact
+  generalization beyond Facebook's system should still be treated as design pattern, not universal law.
 
 ---
 
@@ -111,13 +124,13 @@ Every cache coherence design chooses where staleness can appear:
 | Redis maxmemory policy constants | `https://raw.githubusercontent.com/redis/redis/unstable/src/server.h` | VERIFIED |
 | Redis DB keyspace + expires metadata | `https://raw.githubusercontent.com/redis/redis/unstable/src/server.h` | VERIFIED |
 | Redis active expiration constants and comments | `https://raw.githubusercontent.com/redis/redis/unstable/src/expire.c` | VERIFIED |
-| Redis persistence high-level docs | `https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/` | REACHABLE; detailed claims need reading pass |
-| Redis eviction docs | `https://redis.io/docs/latest/develop/reference/eviction/` | REACHABLE; detailed claims need reading pass |
+| Redis persistence high-level docs | `https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/` | VERIFIED: RDB/AOF/combined, fork snapshotting, fsync policies, AOF rewrite, Redis 7 multi-part AOF |
+| Redis eviction docs | `https://redis.io/docs/latest/develop/reference/eviction/` | VERIFIED: policy list, approximate LRU/LFU sampling, `maxmemory-samples`, LRM note |
 | Memcached text protocol TTL/CAS/touch/gat/mg flags | `https://raw.githubusercontent.com/memcached/memcached/master/doc/protocol.txt` | VERIFIED |
 | Memcached segmented LRU/source counters | `https://raw.githubusercontent.com/memcached/memcached/master/items.c` | VERIFIED snippets; full algorithm not traced |
 | Memcached slabs allocator | `https://raw.githubusercontent.com/memcached/memcached/master/slabs.c` | VERIFIED snippets |
 | Memcached external storage design | `https://raw.githubusercontent.com/memcached/memcached/master/doc/storage.txt` | VERIFIED snippets; optional path |
-| Facebook Memcached NSDI 2013 paper | `https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf` | PDF fetched; body text `[UNVERIFIED]` |
+| Facebook Memcached NSDI 2013 paper | `https://www.usenix.org/system/files/conference/nsdi13/nsdi13-final170_update.pdf` | VERIFIED via `/tmp` pypdf extraction: leases, stale values, Gutter, pools, regional pools, multi-region invalidation |
 
 ---
 
@@ -168,12 +181,12 @@ Every cache coherence design chooses where staleness can appear:
 
 ## 6. Open Questions / Source Gaps
 
-- Extract/read the NSDI 2013 Facebook Memcached paper directly; keep leases/gutter/regional-pool claims
-  `[UNVERIFIED from text]` until then.
-- Trace Redis `evict.c` end-to-end: sample pool, LRU/LFU counters, LRM policy, eviction under memory
-  pressure, and interaction with TTL-only `volatile-*` policies.
-- Read Redis official eviction and persistence docs deeply; current brief only confirmed pages are reachable
-  and source constants exist.
+- Redis `evict.c` has now been traced for the sampled candidate pool, LRU/LFU/LRM/TTL scoring, and
+  `performEvictions()` loop. Remaining Redis gap: exact behavior can shift with unstable-branch code;
+  pin to a release/commit before Phase 2 structure or chapter prose.
+- Redis official eviction and persistence docs were read for policy semantics, sampling, RDB/AOF, fsync,
+  and AOF rewrite. Remaining gap: source-level tracing of RDB/AOF implementation files is deferred to
+  Redis appendix G unless spine 08 needs it.
 - Memcached full LRU maintainer behavior, crawler, slab automove, extstore, and thread model need a deeper
   source pass.
 - Cache consistency taxonomy needs primary anchors from a real production cache/system paper or official

@@ -2,6 +2,30 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 3: reconcile/factcheck 08; start 09 starter cluster
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean;
+  no `os.getcwd()` / `Path.cwd()` PermissionError occurred and `/Users/m0t0hu6/.code-puppy-venv` was not modified.
+- shipped: deepened 08 Redis claims from primary sources: `server.h`, `evict.c`, `expire.c`, Redis eviction
+  docs, and Redis persistence docs. Verified approximate sampled eviction, active expiry constants/effort,
+  and RDB/AOF/fsync/rewrite/multi-part AOF details.
+- shipped: extracted Facebook Memcached NSDI 2013 PDF using a throwaway `/tmp` `uv run --with pypdf`
+  environment; verified leases, stale values, pools, Gutter, regional pools, and 17K/s→1.3K/s lease experiment.
+- shipped: added two 08 cluster briefs: `_research_memcached-internals.md` and
+  `_research_admission-dogpile-consistency.md`; covered slabs, segmented LRU, crawler, slab automove,
+  extstore, threading, CAS/stale flags, TinyLFU/W-TinyLFU/ARC, Go singleflight, RFC 5861, and RFC 9111.
+- shipped: attempted `factchecker` subagent on 08; it failed with `httpx.ReadTimeout`. Manual primary-source
+  fallback produced `08-caches-and-storage-systems/_factcheck_phase1.md`; no blockers remain, warnings logged.
+- shipped: reconciled all 08 briefs into `08-caches-and-storage-systems/_research.md` with the standard six
+  sections; expanded `meta/RESEARCH_INDEX.md` with new verified 08 sources and residual gaps.
+- shipped: started 09 with one starter brief: `09-message-queues-logs-and-kafka/_research_log-abstraction-kafka-storage.md`
+  covering Kafka log abstraction, partitions, offsets, segments, retention, and compaction from the Kafka paper
+  and Apache Kafka source. 09 is not factchecked or reconciled.
+- decisions: no ADR. Operational note: subagent read-timeout was treated like prior network stream failures;
+  no Code Puppy reinstall or venv edit attempted.
+- stopped-at: Phase 1 Wave 3 with 08 reconciled/factchecked; 09 has exactly one starter cluster and needs
+  factcheck + deeper clusters for replication/ISR/high watermark, consumer groups/offset commits, delivery
+  semantics/idempotence/transactions, and then reconciliation. No chapters. No Phase 2.
+
 ## 2026-06-09 — Phase 1 Wave 3: finish/reconcile sub-course 07; start 08 starter cluster
 - shipped: recovered from the prior callback crash safely from `/Users/m0t0hu6/Desktop/substrate`
   (physical repo path resolves through OneDrive) with clean working tree and no `cwd` PermissionError.

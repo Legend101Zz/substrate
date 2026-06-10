@@ -13,8 +13,8 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 05 | programming-language-runtime-internals | RESEARCHING | Wave 2 briefs reconciled + factcheck blockers patched; residual moving-target runtime caveats logged | brain |
 | 06 | data-structures-for-systems | RESEARCHING | Wave 2 briefs reconciled + factcheck blockers patched; residual blocked-paper gaps logged | brain |
 | 07 | database-internals | RESEARCHING | Wave 3 07 briefs drafted, factchecked, blockers patched, and reconciled into `_research.md`; residual paper/source gaps logged | brain |
-| 08 | caches-and-storage-systems | RESEARCHING | One starter cluster drafted: `_research_cache-eviction-consistency.md`; continue Redis/Memcached factcheck/deeper clusters, then reconcile | brain |
-| 09 | message-queues-logs-and-kafka | TODO | wave 3 queued after 08 checkpoint/reconcile | — |
+| 08 | caches-and-storage-systems | RESEARCHING | Phase 1 briefs deepened, factchecked via `_factcheck_phase1.md`, and reconciled into `_research.md`; residual taxonomy/source pinning gaps logged | brain |
+| 09 | message-queues-logs-and-kafka | RESEARCHING | One starter cluster drafted: `_research_log-abstraction-kafka-storage.md`; needs factcheck, deeper clusters on replication/consumer groups/delivery semantics, then reconcile | brain |
 | 10 | nginx-proxies-and-load-balancing | TODO | wave 4 | — |
 | 11 | distributed-systems-foundations | TODO | wave 4 | — |
 | 12 | research-papers-for-engineers | TODO | wave 4 | — |
