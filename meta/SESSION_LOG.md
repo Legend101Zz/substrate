@@ -2,6 +2,42 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 4: research + factcheck + RECONCILE 12 (research-papers-for-engineers)
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
+  checkpoint was `ac2d61e`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and `/Users/m0t0hu6/.code-puppy-venv`
+  was not modified; Code Puppy was not reinstalled.
+- shipped: confirmed network reality (matches prior two sessions): only `lamport.azurewebsites.net` resolves (HTTP 200);
+  every academic/ACM/arXiv/raw.github host = HTTP 000, including the Keshav "How to Read a Paper" PDF across 5 mirrors
+  (Stanford, SIGCOMM CCR, UNB, ACM DOI, Harvard). Invoked the `researcher` subagent for Cluster A; it independently
+  confirmed ZERO method-source fetches, so all Keshav/Roscoe/Mitzenmacher/Smith claims are `[UNVERIFIED from fetched source]`.
+- shipped: fetched + extracted FOUR fresh Lamport primaries into `/tmp/substrate-12-sources/` via a throwaway
+  `uv run --with pypdf` (Walmart index): "State the Problem Before Describing the Solution" (method backbone),
+  "The Byzantine Generals Problem" (TOPLAS 1982), "Reaching Agreement in the Presence of Faults" (JACM 1980), and
+  "The Part-Time Parliament" (original Paxos, TOCS 1998).
+- shipped: wrote two cluster briefs — `12-.../_research_how-to-read-a-paper.md` (reading method, anchored on the
+  verified Lamport expository rule; Keshav three-pass honestly flagged `[UNVERIFIED]`) and
+  `12-.../_research_paper-canon-walkthroughs.md` (canon catalog: 4 fresh-verified Lamport papers + a status map of
+  canon already line-verified in 06-11 + the still-blocked storage/ops trilogy flagged `[UNVERIFIED]`).
+- shipped: factchecked both clusters in `12-.../_factcheck_phase1.md` with exact line receipts against the extracted
+  text — Cluster A: 4 VERIFIED + 2 properly-flagged; Cluster B: 9 VERIFIED (incl. `3m+1`, conditions A/B,
+  impossibility-then-`OM(m)`, PTP state-machine/majority/editor's-note, cross-refs) + 2 flagged groups; **0 blockers**.
+- shipped: RECONCILED both clusters into `12-.../_research.md` (standard six sections) with the cross-cluster thesis
+  (reader's rule from writer's rule -> three-pass triage -> the agreement chain as the exposition-quality teaching spine
+  -> canon maps onto the headline course -> impossibility-first), preserving every `[UNVERIFIED]`/residual gap.
+- shipped: expanded `meta/RESEARCH_INDEX.md` with verified 12 Lamport anchors + the residual 12 gap list; updated
+  `meta/PROGRESS.md` (12 = RESEARCHING/reconciled).
+- shipped: attempted the opportunistic step-5 fetch of the blocked 11 primaries (Gilbert/Lynch, Brewer, Abadi,
+  Herlihy/Wing, Dynamo) — all still HTTP 000 on every academic/ACM host. The 11 `[UNVERIFIED]` flags stand unchanged;
+  none erased.
+- decisions: no ADR. Chose a TWO-cluster honest 12 (method backbone + verified canon spine) over a method-only stub
+  that would have been entirely `[UNVERIFIED]`. Pivoted the verifiable depth onto the reachable Lamport host rather than
+  faking Keshav/Google-trilogy coverage. One clean factchecked/reconciled checkpoint over raccoon-shaped completeness.
+- stopped-at: Phase 1 with 07, 08, 09, 10, 11, AND **12 reconciled/factchecked**. All of foundations 01-12 now have
+  reconciled `_research.md` + factcheck artifacts. Next batch = Phase 1 Wave 5 (Part II System Design 13-21), plus
+  opportunistic fetches of the still-blocked method + storage canon (Keshav, MapReduce/GFS/Bigtable/Dynamo, Dapper,
+  Tail at Scale) and the carried-forward 11 CAP/PACELC/Herlihy-Wing/Dynamo primaries when a healthier network exists.
+  No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 4: add 11 CAP/distributed-commit cluster + RECONCILE 11
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
   checkpoint was `0fe860e`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and

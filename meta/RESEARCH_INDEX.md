@@ -307,3 +307,19 @@ own compiler/interpreter · own search engine · own message queue · own coding
   Dynamo SOSP 2007; Fidge/Mattern/Charron-Bost/CBCAST/DLS; Skeen 1981 original 3PC; Berenson 1995 ANSI isolation
   levels; cleaner Chandra-Toueg text; source pin for the `f+1` synchronous rotating-coordinator claim; and re-pin
   Gray & Lamport to ACM TODS 2006 pagination.
+
+### 12 research-papers-for-engineers
+- Reading-method cluster, factchecked in `_factcheck_phase1.md`: verified backbone is Lamport, "State the Problem
+  Before Describing the Solution" (`lamport.azurewebsites.net/pubs/state-the-problem.pdf`, full text extracted) —
+  flawed-vs-urged paper organization, correctness-conditions-stated-independently-of-the-solution, comprehension !=
+  correctness. Keshav "How to Read a Paper" CCR 2007 (three-pass, five Cs, citation-convergence survey) and
+  Roscoe/Mitzenmacher/Smith reviewing guidance remain `[UNVERIFIED from fetched source]` (HTTP 000 across 5 mirrors).
+- Canon cluster, factchecked in `_factcheck_phase1.md`: FOUR fresh Lamport primaries verified from
+  `lamport.azurewebsites.net/pubs/` — Byzantine Generals (`byz.pdf`: oral `>2/3` loyal / `3m+1`, signed any number,
+  conditions A/B, impossibility-then-`OM(m)`), Reaching Agreement (`reaching.pdf`: `n>=3m+1` iff, interactive
+  consistency, omission faults arbitrary `n>=m>=0`), Part-Time Parliament (`lamport-paxos.pdf`: original Paxos,
+  state-machine approach, majority for progress, editor's-note exposition-failure exemplar). Agreement chain
+  (Reaching Agreement -> Byzantine -> PTP -> Paxos Made Simple -> Raft) is the verified teaching spine; canon already
+  verified in 06-11 is reused. Remaining gaps `[UNVERIFIED]` (fetch before Phase 2): Keshav/Roscoe/Mitzenmacher/Smith;
+  MapReduce/GFS/Bigtable/Dynamo; Dapper/Tail-at-Scale/Chubby/ZooKeeper; Herlihy/Wing, End-to-End, Lampson Hints.
+  12 is now reconciled into `_research.md` (two clusters, six sections). Opportunistic 11-primary retry stayed HTTP 000.

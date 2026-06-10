@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (11 reconciled) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (12 reconciled — ALL foundations 01-12 done) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -66,6 +66,21 @@ to a non-OneDrive workspace and continue there.
   `lamport.azurewebsites.net/video/consensus-on-transaction-commit.pdf` and verified 14 load-bearing 2PC/3PC/Paxos-
   Commit/Spanner claims with line receipts (0 blockers). CAP/PACELC primaries (Gilbert/Lynch, Brewer, Abadi) were
   network-blocked and stay `[UNVERIFIED from fetched source]`; Herlihy/Wing + Dynamo also still blocked.
+- **Phase 1 / Wave 4 / 12 research-papers-for-engineers — TWO clusters drafted/factchecked AND reconciled.**
+  Artifacts:
+  - `12-research-papers-for-engineers/_research_how-to-read-a-paper.md` (reading method; verified Lamport "State the
+    Problem" backbone; Keshav three-pass `[UNVERIFIED]`)
+  - `12-research-papers-for-engineers/_research_paper-canon-walkthroughs.md` (canon catalog; 4 fresh-verified Lamport
+    primaries + reuse of 06-11 receipts + blocked storage/ops canon flagged)
+  - `12-research-papers-for-engineers/_factcheck_phase1.md` (Cluster A 4 VERIFIED + 2 flagged; Cluster B 9 VERIFIED +
+    2 flagged; 0 blockers)
+  - `12-research-papers-for-engineers/_research.md` (RECONCILED, six sections)
+- 12 fetched FOUR new primaries from `lamport.azurewebsites.net/pubs/`: "State the Problem Before Describing the
+  Solution", "The Byzantine Generals Problem" (TOPLAS 1982), "Reaching Agreement in the Presence of Faults" (JACM 1980),
+  and "The Part-Time Parliament" (original Paxos, TOCS 1998). Verified `3m+1`/`>2/3`-loyal, conditions A/B,
+  impossibility-then-`OM(m)`, interactive consistency, the state-machine approach, and the editor's-note exposition
+  exemplar. Keshav + the Google storage trilogy (MapReduce/GFS/Bigtable/Dynamo) + Dapper/Tail-at-Scale stay
+  `[UNVERIFIED from fetched source]` (network-blocked). **ALL foundations 01-12 now reconciled/factchecked.**
 
 ---
 
@@ -82,8 +97,13 @@ to a non-OneDrive workspace and continue there.
   Fidge/Mattern/Charron-Bost/CBCAST + DLS/JACM 1988, Skeen 1981 original 3PC, Berenson 1995 ANSI isolation levels,
   cleaner Chandra-Toueg text, source pin for the `f+1` synchronous rotating-coordinator claim, and re-pin Gray &
   Lamport to ACM TODS 2006 pagination.
-- **12 research-papers-for-engineers is untouched.** It is now unblocked (11 has a clean reconciled checkpoint) and is
-  the next sub-course to research.
+- **12 research-papers-for-engineers is reconciled.** Two clusters (reading-method + canon-walkthroughs) factchecked
+  and synthesized into `_research.md`. Carry-forward 12 gaps (do NOT erase; fetch before Phase 2 prose): Keshav "How to
+  Read a Paper" CCR 2007 + Roscoe/Mitzenmacher/Smith reviewing guidance; the storage trilogy MapReduce/GFS/Bigtable/
+  Dynamo; ops classics Dapper/Tail-at-Scale/Chubby/ZooKeeper; method cross-cuts Herlihy/Wing, Saltzer/Reed/Clark
+  End-to-End, Lampson "Hints"; and re-pin Byzantine/Reaching-Agreement pagination to the ACM record.
+- **ALL foundations 01-12 are now research-complete** (reconciled `_research.md` + factcheck artifacts each), subject to
+  the logged `[UNVERIFIED]` gaps. The next Phase-1 batch is Part II System Design (13-21).
 
 ---
 
@@ -108,66 +128,50 @@ to a non-OneDrive workspace and continue there.
 You are the BRAIN agent for the Substrate course project. Start safely from
 `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,
 meta/RESEARCH_PROTOCOL.md, meta/COURSE_MAP.md, meta/RESEARCH_INDEX.md, meta/PROGRESS.md,
-meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3–4 lines:
+meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4 lines:
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that 07, 08, 09, 10, and 11 are reconciled/factchecked,
-- that 11 has FOUR factchecked clusters and a reconciled `_research.md`,
-- that 12 is untouched and is the next sub-course,
+- that ALL foundations 01-12 are reconciled/factchecked (Part I research-complete),
+- that 12 has TWO factchecked clusters and a reconciled `_research.md`,
+- that Part II System Design (13-21) is the next batch and is untouched,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
 stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneDrive workspace. Do not reinstall
 Code Puppy.
 
-Current state to preserve:
-- Wave 1 (01–03): research + reconciled briefs done; factcheck report `meta/factcheck_wave1_01-03.md` exists and
-  fixes were applied in commit `4a1cc71`. Residual gaps are logged; do not erase them.
-- Wave 2 (04–06): research + reconciled briefs + factcheck report `meta/factcheck_wave2_04-06.md` done in commit
-  `4a1cc71`. Residual gaps are logged.
-- Wave 3:
-  - 07 database-internals has three cluster briefs, `07-database-internals/_factcheck_phase1.md`, and reconciled
-    `07-database-internals/_research.md`.
-  - 08 caches-and-storage-systems has three cluster briefs, `08-caches-and-storage-systems/_factcheck_phase1.md`,
-    and reconciled `08-caches-and-storage-systems/_research.md`.
-  - 09 message-queues-logs-and-kafka has four cluster briefs, `09-message-queues-logs-and-kafka/_factcheck_phase1.md`,
-    and reconciled `09-message-queues-logs-and-kafka/_research.md`.
-- Wave 4:
-  - 10 nginx-proxies-and-load-balancing has three core cluster briefs, `_factcheck_phase1.md`, and reconciled
-    `_research.md`. Residual TLS/HTTP2/HTTP3/reuseport/docs wording gaps are logged; do not erase them.
-  - 11 distributed-systems-foundations has FOUR factchecked clusters and a reconciled `_research.md`:
-    `_research_time-clocks-ordering-failure.md` + `_factcheck_phase1.md`,
-    `_research_vector-clocks-model-taxonomy.md` + `_factcheck_cluster2.md`,
-    `_research_consistency-replication-quorums.md` + `_factcheck_cluster3.md`,
-    `_research_cap-partitions-distributed-commit.md` + `_factcheck_cluster4.md`, and reconciled `_research.md`.
-    Residual `[UNVERIFIED]` gaps (CAP/PACELC, Herlihy/Wing, Dynamo, Skeen 3PC, ANSI isolation, etc.) are logged; do
-    not erase them.
-  - 12 research-papers-for-engineers is untouched — it is the next sub-course to research.
+Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
+- Foundations 01-12 each have reconciled `_research.md` + factcheck artifacts. 12 has
+  `_research_how-to-read-a-paper.md` + `_research_paper-canon-walkthroughs.md` + `_factcheck_phase1.md` + reconciled
+  `_research.md`. Four Lamport primaries were verified for 12 (State-the-Problem, Byzantine Generals, Reaching
+  Agreement, Part-Time Parliament).
+- Network reality (3 sessions running): only `lamport.azurewebsites.net` resolves; academic/ACM/arXiv/raw.github =
+  HTTP 000. Carried-forward blocked primaries to fetch when the network is healthier:
+  - 12: Keshav "How to Read a Paper" CCR 2007 (+ Roscoe/Mitzenmacher/Smith); MapReduce/GFS/Bigtable/Dynamo;
+    Dapper/Tail-at-Scale/Chubby/ZooKeeper; Herlihy/Wing, Saltzer/Reed/Clark End-to-End, Lampson "Hints".
+  - 11: CAP/PACELC (Gilbert/Lynch 2002, Brewer 2000/2012, Abadi 2012), Herlihy/Wing TOPLAS 1990, Dynamo SOSP 2007,
+    Fidge/Mattern/Charron-Bost/CBCAST/DLS, Skeen 1981 3PC, Berenson 1995 ANSI isolation, cleaner Chandra-Toueg.
+  - 10: nginx.org wording recheck, reuseport/EPOLLEXCLUSIVE, thread pools, HTTP phase engine, TLS/HTTP2/HTTP3.
 
-Run this plan, but only do as much as can be completed well in one session. Prefer one clean, factchecked checkpoint
-over multiple shallow briefs.
+Run this plan, but only as much as can be completed well in one session. Prefer one clean factchecked checkpoint over
+multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. Start 12 research-papers-for-engineers (Phase 1 research briefs ONLY — no chapters, no Phase 2). This sub-course is
-   how-to-read-a-paper + walkthroughs of the canon. Begin with one tightly-scoped source cluster, e.g.:
-   - **Cluster A — how to read a research paper (method):** Keshav's "How to Read a Paper" (three-pass method), and
-     reputable systems-reading guidance. Then sketch which canonical papers the sub-course should walk through (many
-     are already fetched/cited in 01–11: Lamport time-clocks, FLP, Paxos, Raft, Spanner, Dynamo, CAP, Bigtable,
-     GFS, MapReduce, Dapper, The Tail at Scale, etc.).
-   Prefer primary sources; fetch via `curl`. Note this session's network reality: `lamport.azurewebsites.net` resolved
-   but most academic/ACM/arXiv/raw.github hosts were blocked — retry, and mark anything unfetched `[UNVERIFIED]`.
-3. Factcheck the new 12 cluster's load-bearing claims against primary sources. Patch blockers.
-4. If 12 has honest coverage, reconcile its clusters into `12-research-papers-for-engineers/_research.md` with the
-   standard six sections, preserving every logged `[UNVERIFIED]`/residual gap. If coverage is thin or a blocker can't
-   be cleared, stop at a clean cluster checkpoint; do not fake completeness. Sneaky fake completeness is how
-   documentation gets raccoon-shaped.
-5. Opportunistic: if a healthier network is available, fetch the blocked 11 primaries (CAP/PACELC: Gilbert/Lynch 2002,
-   Brewer 2000/2012, Abadi 2012; Herlihy/Wing TOPLAS 1990; Dynamo SOSP 2007; Skeen 1981; Berenson 1995) and upgrade
-   the corresponding 11 `[UNVERIFIED]` flags to verified, updating the relevant cluster + factcheck files.
+2. Start Part II System Design (Phase 1 research briefs ONLY - no chapters, no Phase 2), beginning with
+   13-scaling-fundamentals. Begin with ONE tightly-scoped source cluster, e.g.:
+   - Cluster A - back-of-envelope + latency: Dean "Latency Numbers Every Programmer Should Know", Little's Law /
+     queueing basics, Drepper "What Every Programmer Should Know About Memory". Reuse the canon already verified in
+     06-12 where it overlaps. Prefer primary sources; fetch via `curl`; mark anything unfetched `[UNVERIFIED]`.
+3. Factcheck the new cluster's load-bearing claims against primary sources. Patch blockers.
+4. If coverage is honest, reconcile into `13-scaling-fundamentals/_research.md` (standard six sections), preserving
+   every logged `[UNVERIFIED]`/residual gap. If coverage is thin or a blocker can't clear, stop at a clean cluster
+   checkpoint; do not fake completeness (raccoon-shaped docs are forbidden).
+5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 11 + 12 primaries above and upgrade
+   the corresponding `[UNVERIFIED]` flags to verified, updating the relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md` with the exact
-   next-session prompt, ensure files stay under 600 lines where reasonable, run `git status --short`, commit, and
-   report remaining gaps + next batch.
+   next-session prompt, keep files under 600 lines where reasonable, run `git status --short`, commit, and report
+   remaining gaps + next batch.
 
 No chapters. No Phase 2. No hand-waving. Cite the source or mark it `[UNVERIFIED]`.
 ```
