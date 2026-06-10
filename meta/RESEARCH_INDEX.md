@@ -292,6 +292,18 @@ own compiler/interpreter · own search engine · own message queue · own coding
   leader, AppendEntries replication, entry committed once replicated on a majority, Log Matching, Leader Completeness,
   replicated-state-machine framing). Herlihy/Wing TOPLAS 1990 and Dynamo SOSP 2007 remain `[UNVERIFIED from fetched
   source]` (network-blocked); MIT 6.5840 notes blocked, supporting context only.
-- Remaining 11 gaps before reconciliation: CAP/partitions (and PACELC), transactions/distributed commit (2PC/3PC
-  blocking, isolation levels), cleaner Chandra-Toueg text, direct Herlihy/Wing + Dynamo + Fidge/Mattern/DLS/CBCAST
-  primary text, and source pin for the f+1 synchronous crash-fault rotating-coordinator claim before exact Phase 2 prose.
+- CAP/partitions/PACELC + distributed-commit cluster anchors, factchecked in `_factcheck_cluster4.md`: Gray & Lamport
+  "Consensus on Transaction Commit" ACM TODS 2006 (fetched tech-report PDF from
+  `lamport.azurewebsites.net/video/consensus-on-transaction-commit.pdf`) verifies — 2PC blocks if the coordinator
+  fails; non-blocking-commit definition; classic 3PC split-brain/no-proven-correctness critique; 2PC cost `3N-1`/four
+  message delays (`3N-3`/three co-located); stable-storage durability; Paxos Commit uses `2F+1` coordinators, progress
+  with `F+1`; consensus lower bound `2F+1` to tolerate `F` without synchrony; Paxos safety under multiple leaders;
+  **2PC = degenerate `F=0` Paxos Commit (single acceptor)**. Spanner OSDI 2012 (cached) verifies 2PC-over-Paxos,
+  two-phase locking for RW txns, snapshot-isolation read-only txns, commit wait. CAP (Gilbert/Lynch 2002, Brewer
+  2000/2012) and PACELC (Abadi 2012) remain `[UNVERIFIED from fetched source]` — academic/ACM hosts network-blocked
+  this session (only `lamport.azurewebsites.net` resolved).
+- **11 is now reconciled into `_research.md`** (four clusters, standard six sections). Remaining 11 gaps carried to
+  Phase 2: fetch CAP/PACELC primaries (Gilbert/Lynch, Brewer, Abadi); Herlihy/Wing object-level linearizability;
+  Dynamo SOSP 2007; Fidge/Mattern/Charron-Bost/CBCAST/DLS; Skeen 1981 original 3PC; Berenson 1995 ANSI isolation
+  levels; cleaner Chandra-Toueg text; source pin for the `f+1` synchronous rotating-coordinator claim; and re-pin
+  Gray & Lamport to ACM TODS 2006 pagination.

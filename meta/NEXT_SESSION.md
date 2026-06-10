@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (cluster 3 added) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (11 reconciled) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -55,21 +55,17 @@ to a non-OneDrive workspace and continue there.
   BRAIN patches applied after factcheck: release-pinned remaining URLs, added `ngx_posted_next_events` event-loop step,
   and annotated nginx.org doc-wording caveats.
 - `meta/RESEARCH_INDEX.md` now includes verified 10 NGINX source anchors and residual 10 gaps.
-- **Phase 1 / Wave 4 / 11 distributed-systems-foundations — three clusters drafted/factchecked, not reconciled.**
+- **Phase 1 / Wave 4 / 11 distributed-systems-foundations — FOUR clusters drafted/factchecked AND reconciled.**
   Artifacts:
-  - `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md`
-  - `11-distributed-systems-foundations/_factcheck_phase1.md`
-  - `11-distributed-systems-foundations/_research_vector-clocks-model-taxonomy.md`
-  - `11-distributed-systems-foundations/_factcheck_cluster2.md`
-  - `11-distributed-systems-foundations/_research_consistency-replication-quorums.md`
-  - `11-distributed-systems-foundations/_factcheck_cluster3.md`
-- 11 starter factcheck checked 22 load-bearing claims against Lamport 1978, Chandy-Lamport 1985, FLP/JACM 1985,
-  Spanner OSDI 2012, and Chandra-Toueg JACM 1996 PostScript. Cluster 2 factcheck checked vector-clock/model-taxonomy
-  claims; two blockers were patched. Cluster 3 factcheck verified 13 load-bearing claims against Lamport sequential
-  consistency (IEEE TC 1979), Paxos Made Simple, Raft USENIX ATC 2014, and Spanner OSDI 2012 with exact line receipts;
-  0 blockers, 2 citation line-drifts patched. Carry-forward warnings: Herlihy/Wing, Dynamo, and MIT 6.5840 notes were
-  network-blocked and stay `[UNVERIFIED from fetched source]`; the f+1 synchronous rotating-coordinator claim still
-  needs a source pin; Chandra-Toueg exact definitions need cleaner text.
+  - `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md` + `_factcheck_phase1.md`
+  - `11-distributed-systems-foundations/_research_vector-clocks-model-taxonomy.md` + `_factcheck_cluster2.md`
+  - `11-distributed-systems-foundations/_research_consistency-replication-quorums.md` + `_factcheck_cluster3.md`
+  - `11-distributed-systems-foundations/_research_cap-partitions-distributed-commit.md` + `_factcheck_cluster4.md`
+  - `11-distributed-systems-foundations/_research.md` (RECONCILED, six sections)
+- 11 cluster 4 fetched a NEW primary (Gray & Lamport "Consensus on Transaction Commit", TODS 2006) from
+  `lamport.azurewebsites.net/video/consensus-on-transaction-commit.pdf` and verified 14 load-bearing 2PC/3PC/Paxos-
+  Commit/Spanner claims with line receipts (0 blockers). CAP/PACELC primaries (Gilbert/Lynch, Brewer, Abadi) were
+  network-blocked and stay `[UNVERIFIED from fetched source]`; Herlihy/Wing + Dynamo also still blocked.
 
 ---
 
@@ -80,12 +76,14 @@ to a non-OneDrive workspace and continue there.
   operational interaction, `ngx_thread_pool.c`, full HTTP phase engine, `X-Accel-Buffering`, cache-specific proxy paths,
   TLS termination/OpenSSL, HTTP/2 stream multiplexing/flow control, HTTP/3/QUIC, and commercial/open-source boundaries
   for `slow_start`, active health checks, sticky, queue, random, least_time, and dynamic membership.
-- **11 distributed-systems-foundations is started but not reconciled.** Three clusters are factchecked: time/clocks/
-  global state/partial failure, vector clocks/model taxonomy, and consistency/replication/quorums/Paxos-Raft.
-  Remaining 11 gaps before reconciliation: CAP/partitions (PACELC), distributed commit/transactions (2PC/3PC
-  blocking, isolation levels), cleaner Chandra-Toueg text, and direct blocked primary text for Herlihy/Wing, Dynamo,
-  Fidge/Mattern/DLS/CBCAST.
-- **12 research-papers-for-engineers is untouched.** Do not start 12 until 11 has a clean reconciled checkpoint.
+- **11 distributed-systems-foundations is reconciled.** Four clusters factchecked and synthesized into `_research.md`.
+  Remaining 11 carry-forward gaps (do NOT erase; fetch before Phase 2 prose): CAP/PACELC primaries (Gilbert/Lynch 2002,
+  Brewer 2000/2012, Abadi 2012), Herlihy/Wing TOPLAS 1990 object-level linearizability, Dynamo SOSP 2007,
+  Fidge/Mattern/Charron-Bost/CBCAST + DLS/JACM 1988, Skeen 1981 original 3PC, Berenson 1995 ANSI isolation levels,
+  cleaner Chandra-Toueg text, source pin for the `f+1` synchronous rotating-coordinator claim, and re-pin Gray &
+  Lamport to ACM TODS 2006 pagination.
+- **12 research-papers-for-engineers is untouched.** It is now unblocked (11 has a clean reconciled checkpoint) and is
+  the next sub-course to research.
 
 ---
 
@@ -114,9 +112,9 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3�
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that 07, 08, 09, and 10 are reconciled/factchecked,
-- that 11 has three factchecked clusters but is not reconciled,
-- that 12 is untouched,
+- that 07, 08, 09, 10, and 11 are reconciled/factchecked,
+- that 11 has FOUR factchecked clusters and a reconciled `_research.md`,
+- that 12 is untouched and is the next sub-course,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
@@ -138,31 +136,35 @@ Current state to preserve:
 - Wave 4:
   - 10 nginx-proxies-and-load-balancing has three core cluster briefs, `_factcheck_phase1.md`, and reconciled
     `_research.md`. Residual TLS/HTTP2/HTTP3/reuseport/docs wording gaps are logged; do not erase them.
-  - 11 distributed-systems-foundations has three factchecked clusters:
-    `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md` + `_factcheck_phase1.md`,
-    `11-distributed-systems-foundations/_research_vector-clocks-model-taxonomy.md` + `_factcheck_cluster2.md`, and
-    `11-distributed-systems-foundations/_research_consistency-replication-quorums.md` + `_factcheck_cluster3.md`.
-    It is not reconciled into `_research.md`. Residual gaps are logged; do not erase them.
-  - 12 research-papers-for-engineers is untouched.
+  - 11 distributed-systems-foundations has FOUR factchecked clusters and a reconciled `_research.md`:
+    `_research_time-clocks-ordering-failure.md` + `_factcheck_phase1.md`,
+    `_research_vector-clocks-model-taxonomy.md` + `_factcheck_cluster2.md`,
+    `_research_consistency-replication-quorums.md` + `_factcheck_cluster3.md`,
+    `_research_cap-partitions-distributed-commit.md` + `_factcheck_cluster4.md`, and reconciled `_research.md`.
+    Residual `[UNVERIFIED]` gaps (CAP/PACELC, Herlihy/Wing, Dynamo, Skeen 3PC, ANSI isolation, etc.) are logged; do
+    not erase them.
+  - 12 research-papers-for-engineers is untouched — it is the next sub-course to research.
 
 Run this plan, but only do as much as can be completed well in one session. Prefer one clean, factchecked checkpoint
 over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. Continue 11 distributed-systems-foundations with the next source cluster.
-   - **Preferred: CAP/partitions + distributed commit/transactions.** Cover the CAP theorem and its partition
-     trade-off, PACELC, two-phase commit and its blocking failure mode, three-phase commit, and transaction isolation
-     levels where they intersect with replication/consistency. Primary sources to prioritize: Gilbert/Lynch CAP proof,
-     Brewer's CAP retrospective, Abadi PACELC, Gray/Lamport or Bernstein/Hadzilacos/Goodman for 2PC/3PC, and
-     Spanner/Dynamo sections already partly fetched. Try again to fetch Herlihy/Wing and Dynamo primaries to close the
-     `[UNVERIFIED]` gaps from clusters 2 and 3.
-3. Factcheck the new 11 cluster's load-bearing claims against primary sources. Patch blockers.
-4. After CAP/distributed-commit is clean, 11 should have enough coverage: reconcile all cluster briefs into
-   `11-distributed-systems-foundations/_research.md` with the standard six sections, preserving every logged
-   `[UNVERIFIED]`/residual gap. If coverage still feels thin or a blocker cannot be cleared, stop at another clean
-   cluster checkpoint; do not fake completeness. Sneaky fake completeness is how documentation gets raccoon-shaped.
-5. Only after 11 is reconciled cleanly and there is meaningful time left, you may begin 12 research-papers-for-engineers
-   (Phase 1 briefs only). Do not start Phase 2.
+2. Start 12 research-papers-for-engineers (Phase 1 research briefs ONLY — no chapters, no Phase 2). This sub-course is
+   how-to-read-a-paper + walkthroughs of the canon. Begin with one tightly-scoped source cluster, e.g.:
+   - **Cluster A — how to read a research paper (method):** Keshav's "How to Read a Paper" (three-pass method), and
+     reputable systems-reading guidance. Then sketch which canonical papers the sub-course should walk through (many
+     are already fetched/cited in 01–11: Lamport time-clocks, FLP, Paxos, Raft, Spanner, Dynamo, CAP, Bigtable,
+     GFS, MapReduce, Dapper, The Tail at Scale, etc.).
+   Prefer primary sources; fetch via `curl`. Note this session's network reality: `lamport.azurewebsites.net` resolved
+   but most academic/ACM/arXiv/raw.github hosts were blocked — retry, and mark anything unfetched `[UNVERIFIED]`.
+3. Factcheck the new 12 cluster's load-bearing claims against primary sources. Patch blockers.
+4. If 12 has honest coverage, reconcile its clusters into `12-research-papers-for-engineers/_research.md` with the
+   standard six sections, preserving every logged `[UNVERIFIED]`/residual gap. If coverage is thin or a blocker can't
+   be cleared, stop at a clean cluster checkpoint; do not fake completeness. Sneaky fake completeness is how
+   documentation gets raccoon-shaped.
+5. Opportunistic: if a healthier network is available, fetch the blocked 11 primaries (CAP/PACELC: Gilbert/Lynch 2002,
+   Brewer 2000/2012, Abadi 2012; Herlihy/Wing TOPLAS 1990; Dynamo SOSP 2007; Skeen 1981; Berenson 1995) and upgrade
+   the corresponding 11 `[UNVERIFIED]` flags to verified, updating the relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md` with the exact
    next-session prompt, ensure files stay under 600 lines where reasonable, run `git status --short`, commit, and
    report remaining gaps + next batch.

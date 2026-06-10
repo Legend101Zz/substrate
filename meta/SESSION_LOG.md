@@ -2,6 +2,40 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 4: add 11 CAP/distributed-commit cluster + RECONCILE 11
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
+  checkpoint was `0fe860e`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
+  `/Users/m0t0hu6/.code-puppy-venv` was not modified.
+- shipped: fetched a NEW primary this session despite heavy network blocking (only `lamport.azurewebsites.net` and
+  `example.com` resolved; MIT/CMU/Cornell/UMD/UCSB/UW/Brown timed out, ACM `dl.acm.org` returned Cloudflare/403,
+  arXiv + `raw.githubusercontent.com` `HTTP 000`): Gray & Lamport "Consensus on Transaction Commit" (37-page
+  tech-report PDF) from `lamport.azurewebsites.net/video/consensus-on-transaction-commit.pdf`, extracted with a
+  throwaway `uv run --with pypdf` (Walmart index) into `/tmp/substrate-11-cap`.
+- shipped: wrote `11-distributed-systems-foundations/_research_cap-partitions-distributed-commit.md` (cluster 4, 329
+  lines) covering CAP (linearizable-C, partition C-vs-A, Brewer's 2-of-3 correction), PACELC (EL-vs-EC latency tax),
+  2PC (cost `3N-1`/four message delays, stable-storage durability), the 2PC blocking failure, classic 3PC
+  split-brain critique, Paxos Commit (`2F+1` coordinators, progress with `F+1`, 2PC = `F=0` degenerate case), and the
+  Spanner commit×replication×isolation intersection (2PC-over-Paxos, 2PL, snapshot-isolation read-only txns, commit
+  wait).
+- shipped: factchecked the cluster and saved `11-distributed-systems-foundations/_factcheck_cluster4.md` — 14
+  load-bearing claims verified with exact line receipts against Gray & Lamport + cached Spanner/Paxos text; 0 blockers;
+  2 citation-precision warnings (TODS-vs-tech-report pagination; missing ANSI/Berenson isolation source), both already
+  logged as residual gaps. CAP/PACELC claims (Gilbert/Lynch, Brewer, Abadi) correctly state-and-flag as `[UNVERIFIED
+  from fetched source]` because those primaries were network-blocked.
+- shipped: RECONCILED all four 11 clusters into `11-distributed-systems-foundations/_research.md` (227 lines, standard
+  six sections) with a cross-cluster synthesis arc (time/causality → vector clocks → model taxonomy → consistency
+  models → quorums/consensus → CAP/PACELC → atomic commit → Spanner), preserving every logged `[UNVERIFIED]`/residual
+  gap and the deliberate BFT/membership-change scope boundary.
+- shipped: expanded `meta/RESEARCH_INDEX.md` with cluster-4 verified anchors + the consolidated reconciled-11 gap list;
+  updated `meta/PROGRESS.md` (11 = reconciled; 12 = next).
+- decisions: no ADR. Chose NOT to start 12 this session: network was heavily blocked, so 12 briefs would be
+  source-starved and shallow. One clean reconciled-11 checkpoint beats a raccoon-shaped 12 stub. Per the plan, prefer a
+  clean factchecked checkpoint over multiple shallow briefs.
+- stopped-at: Phase 1 with 07, 08, 09, 10 reconciled/factchecked AND **11 now reconciled/factchecked** (four clusters).
+  12 research-papers-for-engineers remains untouched. Next session: start 12 Phase-1 briefs (how-to-read-a-paper +
+  canon walkthroughs), and opportunistically fetch the blocked 11 primaries (CAP/PACELC, Herlihy/Wing, Dynamo, Skeen,
+  ANSI isolation) if a healthier network is available to close the `[UNVERIFIED]` gaps. No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 4: add 11 consistency/replication/quorums cluster
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; current checkpoint was `78c79ae`. A transient
   `git: Unable to read current working directory: Operation not permitted` (OneDrive/macOS privacy gremlin) appeared
