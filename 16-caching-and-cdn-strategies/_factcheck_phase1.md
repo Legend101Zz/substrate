@@ -128,3 +128,30 @@ Lesson: hottest + slowest keys stampede worst; the cache can *raise* peak origin
   memory.
 - 16 is **honestly reconcilable** at the method/math level. The `[UNVERIFIED]` attributions are NOT
   load-bearing for the method and must NOT harden into Phase-2 prose until fetched.
+
+## F. UPGRADE 2026-06-10 (network partially healed during the 17 session)
+
+rfc-editor.org + usenix.org returned HTTP 200 this session (after 8 sessions of HTTP 000). The
+following 16 carry-forward [UNVERIFIED] attributions are now VERIFIED from fetched primaries (text
+saved under meta/fetched_primaries/). Cluster intent unchanged; upgrades, not rewrites.
+
+- RFC 9111 'HTTP Caching' (June 2022, obsoletes 7234): s-maxage (shared-cache TTL, 5.2.2.10), Vary
+  cache-key calc (4.1), Age field, must-revalidate, conditional/304. Receipt rfc9111.txt L82/116/317/
+  463/526/722. VERIFIED.
+- RFC 5861: stale-while-revalidate + stale-if-error Cache-Control extensions. Receipt rfc5861.txt
+  L67/69/81-89. VERIFIED.
+- RFC 7234 (now obsoleted by 9111) fetched as historical baseline. VERIFIED.
+- RFC 4786 'Operation of Anycast Services' BCP (Dec 2006): CDN PoP anycast routing. Receipt
+  rfc4786.txt L14/36. VERIFIED.
+- Nishtala et al., 'Scaling Memcache at Facebook', NSDI '13: demand-filled look-aside cache
+  (cache-aside default); leases regulate thundering herd (64-bit token, <=1 token/10s/key); peak DB
+  query rate 17K/s -> 1.3K/s with leases; mcsqueal CDC delete-stream off the DB commit log broadcast
+  cross-region; only 4% of deletes actually invalidate. Receipt nishtala.txt L98-118 (Fig.1),
+  L371-410 (3.2.1), L565-604 (4.1 / Fig.6). VERIFIED.
+
+Still [UNVERIFIED] after this session (HTTP 000): Breslau INFOCOM 1999 real-world Zipf alpha; Vattani
+XFetch VLDB 2015 exact equation; Cormode-Muthukrishnan 2005 CMS bounds; ARC pseudo-code/patent;
+vendor CDN architecture/purge/edge-compute + DNS-steering + exact RTT figures. Carried forward.
+
+Note (08): these RFC 9111/5861 + Nishtala upgrades also clear the corresponding 08 carry-forward
+attributions (cache-aside default, leases/herd, HTTP-caching anchor). 08 _research.md intent unchanged.

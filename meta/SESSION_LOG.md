@@ -2,6 +2,41 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 6: START Part II 17 async-queues-and-event-driven-architecture (A/B/C/D) + RECONCILE 17; opportunistic 16/08 RFC+Nishtala upgrade
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean; current
+  checkpoint at session start was `59dc7c5`; no `os.getcwd()`/`Path.cwd()` PermissionError occurred and
+  `/Users/m0t0hu6/.code-puppy-venv` was NOT modified; Code Puppy was NOT reinstalled. Confirmed Wave 2 milestone
+  `4a1cc71` in history and ALL of 01-16 reconciled/factchecked at session start; 17-21 untouched.
+- shipped: 17 FOUR cluster briefs — `_research_messaging-models-delivery-semantics.md` (A: queue/log/pub-sub;
+  at-most/at-least/effectively-once; idempotency+dedup-window; per-partition ordering; outbox+CDC),
+  `_research_event-driven-architecture-patterns.md` (B: events vs commands; choreography vs orchestration; sagas+
+  compensation; event sourcing+CQRS; materialized-view maintenance; backpressure handoff to 18),
+  `_research_producer-consumer-mechanics-failure.md` (C: consumer groups/rebalancing; commit/ack timing; redelivery/
+  backoff; DLQ/poison; exactly-once-effect; replay), `_research_delivery-infrastructure-tradeoffs.md` (D: broker
+  durability/replication; partitioning for throughput; fan-out; retention vs compaction; batching).
+- shipped: `_recompute.py` (pure stdlib, 0 errors) verifying 6 load-bearing math claims — at-least-once duplicate
+  certainty E[dups]=N*p / P(>=1)=1-(1-p)^N; dedup-window = redelivery horizon (cap-exp-backoff sum + visibility =
+  213 s ex.) and store size rate*window*bytes; batching throughput 1/(c/B+m) asymptote 1/m; retention disk
+  rate*bytes*ret*RF vs compaction floor keys*bytes (history-independent); parallelism ceiling consumers<=partitions,
+  need=ceil(target/per); dual-write failure window window*crash_rate (~38/1e9 ops at 100 ms -> leaks).
+- shipped: `_factcheck_phase1.md` (recompute/reuse/primary buckets; 0 blockers) and RECONCILED `_research.md`
+  (standard six sections + cross-cluster thesis). All mechanisms reused from line-verified 09/11/13/14/15/16/06/08/03;
+  no canon re-derived.
+- shipped (OPPORTUNISTIC, network partially healed: rfc-editor.org + usenix.org HTTP 200 after 8 sessions of 000):
+  fetched + saved to `meta/fetched_primaries/` — RFC 9111/5861/7234/4786 and Nishtala et al. NSDI '13
+  (`nishtala-nsdi13.pdf` + extracted `.txt`). VERIFIED verbatim: RFC 9111 s-maxage/Vary/Age/must-revalidate; RFC
+  5861 SWR+stale-if-error; RFC 4786 anycast BCP; Nishtala demand-filled look-aside cache, leases (64-bit token, <=1
+  token/10s/key), peak DB query 17K/s -> 1.3K/s, mcsqueal CDC delete-stream off the DB commit log cross-region, 4%
+  of deletes actually invalidate. Recorded as 16 `_factcheck_phase1.md` §F (also clears matching 08 attributions).
+  Nishtala doubles as 17's concrete production EDA/CDC instance (A §1.6, B §1.5).
+- decisions: (ADR-001) per-cluster files reconciled by brain — followed. Reused 09's line-verified log/offsets/
+  consumer-groups/EOS wholesale rather than re-fetching Kafka source. Named the 18 backpressure handoff but did NOT
+  derive it here. Saved fetched primaries into the repo (`meta/fetched_primaries/`) so receipts survive.
+- stopped-at: 17 reconciled; 0 factcheck blockers. NOT started: 18-21 (Phase 1), any chapters, any Phase 2.
+  Remaining 17 gaps = canonical/vendor attributions (AMQP/JMS/SQS/RabbitMQ/Debezium; Sagas-1987/Fowler-CQRS/
+  Richardson/DDD; Kafka-KIP-429/98/447 + knob wording; Kreps-2011/Kafka-defaults/Pulsar/NATS/Kinesis) — all
+  `[UNVERIFIED]`, none load-bearing. Next batch: 18 (rate-limiting-backpressure-and-load-shedding / SEDA).
+
 ## 2026-06-10 — Phase 1 Wave 5: START Part II 16 caching-and-cdn-strategies (A/B/C/D) + RECONCILE 16
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
   checkpoint was `c9f67ad`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and

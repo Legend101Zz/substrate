@@ -500,3 +500,52 @@ own compiler/interpreter · own search engine · own message queue · own coding
   replication + staleness), 13/20 (tail/fan-out origin protection + hedged requests), 17 (cross-region
   invalidation transport / purge fan-out / CDC), 19 (SLOs on hit ratio/origin load). Next Phase-1
   batch: **17-21**; 17 (async-queues-and-event-driven-architecture) is the natural next start.
+
+---
+
+## 17 — async-queues-and-event-driven-architecture (Wave 6; RECONCILED)
+
+- Deliverables: four cluster briefs (`_research_messaging-models-delivery-semantics.md`,
+  `_research_event-driven-architecture-patterns.md`, `_research_producer-consumer-mechanics-failure.md`,
+  `_research_delivery-infrastructure-tradeoffs.md`), `_recompute.py` (6 math claims, pure stdlib, 0
+  errors), `_factcheck_phase1.md` (recompute/reuse/primary; 0 blockers), and reconciled `_research.md`.
+- Math VERIFIED by recomputation: at-least-once duplicate certainty E[dups]=N*p and P(>=1)=1-(1-p)^N;
+  dedup-window = redelivery horizon (capped-exp-backoff sum + visibility = 213 s ex.) and store size
+  rate*window*bytes; batching throughput 1/(c/B+m) -> 1/m; retention disk rate*bytes*ret*RF vs
+  compaction floor keys*bytes (history-independent); parallelism ceiling consumers<=partitions,
+  need=ceil(target/per); dual-write failure window window*crash_rate (~38/1e9 ops at 100 ms).
+- Mechanisms REUSED (not re-derived) from line-verified 09 (log/partitions/offsets/consumer-groups/
+  coordinator/retention/compaction/idempotent-producer/transactional-offset-commit/LSO), 11 (per-
+  partition order / total-order-needs-consensus / exactly-once-delivery impossible / 2PC blocking),
+  13 (Little's Law/amortization/queueing wall/fan-out tail 1-(1-q)^N), 14 (shard key = ordering+
+  parallelism+placement / hot partition / repartition cost / cross-shard txn -> saga), 15 (logical
+  replication log = CDC source / durability dial / quorum overlap / semilattice merge / materialized-
+  view = stale replica), 16/08 (stale-replica framing / coalescing / backoff+jitter / Redis-TTL dedup
+  store), 03 (TCP flow control / retry discipline), 06 (consistent hashing).
+- PRIMARY fetched + verified this session: Nishtala et al. "Scaling Memcache at Facebook" NSDI '13 —
+  the production EDA/CDC instance (demand-filled look-aside cache; leases regulate the thundering herd,
+  17K/s -> 1.3K/s; mcsqueal CDC delete-stream off the DB commit log, cross-region, 4% effective
+  invalidation). Saved `meta/fetched_primaries/nishtala-nsdi13.pdf` + `nishtala.txt`.
+- Three primitives do double duty: idempotency (A dedup = C replay-safety = B compensation =
+  projection upsert), the log (09 substrate = B event-sourcing SoT = A CDC source = C replay buffer),
+  the durability/latency dial (15 acks = D broker durability = A outbox-vs-fast-publish).
+- Blocked `[UNVERIFIED from fetched source]` 17 primaries (HTTP 000 this session): AMQP 0-9-1/JMS/SQS/
+  RabbitMQ/Debezium (A); Garcia-Molina & Salem "Sagas" SIGMOD 1987 / Fowler Event-Sourcing+CQRS+EDA /
+  Richardson microservices.io / Vernon-Evans DDD (B); Kafka KIP-429 + KIP-98/129/447 + exact knob
+  wording + SQS redrive/DLQ + RabbitMQ DLX (C); Kreps et al. "Kafka..." NetDB 2011 + Kafka defaults +
+  Pulsar/BookKeeper/NATS/Kinesis (D). Cross-link: 09 (+appendix H Kafka) for log internals; 11 theory;
+  14 cross-shard mechanics; 15 logical log/durability; 16 invalidation transport; 18 backpressure/
+  shedding; 19 tracing/DLQ-SLOs; 21 fan-out-on-write/read feed problem; 26/27 agentic orchestration.
+  Next Phase-1 batch: **18-21**; 18 (rate-limiting-backpressure-and-load-shedding / SEDA) is next.
+
+## Fetched-primaries upgrade (2026-06-10; network partially healed)
+
+- rfc-editor.org + usenix.org returned HTTP 200 (after 8 sessions of HTTP 000). Saved to
+  `meta/fetched_primaries/`: RFC 9111 (HTTP Caching, June 2022, obsoletes 7234), RFC 5861
+  (SWR + stale-if-error), RFC 7234 (historical), RFC 4786 (Operation of Anycast Services BCP), and
+  Nishtala NSDI '13 (PDF + text).
+- These upgrade the 16 (and matching 08) carry-forward `[UNVERIFIED]` -> VERIFIED: RFC 9111 s-maxage/
+  Vary/Age/must-revalidate; RFC 5861 SWR+stale-if-error; RFC 4786 anycast; Nishtala cache-aside/leases/
+  17K->1.3K/mcsqueal-CDC/4%. See `16-caching-and-cdn-strategies/_factcheck_phase1.md` section F.
+- Still HTTP 000: arxiv, dl.acm, research.google, raft.github.io, postgresql.org, kafka.apache.org,
+  allthingsdistributed, martin.kleppmann. Retry-strategy note: prefer IETF/USENIX-hosted mirrors first.

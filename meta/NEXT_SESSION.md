@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (16 reconciled — ALL foundations 01-12 + Part II 13, 14, 15 & 16 done) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (17 reconciled — ALL foundations 01-12 + Part II 13-17 done; 16/08 RFC+Nishtala upgraded) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -165,6 +165,37 @@ to a non-OneDrive workspace and continue there.
   Cormode-Muthukrishnan, ARC, vendor CDN/anycast attributions `[UNVERIFIED]` (network HTTP 000, 8th session, carried
   forward). **ALL of 01-16 now reconciled.**
 
+- **Phase 1 / Wave 6 / 17 async-queues-and-event-driven-architecture — Part II FIFTH sub-course RECONCILED (four
+  clusters A-D); the async backbone every prior Part-II sub-course hands work to (14 cross-shard -> sagas; 15 logical
+  log -> CDC; 16 write-back flush + cross-region invalidation transport).**
+  Artifacts:
+  - `17-async-queues-and-event-driven-architecture/_research_messaging-models-delivery-semantics.md` (A — queue vs log
+    vs pub/sub; at-most/at-least/effectively-once; idempotency + dedup-window sizing; per-partition ordering; outbox +
+    CDC; reuse 09/11/14/15).
+  - `..._research_event-driven-architecture-patterns.md` (B — events vs commands; choreography vs orchestration; sagas
+    + idempotent compensation; event sourcing + CQRS; materialized-view maintenance; backpressure handoff to 18).
+  - `..._research_producer-consumer-mechanics-failure.md` (C — consumer groups/rebalancing; commit/ack timing;
+    redelivery/backoff/retry-budget; DLQ/poison; exactly-once-effect; replay/reprocessing).
+  - `..._research_delivery-infrastructure-tradeoffs.md` (D — broker durability/replication = 15 dial; partitioning for
+    throughput = 14; fan-out; retention vs compaction; latency-vs-throughput batching).
+  - `..._recompute.py` (pure stdlib, 0 errors) + `..._factcheck_phase1.md` (recompute/reuse/primary; 0 blockers) +
+    `..._research.md` (RECONCILED, six sections).
+  All 6 load-bearing math claims VERIFIED by recomputation (duplicate certainty E[dups]=N*p; dedup-window=redelivery
+  horizon (213 s ex.) + store rate*window*bytes; batching tput 1/(c/B+m)->1/m; retention rate*bytes*ret*RF vs
+  compaction floor keys*bytes history-independent; parallelism<=partitions, need=ceil(target/per); dual-write window
+  ~38/1e9 ops at 100 ms). Mechanisms reused from line-verified 09/11/13/14/15/16/06/08/03. Nishtala NSDI '13 FETCHED
+  + verified as the production EDA/CDC instance (leases 17K->1.3K herd cut; mcsqueal CDC delete-stream off the commit
+  log). AMQP/JMS/SQS/RabbitMQ/Debezium, Sagas-1987/Fowler-CQRS/Richardson/DDD, Kafka-KIP-429/98/447 + knob wording,
+  Kreps-2011/Kafka-defaults/Pulsar/NATS/Kinesis attributions `[UNVERIFIED]` carried forward. **ALL of 01-17 now
+  reconciled.**
+
+- **NETWORK UPGRADE 2026-06-10 (8 sessions of HTTP 000 partially lifted):** rfc-editor.org + usenix.org returned
+  HTTP 200. Fetched + saved to `meta/fetched_primaries/`: RFC 9111/5861/7234/4786 and Nishtala NSDI '13 (PDF + text).
+  Upgraded 16 (and matching 08) carry-forward `[UNVERIFIED]` -> VERIFIED: RFC 9111 s-maxage/Vary/Age/must-revalidate,
+  RFC 5861 SWR+stale-if-error, RFC 4786 anycast BCP, Nishtala cache-aside/leases/17K->1.3K/mcsqueal-CDC/4%. See
+  `16-caching-and-cdn-strategies/_factcheck_phase1.md` §F. Still HTTP 000: arxiv, dl.acm, research.google,
+  raft.github.io, postgresql.org, kafka.apache.org, allthingsdistributed, martin.kleppmann.
+
 ---
 
 ## Things LEFT / current gaps
@@ -255,90 +286,81 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that ALL of 01-16 are reconciled/factchecked (all foundations 01-12 PLUS Part II sub-courses
-  13 scaling-fundamentals (A-D), 14 data-modeling-partitioning-sharding (A-C),
-  15 replication-and-consistency-in-practice (A-D), and 16 caching-and-cdn-strategies (A-D)),
-- that Part II 17-21 are still untouched,
+- that ALL of 01-17 are reconciled/factchecked (foundations 01-12 PLUS Part II 13 scaling-fundamentals
+  (A-D), 14 data-modeling-partitioning-sharding (A-C), 15 replication-and-consistency-in-practice (A-D),
+  16 caching-and-cdn-strategies (A-D), and 17 async-queues-and-event-driven-architecture (A-D)),
+- that Part II 18-21 are still untouched,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
-stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneDrive workspace. Do not reinstall
-Code Puppy.
+stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneDrive workspace. Do not
+reinstall Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 16 is reconciled; ALL its sizing/stampede math is VERIFIED BY RECOMPUTATION (Zipf hit ratio
-  H(k,a)/H(N,a): top-1% of N=1e6,a=1 -> 0.68, top-10% -> 0.84; a=0.8/1.0/1.2 -> 0.36/0.68/0.91;
-  concave monotone working-set curve; avg latency h*t_hit+(1-h)*t_miss with origin load=(1-h), so
-  99->99.9% cuts origin load 10x; cache stampede herd ~ R*T_r up to 2000x, collapsing to 1 with
-  request coalescing). Every canonical/RFC/vendor ATTRIBUTION stays blocked `[UNVERIFIED]` (network
-  HTTP 000, now 8 sessions): RFC 9111/5861/7234/4786; Nishtala et al. "Scaling Memcache at Facebook"
-  NSDI 2013; Breslau et al. "Web Caching and Zipf-like Distributions" INFOCOM 1999; Vattani et al.
-  XFetch VLDB 2015; Cormode-Muthukrishnan 2005 (CMS bounds); ARC pseudo-code/patent; vendor CDN
-  architecture/purge/edge-compute (Cloudflare/Fastly/Akamai/CloudFront) + anycast/BGP + DNS-steering
-  specifics + exact RTT/propagation figures + real-world Zipf alpha values.
-- 15 stays reconciled; math verified by recomputation (W+R>N overlap, W+R=N insufficient, P(stale),
-  majority tolerance floor((N-1)/2)); DDIA ch.5/8/9, Dynamo, Bayou session guarantees, CRDT papers,
-  CAP/PACELC, Postgres/MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper/Patroni/Pacemaker docs
-  still `[UNVERIFIED]`.
-- 14 stays reconciled; math verified by recomputation; Codd/Bigtable/Dynamo/Karger/Sagas/MapReduce/
-  DDIA/vendor-doc attributions still `[UNVERIFIED]`.
-- 13 stays reconciled; math verified by recomputation; Dean/Drepper/Gregg/AKF/Tene empirical+
-  historical attributions still `[UNVERIFIED]`.
-- Network reality (8 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
-  resolve; academic/ACM/arXiv/raw.github/research.google/postgresql.org/raft.github.io/rfc-editor/
-  vendor CDN = HTTP 000. Carried-forward blocked primaries to fetch when the network is healthier:
-  - 16: RFC 9111/5861/7234/4786; Nishtala NSDI 2013; Breslau INFOCOM 1999; XFetch VLDB 2015;
-    Cormode-Muthukrishnan; ARC; vendor CDN/anycast/edge-compute (see 16 "Things LEFT").
-  - 15: DDIA ch.5/8/9; Dynamo; Bayou session guarantees; CRDT papers; CAP/PACELC; the Postgres/
-    MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper/Patroni/Pacemaker docs.
-  - 14: the A/B/C primaries (see "Things LEFT").
-  - 13: Dean latency table, Drepper, Little/Kleinrock/Amdahl/Gunther USL/Tail-at-Scale (A); Gregg
-    USE+flame graphs/RED/PSI (B); AKF Scale Cube/Art of Scalability/Twelve-Factor/Fowler (C); Tene
-    coordinated omission/HdrHistogram/wrk2/NSDI-2006 open-vs-closed (D).
-  - 12: Keshav "How to Read a Paper" CCR 2007; MapReduce/GFS/Bigtable/Dynamo; Dapper/Tail-at-Scale/
-    Chubby/ZooKeeper; Herlihy/Wing, Saltzer/Reed/Clark End-to-End, Lampson "Hints".
-  - 11: CAP/PACELC (Gilbert/Lynch 2002, Brewer 2000/2012, Abadi 2012), Herlihy/Wing TOPLAS 1990,
-    Dynamo SOSP 2007, Fidge/Mattern/Charron-Bost/CBCAST/DLS, Skeen 1981 3PC, Berenson 1995 ANSI
-    isolation, cleaner Chandra-Toueg.
-  - 10: nginx.org wording recheck, reuseport/EPOLLEXCLUSIVE, thread pools, HTTP phase engine, TLS/HTTP2/HTTP3.
+- 17 is reconciled; ALL 6 load-bearing math claims VERIFIED BY RECOMPUTATION (`17.../_recompute.py`):
+  at-least-once duplicate certainty E[dups]=N*p and P(>=1)=1-(1-p)^N; dedup-window = redelivery horizon
+  (capped-exp-backoff sum + visibility, e.g. 213 s) and store size rate*window*bytes; batching throughput
+  1/(c/B+m) asymptoting at 1/m; retention disk rate*bytes*ret*RF vs compaction floor keys*bytes
+  (history-independent); parallelism ceiling consumers<=partitions, need=ceil(target/per); dual-write
+  failure window ~38 bad/1e9 ops at 100 ms. Mechanisms reused from line-verified 09/11/13/14/15/16/06/08/03.
+  Nishtala NSDI '13 FETCHED+verified (leases 17K->1.3K herd; mcsqueal CDC delete-stream). Carry-forward
+  `[UNVERIFIED]`: AMQP/JMS/SQS/RabbitMQ/Debezium (A); Garcia-Molina & Salem "Sagas" SIGMOD 1987 /
+  Fowler Event-Sourcing+CQRS+EDA / Richardson microservices.io / Vernon-Evans DDD (B); Kafka KIP-429
+  cooperative rebalance + KIP-98/129/447 EOS + exact session.timeout/max.poll.interval/auto.offset.reset
+  wording + SQS redrive/DLQ + RabbitMQ DLX (C); Kreps et al. "Kafka..." NetDB 2011 + Kafka exact defaults
+  (acks/min.insync.replicas/linger.ms/batch.size/unclean-election/codecs) + Pulsar/BookKeeper/NATS/Kinesis (D).
+- 16 is reconciled AND UPGRADED 2026-06-10: RFC 9111/5861/7234/4786 + Nishtala NSDI 2013 are now VERIFIED
+  from fetched primaries (saved in `meta/fetched_primaries/`); see `16.../_factcheck_phase1.md` section F (also
+  clears matching 08 attributions). Still `[UNVERIFIED]`: Breslau INFOCOM 1999 real-world Zipf alpha,
+  Vattani XFetch VLDB 2015 equation, Cormode-Muthukrishnan CMS bounds, ARC, vendor CDN/anycast/edge specifics.
+- 15/14/13 stay reconciled; math verified by recomputation; their canon/vendor attributions still `[UNVERIFIED]`.
+- Network reality at last check: rfc-editor.org + usenix.org + lamport now HTTP 200 (8-session 000 partially
+  lifted); STILL HTTP 000: arxiv, dl.acm, research.google, raft.github.io, postgresql.org, kafka.apache.org,
+  allthingsdistributed, martin.kleppmann. Carried-forward blocked primaries to fetch when net is healthier:
+  - 17: AMQP/SQS/RabbitMQ/Debezium; Sagas-1987/Fowler-CQRS/Richardson/DDD; Kafka-KIP-429/98/447 + knob docs;
+    Kreps-2011 + Kafka defaults + Pulsar/NATS/Kinesis (see 17 "Things LEFT").
+  - 16: Breslau, XFetch, Cormode-Muthukrishnan, ARC, vendor CDN/anycast (RFCs + Nishtala now DONE).
+  - 15/14/13/12/11/10: as previously logged (DDIA/Dynamo/Bayou/CRDT/CAP-PACELC; Codd/Bigtable/Karger/Sagas;
+    Dean/Drepper/Gregg/AKF/Tene; Keshav + storage trilogy; CAP-PACELC/Herlihy-Wing/Skeen/ANSI; nginx docs).
+    NOTE: retry these on USENIX/IETF-hosted copies first since those hosts are now reachable.
 
-Run this plan, but only as much as can be completed well in one session. Prefer one clean factchecked checkpoint over
-multiple shallow briefs.
+Run this plan, but only as much as can be completed well in one session. Prefer one clean factchecked
+checkpoint over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. START 17-async-queues-and-event-driven-architecture (Phase 1 briefs ONLY - no chapters, no Phase 2).
-   It absorbs the write-back flush (16 Cluster A), the cross-region cache invalidation transport
-   (16 Clusters C/D), the CDC/logical-log fan-out (15 Cluster A logical replication -> CDC), and the
-   saga/cross-shard orchestration (14 Cluster C) that earlier sub-courses hand off. Reuse the LOG
-   abstraction already line-verified in 09 (message-queues-logs-and-kafka: the log, partitions,
-   offsets, delivery semantics, consumer groups). Add tightly-scoped clusters, e.g.:
-   - messaging models + delivery semantics: queue vs log vs pub/sub; at-most-once/at-least-once/
-     effectively-once; idempotency + dedup keys; ordering (per-partition) reusing 09/11; the outbox
-     pattern + CDC reusing 15's logical log.
-   - event-driven architecture + patterns: events vs commands; choreography vs orchestration; sagas
-     (reuse 14 Cluster C) + compensation; event sourcing + CQRS; materialized-view maintenance
-     (reuse 14/16); backpressure handoff to 18.
-   - producer/consumer mechanics + failure: consumer groups/rebalancing, commit/ack timing,
-     redelivery, dead-letter queues, poison messages, exactly-once via idempotent consumers +
-     transactional outbox; replay/reprocessing.
-   - delivery infrastructure + tradeoffs: broker durability/replication (reuse 15), partitioning
-     for throughput (reuse 14), fan-out, retention/compaction; latency-vs-throughput batching.
-   Reuse canon already verified in 09 (the log/partitions/offsets/delivery), 11 (ordering/causality/
-   consensus), 14 (sagas/partitioning), 15 (logical log/CDC/replication durability), 16 (invalidation
-   transport, materialized-view staleness). Prefer primary sources; fetch via `curl`; mark anything
-   unfetched `[UNVERIFIED]`.
-3. Factcheck each new cluster's load-bearing claims (recompute any math - delivery-semantics
-   probabilities, dedup-window sizing, throughput/batching, retention; cite source for empirical/
-   historical claims). Patch blockers.
-4. If 17 coverage is honest, reconcile into `17-async-queues-and-event-driven-architecture/_research.md`
+2. START 18-rate-limiting-backpressure-and-load-shedding (SEDA) (Phase 1 briefs ONLY - no chapters, no
+   Phase 2). It absorbs the lag/backpressure handoff that 17 Clusters B/C/D name (consumers falling behind
+   -> growing queue -> must be bounded), and continues 13's queueing-theory thread (rho->1 => unbounded
+   latency) into deliberate overload control. Reuse: 13 (Little's Law, M/M/1 utilization wall, queueing,
+   tail/fan-out, USL), 17 (the queue as buffer, retry/backoff+jitter, DLQ, consumer lag), 11 (no global
+   coordination for free), 16 (coalescing/jitter), 03/10 (connection limits, proxy queues/timeouts).
+   Add tightly-scoped clusters, e.g.:
+   - rate limiting algorithms: token bucket / leaky bucket / fixed + sliding window (log + counter);
+     distributed rate limiting (shared counter, cell-based, approximate); fairness + burst; where to
+     enforce (edge/gateway/service). RECOMPUTE the math (bucket refill/burst capacity, sliding-window
+     accuracy vs memory, distributed-counter error).
+   - backpressure: bounded queues, blocking vs dropping, credit/flow control (reuse 03 TCP flow control,
+     17 consumer lag), end-to-end vs hop-by-hop, the SEDA stage/queue/controller model.
+   - load shedding: admission control, priority/tiered shedding, brownout/degradation, LIFO vs FIFO under
+     overload, deadline-aware dropping, retry amplification + retry storms (reuse 17 retry budgets;
+     RECOMPUTE the retry-amplification multiplier and the "goodput collapse past saturation" curve).
+   - timeouts, retries, circuit breakers, bulkheads, hedged requests (reuse 13/20 tail; 16 coalescing);
+     concurrency limiting (e.g. AIMD/adaptive); the interaction with capacity planning (handoff to 20).
+   Prefer primary sources; fetch via `curl` (try IETF/USENIX-hosted copies first - now reachable);
+   mark anything unfetched `[UNVERIFIED]`.
+3. Factcheck each cluster's load-bearing claims (RECOMPUTE all math - bucket/window sizing, distributed
+   counter error, retry amplification, goodput-vs-offered-load past saturation, queue bound vs latency;
+   cite source for empirical/historical claims). Patch blockers.
+4. If 18 coverage is honest, reconcile into `18-rate-limiting-backpressure-and-load-shedding/_research.md`
    (standard six sections), preserving every logged `[UNVERIFIED]`/residual gap. If thin or a blocker
-   can't clear, stop at a clean cluster checkpoint; do not fake completeness (raccoon-shaped docs
-   forbidden).
-5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 16 + 15 + 14 + 13 +
-   12 + 11 primaries above and upgrade the corresponding `[UNVERIFIED]` flags to verified, updating
-   the relevant cluster + factcheck files.
-6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md`
-   with the exact next-session prompt, keep files under 600 lines where reasonable, run
+   can't clear, stop at a clean cluster checkpoint; do not fake completeness (raccoon-shaped docs forbidden).
+5. Opportunistic: the network partially healed - aggressively retry the carried-forward blocked primaries,
+   ESPECIALLY any IETF (rfc-editor.org) or USENIX (usenix.org) hosted copies of 17/15/14/13/12/11 sources
+   (e.g. Sagas, Dynamo, Tail-at-Scale, MapReduce, Kafka paper, NSDI/OSDI/SOSP PDFs may have USENIX mirrors),
+   and upgrade the corresponding `[UNVERIFIED]` flags to verified, saving receipts to meta/fetched_primaries/
+   and updating the relevant cluster + factcheck files.
+6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md` with
+   the exact next-session prompt (then 19-21 remain), keep files under 600 lines where reasonable, run
    `git status --short`, commit, and report remaining gaps + next batch.
 
 No chapters. No Phase 2. No hand-waving. Cite the source or mark it `[UNVERIFIED]`.
