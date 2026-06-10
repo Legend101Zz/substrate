@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (14 reconciled — ALL foundations 01-12 + Part II 13 & 14 done) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (16 reconciled — ALL foundations 01-12 + Part II 13, 14, 15 & 16 done) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -140,6 +140,31 @@ to a non-OneDrive workspace and continue there.
   primaries, Postgres/MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper docs `[UNVERIFIED]` (network HTTP 000, 7th
   session, carried forward). **ALL of 01-15 now reconciled.**
 
+- **Phase 1 / Wave 5 / 16 caching-and-cdn-strategies — Part II FOURTH sub-course RECONCILED (four clusters A-D); the
+  shared sink for the hot-key + read-scale + staleness pressures that 14 (hot shards/Zipf) and 15 (read replicas/lag/
+  staleness ladder) both hand off; a cache is a deliberately-stale replica (15) bounded by TTL/invalidation not a
+  replication log.**
+  Artifacts:
+  - `16-caching-and-cdn-strategies/_research_cache-placement-and-patterns.md` (A — placement ladder client/CDN/proxy/
+    app-local/remote/DB; five patterns cache-aside/read-through/write-through/write-back/write-around = cross-product
+    of "write touches cache?" x "SoT write sync?"; read vs write path; near/far duplication tax).
+  - `16-caching-and-cdn-strategies/_research_eviction-and-sizing.md` (B — eviction reuse from 08; hit ratio master
+    metric, origin load=(1-h); Zipf working-set curve H(k,a)/H(N,a); skew sensitivity; size to the knee).
+  - `16-caching-and-cdn-strategies/_research_consistency-and-invalidation.md` (C — cache=replica so caching IS a
+    consistency problem; invalidation ladder TTL->versioned->explicit; validation/304; stampede R*T_r + coalescing/
+    leases/SWR/jitter/XFetch; negative caching; stale-fill race fix=version/token).
+  - `16-caching-and-cdn-strategies/_research_cdn-and-edge.md` (D — PoPs/anycast; pull vs push; cache key/`Vary`;
+    origin shielding=coalescing across the fleet; Cache-Control/ETag/conditional-304/SWR; purge/soft-purge/versioned
+    URLs; edge compute; latency floor is physics).
+  - `16-caching-and-cdn-strategies/_factcheck_phase1.md` (math by recomputation; mechanisms by reuse of 03/06/08/10/
+    13/14/15; 0 blockers).
+  - `16-caching-and-cdn-strategies/_research.md` (RECONCILED, six sections).
+  All sizing/stampede MATH verified by recomputation (top-1% of N=1e6,a=1 -> 0.68 hit ratio; a=0.8/1.0/1.2 ->
+  0.36/0.68/0.91; concave monotone curve; origin load=(1-h), 99->99.9% cuts origin load 10x; stampede herd~R*T_r up
+  to 2000x -> 1 with coalescing). RFC 9111/5861/7234/4786, Nishtala NSDI 2013, Breslau INFOCOM 1999, XFetch VLDB 2015,
+  Cormode-Muthukrishnan, ARC, vendor CDN/anycast attributions `[UNVERIFIED]` (network HTTP 000, 8th session, carried
+  forward). **ALL of 01-16 now reconciled.**
+
 ---
 
 ## Things LEFT / current gaps
@@ -230,10 +255,10 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that ALL of 01-15 are reconciled/factchecked (all foundations 01-12 PLUS Part II sub-courses
-  13 scaling-fundamentals (A-D), 14 data-modeling-partitioning-sharding (A-C), and
-  15 replication-and-consistency-in-practice (A-D)),
-- that Part II 16-21 are still untouched,
+- that ALL of 01-16 are reconciled/factchecked (all foundations 01-12 PLUS Part II sub-courses
+  13 scaling-fundamentals (A-D), 14 data-modeling-partitioning-sharding (A-C),
+  15 replication-and-consistency-in-practice (A-D), and 16 caching-and-cdn-strategies (A-D)),
+- that Part II 17-21 are still untouched,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
@@ -241,33 +266,37 @@ stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneD
 Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 15 is reconciled; ALL its math is VERIFIED BY RECOMPUTATION (exhaustive `W+R>N <=> guaranteed
-  read/write overlap`, with `W+R=N` proven INSUFFICIENT — strict `>`; stale-read prob = 0 iff
-  W+R>N, N=3,W=R=1 -> 2/3 stale, N=5,W=R=1 -> 0.8 stale; majority quorum tolerates floor((N-1)/2)
-  failures, N in {3,5,7} -> {1,2,3}). Every canonical/vendor/historical ATTRIBUTION stays blocked
-  `[UNVERIFIED]` (network HTTP 000, now 7 sessions): DDIA ch.5/8/9; Dynamo SOSP 2007; Terry et al.
-  "Session Guarantees" (Bayou) PDIS 1994; Shapiro et al. CRDTs (INRIA RR-7506 / SSS 2011);
-  CAP/PACELC (Gilbert-Lynch 2002, Brewer 2000/2012, Abadi 2012); vendor docs Postgres
-  (synchronous_commit, logical decoding, Patroni), MySQL (binlog formats, semi-sync, GTID, Group
-  Replication), MongoDB (oplog/write concern), Cassandra (LWW/tunable consistency/hinted handoff/
-  read repair), Riak (siblings/dotted version vectors/CRDT types), etcd/CockroachDB/Consul/TiKV
-  (Raft ranges/leases), ZooKeeper (Zab/zxid)/Chubby, Pacemaker/STONITH.
+- 16 is reconciled; ALL its sizing/stampede math is VERIFIED BY RECOMPUTATION (Zipf hit ratio
+  H(k,a)/H(N,a): top-1% of N=1e6,a=1 -> 0.68, top-10% -> 0.84; a=0.8/1.0/1.2 -> 0.36/0.68/0.91;
+  concave monotone working-set curve; avg latency h*t_hit+(1-h)*t_miss with origin load=(1-h), so
+  99->99.9% cuts origin load 10x; cache stampede herd ~ R*T_r up to 2000x, collapsing to 1 with
+  request coalescing). Every canonical/RFC/vendor ATTRIBUTION stays blocked `[UNVERIFIED]` (network
+  HTTP 000, now 8 sessions): RFC 9111/5861/7234/4786; Nishtala et al. "Scaling Memcache at Facebook"
+  NSDI 2013; Breslau et al. "Web Caching and Zipf-like Distributions" INFOCOM 1999; Vattani et al.
+  XFetch VLDB 2015; Cormode-Muthukrishnan 2005 (CMS bounds); ARC pseudo-code/patent; vendor CDN
+  architecture/purge/edge-compute (Cloudflare/Fastly/Akamai/CloudFront) + anycast/BGP + DNS-steering
+  specifics + exact RTT/propagation figures + real-world Zipf alpha values.
+- 15 stays reconciled; math verified by recomputation (W+R>N overlap, W+R=N insufficient, P(stale),
+  majority tolerance floor((N-1)/2)); DDIA ch.5/8/9, Dynamo, Bayou session guarantees, CRDT papers,
+  CAP/PACELC, Postgres/MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper/Patroni/Pacemaker docs
+  still `[UNVERIFIED]`.
 - 14 stays reconciled; math verified by recomputation; Codd/Bigtable/Dynamo/Karger/Sagas/MapReduce/
   DDIA/vendor-doc attributions still `[UNVERIFIED]`.
 - 13 stays reconciled; math verified by recomputation; Dean/Drepper/Gregg/AKF/Tene empirical+
   historical attributions still `[UNVERIFIED]`.
-- Network reality (7 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
-  resolve; academic/ACM/arXiv/raw.github/research.google/postgresql.org/raft.github.io/gregg/
-  akfpartners = HTTP 000. Carried-forward blocked primaries to fetch when the network is healthier:
+- Network reality (8 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
+  resolve; academic/ACM/arXiv/raw.github/research.google/postgresql.org/raft.github.io/rfc-editor/
+  vendor CDN = HTTP 000. Carried-forward blocked primaries to fetch when the network is healthier:
+  - 16: RFC 9111/5861/7234/4786; Nishtala NSDI 2013; Breslau INFOCOM 1999; XFetch VLDB 2015;
+    Cormode-Muthukrishnan; ARC; vendor CDN/anycast/edge-compute (see 16 "Things LEFT").
   - 15: DDIA ch.5/8/9; Dynamo; Bayou session guarantees; CRDT papers; CAP/PACELC; the Postgres/
-    MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper/Patroni/Pacemaker docs (see "Things LEFT").
-  - 14: the A/B/C primaries (see "Things LEFT" for the full list).
+    MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper/Patroni/Pacemaker docs.
+  - 14: the A/B/C primaries (see "Things LEFT").
   - 13: Dean latency table, Drepper, Little/Kleinrock/Amdahl/Gunther USL/Tail-at-Scale (A); Gregg
     USE+flame graphs/RED/PSI (B); AKF Scale Cube/Art of Scalability/Twelve-Factor/Fowler (C); Tene
     coordinated omission/HdrHistogram/wrk2/NSDI-2006 open-vs-closed (D).
-  - 12: Keshav "How to Read a Paper" CCR 2007 (+ Roscoe/Mitzenmacher/Smith); MapReduce/GFS/
-    Bigtable/Dynamo; Dapper/Tail-at-Scale/Chubby/ZooKeeper; Herlihy/Wing, Saltzer/Reed/Clark
-    End-to-End, Lampson "Hints".
+  - 12: Keshav "How to Read a Paper" CCR 2007; MapReduce/GFS/Bigtable/Dynamo; Dapper/Tail-at-Scale/
+    Chubby/ZooKeeper; Herlihy/Wing, Saltzer/Reed/Clark End-to-End, Lampson "Hints".
   - 11: CAP/PACELC (Gilbert/Lynch 2002, Brewer 2000/2012, Abadi 2012), Herlihy/Wing TOPLAS 1990,
     Dynamo SOSP 2007, Fidge/Mattern/Charron-Bost/CBCAST/DLS, Skeen 1981 3PC, Berenson 1995 ANSI
     isolation, cleaner Chandra-Toueg.
@@ -277,35 +306,40 @@ Run this plan, but only as much as can be completed well in one session. Prefer 
 multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. START 16-caching-and-cdn-strategies (Phase 1 briefs ONLY - no chapters, no Phase 2). It absorbs
-   the hot-key + read-scale + staleness pressures that 14 (hot shards / celebrity keys) and 15
-   (read replicas, replication lag, the consistency/staleness ladder) both hand off. Add tightly-
-   scoped clusters, e.g.:
-   - cache placement + patterns: client/CDN/edge/reverse-proxy/app/DB cache layers; cache-aside
-     (lazy) vs read-through vs write-through vs write-back vs write-around; the read/write path.
-   - eviction + sizing: LRU/LFU/ARW/2Q/TinyLFU/W-TinyLFU, admission policies, hit-ratio vs working
-     set, Zipf reuse from 14, the cost model (reuse 08 cache mechanics + 06 structures).
-   - cache consistency + invalidation: TTL vs explicit invalidation vs versioned keys; stampede/
-     thundering-herd (reuse 08), request coalescing, negative caching; staleness reusing 15's
-     consistency ladder + 11 models.
-   - CDN + edge: anycast, PoPs, cache keys, origin shielding, push vs pull, cache-control/ETag/
-     conditional requests, purge/soft-purge, edge compute; geo-locality reusing 13.
-   Reuse canon already verified in 08 (cache strategies/eviction/write paths/stampede), 06 (LRU/
-   structures, HLL), 13 (latency hierarchy, fan-out, X-axis read-scale), 14 (hot shards/Zipf), and
-   15 (read replicas + the staleness/consistency ladder). Prefer primary sources; fetch via `curl`;
-   mark anything unfetched `[UNVERIFIED]`.
-3. Factcheck each new cluster's load-bearing claims (recompute any math — hit-ratio/Zipf, stampede,
-   working-set; cite source for empirical/historical claims). Patch blockers.
-4. If 16 coverage is honest, reconcile into `16-caching-and-cdn-strategies/_research.md` (standard
-   six sections), preserving every logged `[UNVERIFIED]`/residual gap. If thin or a blocker can't
-   clear, stop at a clean cluster checkpoint; do not fake completeness (raccoon-shaped docs forbidden).
-5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 15 + 14 + 13 + 12 +
-   11 primaries above and upgrade the corresponding `[UNVERIFIED]` flags to verified, updating the
-   relevant cluster + factcheck files.
+2. START 17-async-queues-and-event-driven-architecture (Phase 1 briefs ONLY - no chapters, no Phase 2).
+   It absorbs the write-back flush (16 Cluster A), the cross-region cache invalidation transport
+   (16 Clusters C/D), the CDC/logical-log fan-out (15 Cluster A logical replication -> CDC), and the
+   saga/cross-shard orchestration (14 Cluster C) that earlier sub-courses hand off. Reuse the LOG
+   abstraction already line-verified in 09 (message-queues-logs-and-kafka: the log, partitions,
+   offsets, delivery semantics, consumer groups). Add tightly-scoped clusters, e.g.:
+   - messaging models + delivery semantics: queue vs log vs pub/sub; at-most-once/at-least-once/
+     effectively-once; idempotency + dedup keys; ordering (per-partition) reusing 09/11; the outbox
+     pattern + CDC reusing 15's logical log.
+   - event-driven architecture + patterns: events vs commands; choreography vs orchestration; sagas
+     (reuse 14 Cluster C) + compensation; event sourcing + CQRS; materialized-view maintenance
+     (reuse 14/16); backpressure handoff to 18.
+   - producer/consumer mechanics + failure: consumer groups/rebalancing, commit/ack timing,
+     redelivery, dead-letter queues, poison messages, exactly-once via idempotent consumers +
+     transactional outbox; replay/reprocessing.
+   - delivery infrastructure + tradeoffs: broker durability/replication (reuse 15), partitioning
+     for throughput (reuse 14), fan-out, retention/compaction; latency-vs-throughput batching.
+   Reuse canon already verified in 09 (the log/partitions/offsets/delivery), 11 (ordering/causality/
+   consensus), 14 (sagas/partitioning), 15 (logical log/CDC/replication durability), 16 (invalidation
+   transport, materialized-view staleness). Prefer primary sources; fetch via `curl`; mark anything
+   unfetched `[UNVERIFIED]`.
+3. Factcheck each new cluster's load-bearing claims (recompute any math - delivery-semantics
+   probabilities, dedup-window sizing, throughput/batching, retention; cite source for empirical/
+   historical claims). Patch blockers.
+4. If 17 coverage is honest, reconcile into `17-async-queues-and-event-driven-architecture/_research.md`
+   (standard six sections), preserving every logged `[UNVERIFIED]`/residual gap. If thin or a blocker
+   can't clear, stop at a clean cluster checkpoint; do not fake completeness (raccoon-shaped docs
+   forbidden).
+5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 16 + 15 + 14 + 13 +
+   12 + 11 primaries above and upgrade the corresponding `[UNVERIFIED]` flags to verified, updating
+   the relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md`
    with the exact next-session prompt, keep files under 600 lines where reasonable, run
    `git status --short`, commit, and report remaining gaps + next batch.
 
 No chapters. No Phase 2. No hand-waving. Cite the source or mark it `[UNVERIFIED]`.
 ```
-

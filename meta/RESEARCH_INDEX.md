@@ -461,3 +461,42 @@ own compiler/interpreter · own search engine · own message queue · own coding
   read-scale, fan-out/lag), 14 (denormalization tax, hot shards), 16 (caching staleness), 17
   (CDC/saga), 19/20 (SLO/failover headroom, tail tolerance), appendix L (consensus). Next Phase-1
   batch: **16-21**; 16 (caching-and-cdn-strategies) is the natural next start.
+
+### 16 caching-and-cdn-strategies
+- **16 is RECONCILED** (`16-caching-and-cdn-strategies/_research.md`, six sections) on the basis
+  of FOUR factchecked clusters (A placement+patterns, B eviction+sizing, C consistency+invalidation,
+  D CDN+edge), 0 factcheck blockers. Cluster anchor files:
+  - A `_research_cache-placement-and-patterns.md` (placement ladder client/CDN/proxy/app-local/
+    remote/DB; five patterns = cross-product of "write touches cache?" x "SoT write sync?").
+  - B `_research_eviction-and-sizing.md` (eviction reuse from 08; Zipf hit-ratio working-set math).
+  - C `_research_consistency-and-invalidation.md` (TTL/versioned/explicit; stampede; stale-fill fix).
+  - D `_research_cdn-and-edge.md` (PoPs/anycast/pull-push/cache-key/shielding/purge/versioned URLs).
+  - Factcheck `_factcheck_phase1.md`.
+- The sizing/stampede MATH is VERIFIED BY RECOMPUTATION this session (Python, no deps): Zipf hit
+  ratio H(k,a)/H(N,a) with H(n,a)=sum 1/i^a -> top-1% of N=1e6,a=1 = 0.6800, top-10% = 0.8400;
+  alpha sensitivity (top-1%): a=0.8 -> 0.3624, a=1.0 -> 0.6800, a=1.2 -> 0.9096; concave monotone
+  working-set curve; avg latency h*t_hit+(1-h)*t_miss with origin load = (1-h) (99->99.9% cuts origin
+  load 10x); cache stampede herd ~ R*T_r (up to 2000x) collapsing to 1 with request coalescing.
+- Mechanisms REUSED (not re-fetched) from line-verified 03 (TCP/TLS handshake RTT, IP/BGP/DNS),
+  06 (Bloom for negative caching), 08 (cache-aside/eviction/admission/slabs/leases/singleflight/SWR/
+  stale-fill race), 10 (reverse-proxy proxy_cache as the PoP), 13 (latency hierarchy/propagation
+  floor/fan-out), 14 (hot shards/Zipf skew), 15 (cache-as-replica staleness ladder).
+- Three primitives do double duty across clusters: request coalescing (C stampede control =
+  D origin shielding), versioned/content-addressed keys (C cleanest invalidation = D CDN assets),
+  the 15 staleness ladder (re-pointed at cache layers).
+- Network reality (8th consecutive session): only `lamport.azurewebsites.net` + Walmart artifactory
+  resolve; rfc-editor / usenix / arxiv / vendor CDN / postgresql.org / research.google = HTTP 000.
+  Blocked `[UNVERIFIED from fetched source]` 16 primaries to fetch when network heals: RFC 9111
+  (HTTP caching: Cache-Control/s-maxage/Age/Vary/validators/304/unsafe-method invalidation),
+  RFC 5861 (stale-while-revalidate/stale-if-error), RFC 7234, RFC 4786 (anycast ops); Nishtala et
+  al. "Scaling Memcache at Facebook" NSDI 2013 (cache-aside default, leases, 17K->1.3K herd,
+  cross-region delete stream); Breslau et al. "Web Caching and Zipf-like Distributions" INFOCOM 1999
+  (empirical web alpha); Vattani et al. "Optimal Probabilistic Cache Stampede Prevention" VLDB 2015
+  (XFetch); Cormode & Muthukrishnan 2005 (CMS error bounds); ARC pseudo-code/patent; vendor CDN
+  architecture/purge/edge-compute (Cloudflare/Fastly/Akamai/CloudFront) + anycast/BGP + DNS-steering
+  + exact RTT/propagation figures. Do NOT harden any attribution/exact RFC wording/real-world alpha/
+  exact ms into Phase-2 prose until fetched. Cross-link: 08 (eviction internals + appendix G Redis),
+  03/10 (TCP/TLS/HTTP2/HTTP3 + anycast/BGP internals + appendix O), 14/15 (remote-tier sharding/
+  replication + staleness), 13/20 (tail/fan-out origin protection + hedged requests), 17 (cross-region
+  invalidation transport / purge fan-out / CDC), 19 (SLOs on hit ratio/origin load). Next Phase-1
+  batch: **17-21**; 17 (async-queues-and-event-driven-architecture) is the natural next start.
