@@ -110,9 +110,12 @@ page that embodies that change. Otherwise a crash between page flush and log flu
 database with unrecoverable in-place changes.
 
 **BusTub WAL structures** (`src/include/recovery/`):
-- **LogRecord** format (`log_record.h`): HEADER = 20B (size:4, LSN:4, transID:4, prevLSN:4,
-  LogType:4). LogRecordType: BEGIN, COMMIT, ABORT, INSERT, MARKDELETE, APPLYDELETE,
-  ROLLBACKDELETE, UPDATE, NEWPAGE. prevLSN chains records per transaction (undo chain).
+- **LogRecord** format (`log_record.h`): source comment and `HEADER_SIZE` define HEADER = 20B
+  with five common fields (`size`, `LSN`, `transID`, `prevLSN`, `LogType`). Nuance: current
+  `config.h` defines `txn_id_t = int64_t`, so treat 20B as BusTub's serialized/header-size
+  contract, not as native C++ object layout obtained by summing member types. LogRecordType:
+  BEGIN, COMMIT, ABORT, INSERT, MARKDELETE, APPLYDELETE, ROLLBACKDELETE, UPDATE, NEWPAGE.
+  `prevLSN` chains records per transaction (undo chain).
 - **LogManager** (`log_manager.h`): `log_buffer_` (in-memory ring), `flush_buffer_`
   (double-buffer for concurrent flush), `next_lsn_` (atomic), `persistent_lsn_` (atomic).
   Background flush thread wakes on timeout or buffer full.
@@ -255,7 +258,7 @@ BusTub Project 4 implements MVCC with in-memory undo chains
 | ARC replacer: MRU/MFU/ghost lists, LRUK_REPLACER_K=10 | `github.com/cmu-db/bustub/blob/master/src/include/buffer/arc_replacer.h` | YES |
 | DiskScheduler: background thread, promise/future | `github.com/cmu-db/bustub/blob/master/src/include/storage/disk/disk_scheduler.h` | YES |
 | B+ tree internal header 12B, leaf header 16B | `github.com/cmu-db/bustub/blob/master/src/include/storage/page/b_plus_tree_internal_page.h` | YES |
-| WAL HEADER=20B, LogRecordType enum, prevLSN chain | `github.com/cmu-db/bustub/blob/master/src/include/recovery/log_record.h` | YES |
+| WAL HEADER_SIZE=20 source constant/comment, LogRecordType enum, prevLSN chain; native member-size caveat because current txn_id_t is int64_t | `github.com/cmu-db/bustub/blob/master/src/include/recovery/log_record.h` + `src/include/common/config.h` | YES (with caveat) |
 | LogManager: log_buffer_, persistent_lsn_, flush thread | `github.com/cmu-db/bustub/blob/master/src/include/recovery/log_manager.h` | YES |
 | AbstractExecutor = Volcano tuple-at-a-time model; BATCH_SIZE=20 | `github.com/cmu-db/bustub/blob/master/src/include/execution/executors/abstract_executor.h` + config.h | YES |
 | Optimizer rules list (rule-based, not cost-based) | `github.com/cmu-db/bustub/blob/master/src/include/optimizer/optimizer.h` | YES |

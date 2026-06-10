@@ -2,6 +2,30 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-09 — Phase 1 Wave 3: finish/reconcile sub-course 07; start 08 starter cluster
+- shipped: recovered from the prior callback crash safely from `/Users/m0t0hu6/Desktop/substrate`
+  (physical repo path resolves through OneDrive) with clean working tree and no `cwd` PermissionError.
+- shipped: validated the load-bearing 07 storage/query-exec claims against BusTub/PostgreSQL sources:
+  BusTub page/config constants, `TablePage`, `TupleInfo`, `TupleMeta`, B+ tree headers,
+  `AbstractExecutor` batching, ARC vs legacy LRU-K, PostgreSQL page/line-pointer/heap tuple headers.
+- shipped: patched the BusTub WAL wording: `LogRecord::HEADER_SIZE=20` is the source-defined
+  header/serialized-size contract, not native C++ member-size math, because current `txn_id_t=int64_t`.
+- shipped: wrote `07-database-internals/_research_transactions-recovery.md` and
+  `07-database-internals/_research_optimizer-external-exec.md`; ran `factchecker` and saved
+  `07-database-internals/_factcheck_phase1.md`; patched all three factcheck blockers:
+  BusTub Project 3 2PL vs Project 4 MVCC split, `DISABLE_LOCK_MANAGER`, and unsupported deadlock
+  victim-selection claim.
+- shipped: reconciled all 07 cluster briefs into `07-database-internals/_research.md` using the
+  standard six sections; expanded `meta/RESEARCH_INDEX.md` with genuinely new 07 sources.
+- shipped: started 08 with `08-caches-and-storage-systems/_research_cache-eviction-consistency.md`
+  after the researcher subagent failed with an `httpx.ReadError`; manual fallback used Redis/Memcached
+  source/docs and left Facebook Memcached paper-body claims `[UNVERIFIED from text]`.
+- decisions: no ADR. Operational note only: subagent `httpx.ReadError` did not touch the Code Puppy venv;
+  no reinstall attempted. 08 remains only partially started and not reconciled.
+- stopped-at: Phase 1 Wave 3 with 07 reconciled/factchecked and 08 one-cluster started. Next session should
+  factcheck/deepen 08 (Redis eviction source, Memcached paper extraction, TinyLFU/ARC/admission, write paths),
+  reconcile 08, then start 09. No chapters. No Phase 2.
+
 ## 2026-06-09 — Recovery checkpoint after code-puppy cwd-permission crash; Wave 3 sub-course 07 cluster 1
 - shipped: recovered the repo state after a Code Puppy callback crash triggered immediately after
   `curl -s --max-time 15 https://raw.githubusercontent.com/sqlite/sqlite/master/src/pager.c | sed -n 1,120p`.

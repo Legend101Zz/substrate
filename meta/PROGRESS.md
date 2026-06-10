@@ -12,9 +12,9 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 04 | operating-systems-internals | RESEARCHING | Wave 2 briefs reconciled + factcheck blockers patched; residual source gaps logged | brain |
 | 05 | programming-language-runtime-internals | RESEARCHING | Wave 2 briefs reconciled + factcheck blockers patched; residual moving-target runtime caveats logged | brain |
 | 06 | data-structures-for-systems | RESEARCHING | Wave 2 briefs reconciled + factcheck blockers patched; residual blocked-paper gaps logged | brain |
-| 07 | database-internals | RESEARCHING | Wave 3 started: storage/query-exec cluster brief drafted; validate, add remaining clusters, then reconcile | brain |
-| 08 | caches-and-storage-systems | TODO | wave 3 queued after 07 checkpoint/reconcile | — |
-| 09 | message-queues-logs-and-kafka | TODO | wave 3 queued after 07 checkpoint/reconcile | — |
+| 07 | database-internals | RESEARCHING | Wave 3 07 briefs drafted, factchecked, blockers patched, and reconciled into `_research.md`; residual paper/source gaps logged | brain |
+| 08 | caches-and-storage-systems | RESEARCHING | One starter cluster drafted: `_research_cache-eviction-consistency.md`; continue Redis/Memcached factcheck/deeper clusters, then reconcile | brain |
+| 09 | message-queues-logs-and-kafka | TODO | wave 3 queued after 08 checkpoint/reconcile | — |
 | 10 | nginx-proxies-and-load-balancing | TODO | wave 4 | — |
 | 11 | distributed-systems-foundations | TODO | wave 4 | — |
 | 12 | research-papers-for-engineers | TODO | wave 4 | — |

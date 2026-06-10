@@ -165,3 +165,33 @@ own compiler/interpreter · own search engine · own message queue · own coding
 - Consistent hashing/HLL: Karger 1997, groupcache implementation, Jump consistent hash paper,
   Redis Cluster `cluster.h` (slots, not consistent hashing), Flajolet HLL 2007, Ertl 2017,
   Redis `hyperloglog.c`.
+
+## Wave 3 — new/confirmed primary sources (sub-course 07 started)
+
+### 07 database-internals
+- BusTub current master as teaching implementation anchor: `config.h` (8192B pages, 128-frame buffer
+  pool, batch size 20, legacy `LRUK_REPLACER_K=10`, `TXN_START_ID`, `DISABLE_LOCK_MANAGER`),
+  `table_page.h`/`tuple.h` (slotted page, `TupleInfo=24`, `TupleMeta=16`), `arc_replacer.h`,
+  `buffer_pool_manager.h`, `disk_scheduler.h`, `log_record.h`/`log_manager.h`, B+ tree page headers,
+  `abstract_executor.h`, `optimizer.h`, `transaction.h`, `transaction_manager.cpp`, `watermark.h`,
+  and `lock_manager.h` (Project 3 spec caveat, not active Project 4 MVCC runtime).
+- PostgreSQL current master as production anchor: `bufpage.h`, `itemid.h`, `htup_details.h`,
+  `snapshot.h`, `heapam_visibility.c`, `transam.h`, `xlogrecord.h`, `xlog.h`, `pg_control.h`,
+  `lockdefs.h`, `optimizer/README`, `costsize.c`, `cost.h`, `pathkeys.c`, `pathnode.c`, `selfuncs.c`,
+  `tuplesort.c`, `nodeHashjoin.c`, and `backend/jit/README`; docs for planner stats and query GUCs.
+- MySQL/InnoDB 8.4 source: `read0types.h` (ReadView), `trx0trx.h` (states/isolation), `trx0undo.h`,
+  `lock0types.h`, `lock0lock.h` (gap/next-key/insert-intention locks), and `log0sys.h`.
+- DuckDB source/docs: `vector_size.hpp` (`STANDARD_VECTOR_SIZE=2048`, compile-time power-of-two
+  check), `data_chunk.hpp`, `physical_hash_join.hpp`, and `duckdb.org/why_duckdb` for design lineage.
+- Classic papers needing direct-text verification before exact quote/page use: Graefe 1994 Volcano,
+  Graefe 1993 query evaluation survey, Selinger 1979 System R (Duke scanned PDF fetched but not text
+  extracted), Mohan 1992 ARIES, Crotty et al. 2022 mmap, MonetDB/X100, HyPer/Neumann 2011, PAX 2001.
+
+### 08 caches-and-storage-systems (started)
+- Redis current source/docs anchors: `src/server.h` (maxmemory policy constants, DB `keys`/`expires`,
+  LRU/LFU knobs), `src/expire.c` (active expiration loop/constants), official Redis eviction docs and
+  persistence docs (reachable; detailed claims still need reading pass).
+- Memcached anchors: `doc/protocol.txt` (TTL, CAS, touch/gat, metadata flags), `items.c` (segmented
+  HOT/WARM/COLD/TEMP LRU structures and stats), `slabs.c` (slab classes/chunk sizing), `doc/storage.txt`
+  (external storage optional path). Facebook Memcached NSDI 2013 PDF fetched from USENIX, but body text
+  not extracted; leases/gutter/regional-pool details remain `[UNVERIFIED from text]`.
