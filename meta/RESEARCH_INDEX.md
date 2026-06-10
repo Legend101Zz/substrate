@@ -265,3 +265,17 @@ own compiler/interpreter · own search engine · own message queue · own coding
   engine, `X-Accel-Buffering`, cache-specific proxy paths, TLS termination/OpenSSL, HTTP/2 stream multiplexing/flow
   control, HTTP/3/QUIC, and exact commercial/open-source boundaries for `slow_start`, active health checks, sticky,
   queue, random, least_time, and dynamic membership before operational config prose.
+
+### 11 distributed-systems-foundations
+- Time/clocks/ordering/partial-failure starter anchors, factchecked manually from fetched primary sources:
+  Lamport 1978 `time-clocks.pdf` (happened-before, Clock Condition, IR1/IR2 logical clocks, arbitrary total-order
+  extension, physical-clock drift/synchronization bounds, failure needing physical-time context), Chandy-Lamport 1985
+  `chandy.pdf` (global state = process + channel states, no shared clocks/memory, inconsistent naive cuts, meaningful
+  recorded state via reachability), FLP/JACM 1985 `jacm85.pdf` (completely asynchronous model, no synchronized clocks
+  or death detector, no deterministic consensus termination with one unannounced crash), Spanner OSDI 2012
+  `spanner-osdi2012.pdf` (TrueTime interval, bounded uncertainty, wait out uncertainty), and Chandra-Toueg JACM 1996
+  `CT96-JACM.ps` (unreliable failure detectors; completeness/accuracy framing; exact definitions need cleaner text).
+- Remaining 11 gaps before reconciliation: vector clocks/version vectors, model taxonomy (synchronous/asynchronous/
+  partially synchronous/eventually synchronous), linearizability and consistency vocabulary, replication/quorums,
+  consensus (Raft/Paxos), CAP/partitions, transactions/distributed commit, and cleaner Chandra-Toueg text before exact
+  Phase 2 prose.

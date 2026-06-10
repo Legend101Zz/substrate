@@ -2,6 +2,29 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 4: start 11 time/clocks/partial-failure cluster
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current checkpoint
+  was `e227319`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and `/Users/m0t0hu6/.code-puppy-venv` was
+  not modified.
+- shipped: created `11-distributed-systems-foundations/` and added
+  `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md` (starter cluster only) covering
+  happened-before, Lamport logical clocks, arbitrary total-order extension, physical-clock bounds, Chandy-Lamport
+  consistent global snapshots, FLP partial failure/asynchrony, Spanner TrueTime uncertainty, and Chandra-Toueg failure
+  detector framing.
+- shipped: fetched primary sources into `/tmp/substrate-11-sources` and extracted PDFs with a throwaway
+  `uv run --with pypdf` environment: Lamport 1978, Chandy-Lamport 1985, FLP/JACM 1985, Spanner OSDI 2012; fetched
+  Chandra-Toueg JACM 1996 as PostScript and inspected noisy text with `strings`.
+- shipped: manually factchecked 22 load-bearing claims and saved
+  `11-distributed-systems-foundations/_factcheck_phase1.md`; blockers: 0. Warning: Chandra-Toueg exact definitions need
+  a cleaner text/PDF before Phase 2 prose.
+- shipped: expanded `meta/RESEARCH_INDEX.md` with verified 11 starter anchors and residual gaps; updated
+  `meta/PROGRESS.md` to mark 11 as RESEARCHING.
+- decisions: no ADR. Chose not to start the second 11 cluster in this session; one clean factchecked checkpoint beats
+  two mushy ones, because we are building a course, not a content slurry machine.
+- stopped-at: Phase 1 with 11 started but not reconciled. Next should add vector clocks/model taxonomy and/or the
+  consistency + replication vocabulary cluster, then factcheck and only reconcile 11 when coverage is solid. 12 remains
+  untouched. No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 4: factcheck/deepen/reconcile 10 NGINX core
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
   checkpoint was `ef3528d`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and

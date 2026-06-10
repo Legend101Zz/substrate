@@ -55,6 +55,13 @@ to a non-OneDrive workspace and continue there.
   BRAIN patches applied after factcheck: release-pinned remaining URLs, added `ngx_posted_next_events` event-loop step,
   and annotated nginx.org doc-wording caveats.
 - `meta/RESEARCH_INDEX.md` now includes verified 10 NGINX source anchors and residual 10 gaps.
+- **Phase 1 / Wave 4 / 11 distributed-systems-foundations â€” starter cluster begun, factchecked, not reconciled.**
+  Artifacts:
+  - `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md`
+  - `11-distributed-systems-foundations/_factcheck_phase1.md`
+- 11 starter factcheck checked 22 load-bearing claims against Lamport 1978, Chandy-Lamport 1985, FLP/JACM 1985,
+  Spanner OSDI 2012, and Chandra-Toueg JACM 1996 PostScript. No blockers remain. Warning: Chandra-Toueg exact
+  definitions need cleaner text before Phase 2 prose.
 
 ---
 
@@ -65,9 +72,11 @@ to a non-OneDrive workspace and continue there.
   operational interaction, `ngx_thread_pool.c`, full HTTP phase engine, `X-Accel-Buffering`, cache-specific proxy paths,
   TLS termination/OpenSSL, HTTP/2 stream multiplexing/flow control, HTTP/3/QUIC, and commercial/open-source boundaries
   for `slow_start`, active health checks, sticky, queue, random, least_time, and dynamic membership.
-- **11 distributed-systems-foundations is untouched.** Start with one careful source cluster only; do not rush the entire
-  distributed systems canon in one pass like a raccoon in a paper archive.
-- **12 research-papers-for-engineers is untouched.** Do not start 12 until 11 has at least one clean checkpoint.
+- **11 distributed-systems-foundations is started but not reconciled.** One starter cluster on time/clocks/ordering/
+  global state/partial failure is factchecked. Remaining 11 gaps: vector clocks/version vectors, synchronous vs.
+  asynchronous vs. partially/evenually synchronous model taxonomy, linearizability/consistency vocabulary,
+  replication/quorums, consensus, CAP/partitions, distributed commit/transactions, and cleaner Chandra-Toueg text.
+- **12 research-papers-for-engineers is untouched.** Do not start 12 until 11 has a clean reconciled checkpoint.
 
 ---
 
@@ -97,7 +106,8 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3â€
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
 - that 07, 08, 09, and 10 are reconciled/factchecked,
-- that 11 and 12 are untouched,
+- that 11 has one factchecked starter cluster but is not reconciled,
+- that 12 is untouched,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
@@ -119,24 +129,31 @@ Current state to preserve:
 - Wave 4:
   - 10 nginx-proxies-and-load-balancing has three core cluster briefs, `_factcheck_phase1.md`, and reconciled
     `_research.md`. Residual TLS/HTTP2/HTTP3/reuseport/docs wording gaps are logged; do not erase them.
-  - 11 distributed-systems-foundations and 12 research-papers-for-engineers are untouched.
+  - 11 distributed-systems-foundations has one starter cluster,
+    `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md`, plus
+    `11-distributed-systems-foundations/_factcheck_phase1.md`. It is factchecked but not reconciled into `_research.md`.
+    Residual gaps are logged; do not erase them.
+  - 12 research-papers-for-engineers is untouched.
 
 Run this plan, but only do as much as can be completed well in one session. Prefer one clean, factchecked checkpoint
 over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. Start 11 distributed-systems-foundations with the first source cluster: time, clocks, ordering, causality, and
-   partial failure foundations.
-   - Primary sources to prioritize: Lamport "Time, Clocks, and the Ordering of Events"; MIT 6.5840/6.824 lecture
-     notes where applicable; DDIA/source-backed excerpts only if directly accessible; van Steen/Tanenbaum only where
-     accessible; Jepsen/Aphyr only for failure intuition, not as replacement for primary papers.
-   - Cover logical clocks, happened-before, causality vs. wall time, clock skew, partial failure, timeouts, and why
-     distributed systems cannot observe a single global state without protocol assumptions.
-   - Cite source or mark `[UNVERIFIED]`; do not paraphrase inaccessible books as facts.
-3. Factcheck the 11 starter cluster's most load-bearing claims against primary sources. Patch blockers.
-4. If and only if the first 11 cluster is clean and time remains, add a second 11 cluster on replication basics and
-   consistency vocabulary (leader/follower, quorums, linearizability vs. sequential/eventual consistency) using primary
-   sources. Otherwise stop at the clean first-cluster checkpoint.
+2. Continue 11 distributed-systems-foundations with the next source cluster. Recommended options:
+   - **Option A (preferred): vector clocks + model taxonomy.** Cover vector clocks/version vectors, causal histories,
+     scalar Lamport-clock limitations, synchronous/asynchronous/partially synchronous/eventually synchronous models,
+     and why timing assumptions change what can be solved.
+     Primary sources to prioritize: Fidge/Mattern vector-clock papers if accessible; Birman/Schiper/Stephenson or
+     version-vector primary sources if accessible; Dwork/Lynch/Stockmeyer partial synchrony; FLP as already fetched;
+     MIT 6.5840 notes only as supporting course context.
+   - **Option B: consistency + replication vocabulary.** Cover leader/follower, quorums, linearizability vs.
+     sequential/eventual consistency, and the bridge into Raft/Paxos.
+     Primary sources to prioritize: Herlihy/Wing linearizability, MIT 6.5840 linearizability notes, Raft extended paper,
+     Paxos Made Simple, Dynamo paper, Spanner sections where relevant.
+3. Factcheck the new 11 cluster's load-bearing claims against primary sources. Patch blockers.
+4. If 11 now has enough coverage, reconcile cluster briefs into `11-distributed-systems-foundations/_research.md` with
+   the standard six sections. If not, stop at another clean cluster checkpoint; do not fake completeness. Sneaky fake
+   completeness is how documentation gets raccoon-shaped.
 5. Do not start 12 unless 11 has a clean reconciled checkpoint and there is meaningful time left. Do not start Phase 2.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md` with the exact
    next-session prompt, ensure files stay under 600 lines where reasonable, run `git status --short`, commit, and
