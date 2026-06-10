@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (12 reconciled — ALL foundations 01-12 done) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (13 reconciled — ALL foundations 01-12 + first Part II sub-course 13 done) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -81,13 +81,24 @@ to a non-OneDrive workspace and continue there.
   impossibility-then-`OM(m)`, interactive consistency, the state-machine approach, and the editor's-note exposition
   exemplar. Keshav + the Google storage trilogy (MapReduce/GFS/Bigtable/Dynamo) + Dapper/Tail-at-Scale stay
   `[UNVERIFIED from fetched source]` (network-blocked). **ALL foundations 01-12 now reconciled/factchecked.**
-- **Phase 1 / Wave 5 / 13 scaling-fundamentals — Part II STARTED; Cluster A drafted + factchecked (NOT reconciled).**
-  Artifacts: `13-scaling-fundamentals/_research_back-of-envelope-latency-queueing.md` (Little's Law, M/M/1 utilization
-  wall, M/G/1 P-K, Amdahl, USL, tail/fan-out arithmetic, latency hierarchy) + `13-scaling-fundamentals/_factcheck_clusterA.md`.
-  The capacity MATH was verified by independent recomputation (Python): `W/S=1/(1−ρ)`, Amdahl ceiling `1/(1−p)`,
-  fan-out `1−(1−q)^N`, USL knee `N*=√((1−α)/β)`, Little's-Law derivation. 0 blockers. Memory-hierarchy/64B
-  cache-line canon reused from verified 01+06. Empirical latency table (Dean) + Drepper measurements stay
-  `[UNVERIFIED]` — network-blocked. 13 deliberately NOT reconciled — needs clusters B/C/D first.
+- **Phase 1 / Wave 5 / 13 scaling-fundamentals — Part II FIRST sub-course RECONCILED (four clusters A–D).**
+  Artifacts:
+  - `13-scaling-fundamentals/_research_back-of-envelope-latency-queueing.md` (Cluster A) + `_factcheck_clusterA.md`
+    (Little's Law, M/M/1 utilization wall, M/G/1 P-K, Amdahl, USL, tail/fan-out, latency hierarchy).
+  - `13-scaling-fundamentals/_research_bottlenecks-use-method.md` (Cluster B — USE method, resource-vs-workload,
+    sampling profilers, flame graphs, on/off-CPU, bottleneck-moves).
+  - `13-scaling-fundamentals/_research_horizontal-vertical-akf-cube.md` (Cluster C — scale up/out, statelessness,
+    AKF X/Y/Z cube, axis→downstream handoffs).
+  - `13-scaling-fundamentals/_research_load-testing-capacity-planning.md` (Cluster D — open vs closed models,
+    coordinated omission, percentile/histogram discipline, capacity loop).
+  - `13-scaling-fundamentals/_factcheck_clusterBCD.md` (B/C/D, 0 blockers).
+  - `13-scaling-fundamentals/_research.md` (RECONCILED, six sections).
+  All capacity MATH verified by independent recomputation (Python): `W/S=1/(1−ρ)`, Amdahl `1/(1−p)`, fan-out
+  `1−(1−q)^N`, USL knee `N*=√((1−α)/β)`, Little's-Law derivation, closed `N=X·R`, and coordinated-omission
+  percentiles (naive p99.9=1 ms vs CO-corrected ≈989 ms, ~3-orders-of-magnitude understatement). Memory-hierarchy/64B
+  cache-line + consistent-hashing + replication/quorum + LB-peer-selection canon reused from verified 01/06/10/11.
+  Empirical/historical attributions (Dean latency table, Drepper, Gregg USE+flame graphs, AKF cube, Tene CO,
+  HdrHistogram/wrk2, NSDI-2006 open-vs-closed) stay `[UNVERIFIED]` — network-blocked. **ALL of 01-13 now reconciled.**
 
 ---
 
@@ -110,15 +121,23 @@ to a non-OneDrive workspace and continue there.
   Dynamo; ops classics Dapper/Tail-at-Scale/Chubby/ZooKeeper; method cross-cuts Herlihy/Wing, Saltzer/Reed/Clark
   End-to-End, Lampson "Hints"; and re-pin Byzantine/Reaching-Agreement pagination to the ACM record.
 - **ALL foundations 01-12 are now research-complete** (reconciled `_research.md` + factcheck artifacts each), subject to
-  the logged `[UNVERIFIED]` gaps. **Part II System Design has STARTED: 13 has one clean factchecked Cluster A (not
-  reconciled).**
-- **13 scaling-fundamentals gaps:** the capacity math is verified by recomputation, but Pillar 2 is blocked. Fetch when
-  network heals (do NOT erase, do NOT harden into prose until fetched): Jeff Dean "Latency Numbers Every Programmer
-  Should Know" exact ns/ms table (jboner gist 2841832 / Colin Scott interactive / Stanford-295 talk PDF); Drepper
-  "What Every Programmer Should Know About Memory" (akkadia/LWN 2007); Little 1961; Kleinrock *Queueing Systems v1*
-  (M/M/1, M/G/1 P-K); Amdahl 1967; Gunther USL; Dean & Barroso "Tail at Scale" CACM 2013. Then add clusters B (USE
-  method / bottlenecks — Gregg), C (horizontal vs vertical / statelessness / AKF cube X/Y/Z), D (load testing /
-  open-vs-closed models / coordinated omission — Tene), and reconcile 13. Next Phase-1 work: finish 13, then 14-21.
+  the logged `[UNVERIFIED]` gaps. **Part II System Design FIRST sub-course 13 is also reconciled/factchecked (four
+  clusters A–D).** 14-21 remain untouched.
+- **13 scaling-fundamentals gaps (RECONCILED, but carry-forward `[UNVERIFIED]` primaries remain — do NOT erase, do NOT
+  harden into prose until fetched):** all four clusters' math is verified by recomputation, but every empirical/
+  historical *attribution* is network-blocked. Fetch when the network heals:
+  - Cluster A: Jeff Dean "Latency Numbers Every Programmer Should Know" exact ns/ms table (jboner gist 2841832 /
+    Colin Scott interactive / Stanford-295 talk PDF); Drepper "What Every Programmer Should Know About Memory"
+    (akkadia/LWN 2007); Little 1961; Kleinrock *Queueing Systems v1* (M/M/1, M/G/1 P-K); Amdahl 1967; Gunther USL;
+    Dean & Barroso "Tail at Scale" CACM 2013.
+  - Cluster B: Gregg "The USE Method" + per-resource checklist/tools; flame-graph pages + FlameGraph scripts (incl.
+    off-CPU); _Systems Performance_ (2nd ed.); RED method (Wilkie/Weaveworks); Linux PSI `/proc/pressure`.
+  - Cluster C: AKF "Scale Cube" articles (akfpartners.com); Abbott & Fisher _The Art of Scalability_ (2nd ed.);
+    Twelve-Factor App factor VI; Fowler microservices/distributed-monolith.
+  - Cluster D: Gil Tene "How NOT to Measure Latency"; HdrHistogram `recordValueWithExpectedInterval`; `wrk2`;
+    Schroeder/Wierman/Harchol-Balter "Open Versus Closed" (NSDI 2006); Harchol-Balter _Performance Modeling..._.
+  Next Phase-1 work: **14-21** (Part II). 14 (data modeling/partitioning/sharding) is the natural next start — it is the
+  Z-axis handoff from 13's AKF cube.
 
 ---
 
@@ -147,11 +166,9 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that ALL foundations 01-12 are reconciled/factchecked (Part I research-complete),
-- that Part II System Design has STARTED: 13 has ONE clean factchecked Cluster A
-  (`_research_back-of-envelope-latency-queueing.md` + `_factcheck_clusterA.md`) and is NOT
-  yet reconciled,
-- that 14-21 are still untouched,
+- that ALL of 01-13 are reconciled/factchecked (all foundations 01-12 PLUS the first Part II
+  sub-course 13 scaling-fundamentals, four clusters A-D),
+- that Part II 14-21 are still untouched,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
@@ -159,15 +176,16 @@ stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneD
 Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 13 Cluster A math is VERIFIED BY RECOMPUTATION (Little's Law, M/M/1 wall `1/(1−ρ)`, Amdahl,
-  USL knee, fan-out tail). Its empirical pillar is blocked `[UNVERIFIED]`: Jeff Dean "Latency
-  Numbers" exact ns/ms table, Drepper memory paper, + Little 1961 / Kleinrock / Amdahl 1967 /
-  Gunther USL / Dean&Barroso "Tail at Scale" historical citations.
-- Network reality (4 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
-  resolve; academic/ACM/arXiv/raw.github/research.google/gregg = HTTP 000. Carried-forward
-  blocked primaries to fetch when the network is healthier:
-  - 13: Dean latency table (jboner gist 2841832 / Colin Scott interactive / Stanford-295 PDF);
-    Drepper (akkadia/LWN 2007); Little 1961; Kleinrock; Amdahl 1967; Gunther USL.
+- 13 is reconciled; ALL its math is VERIFIED BY RECOMPUTATION (Little's Law, M/M/1 wall
+  `1/(1-rho)`, Amdahl, USL knee, fan-out tail, closed `N=X*R`, coordinated-omission percentiles).
+  Every empirical/historical ATTRIBUTION stays blocked `[UNVERIFIED]` (network HTTP 000, now 5
+  sessions): Dean latency table, Drepper, Little 1961/Kleinrock/Amdahl 1967/Gunther USL/Tail-at-
+  Scale (A); Gregg USE+flame graphs/RED/PSI (B); AKF Scale Cube/Art of Scalability/Twelve-Factor/
+  Fowler (C); Tene coordinated omission/HdrHistogram/wrk2/NSDI-2006 open-vs-closed (D).
+- Network reality (5 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
+  resolve; academic/ACM/arXiv/raw.github/research.google/gregg/akfpartners = HTTP 000.
+  Carried-forward blocked primaries to fetch when the network is healthier:
+  - 13: the A/B/C/D primaries listed above (see NEXT_SESSION "Things LEFT" for the full list).
   - 12: Keshav "How to Read a Paper" CCR 2007 (+ Roscoe/Mitzenmacher/Smith); MapReduce/GFS/
     Bigtable/Dynamo; Dapper/Tail-at-Scale/Chubby/ZooKeeper; Herlihy/Wing, Saltzer/Reed/Clark
     End-to-End, Lampson "Hints".
@@ -180,22 +198,24 @@ Run this plan, but only as much as can be completed well in one session. Prefer 
 multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. CONTINUE 13-scaling-fundamentals (Phase 1 briefs ONLY - no chapters, no Phase 2). Add the
-   next tightly-scoped cluster(s):
-   - Cluster B - bottleneck identification & the USE method (Gregg: Utilization/Saturation/
-     Errors; resource-vs-workload; profiling/flame graphs).
-   - Cluster C - horizontal vs vertical scaling, statelessness, the AKF scaling cube (X/Y/Z axes)
-     and where each axis hands off to 14/15/16.
-   - Cluster D - load testing & capacity planning method (open vs closed models; coordinated
-     omission - Tene; measuring the wall derived in Cluster A).
-   Reuse canon already verified in 01/06/11 where it overlaps. Prefer primary sources; fetch via
-   `curl`; mark anything unfetched `[UNVERIFIED]`.
+2. START 14-data-modeling-partitioning-sharding (Phase 1 briefs ONLY - no chapters, no Phase 2).
+   It is the Z-axis handoff from 13's AKF cube. Add tightly-scoped clusters, e.g.:
+   - data modeling: relational vs document vs wide-column vs KV; normalization vs denormalization;
+     access-pattern-driven modeling; the read/write tradeoff.
+   - partitioning/sharding: range vs hash vs directory partitioning; consistent hashing (reuse 06);
+     shard keys, hot shards/celebrity problem, rebalancing, secondary indexes (local vs global).
+   - cross-partition operations: scatter-gather, cross-shard joins/transactions (handoff to 11),
+     distributed query planning.
+   Reuse canon already verified in 06 (consistent hashing, B-trees/LSM) and 11 (replication,
+   consistency, atomic commit) where it overlaps. Prefer primary sources; fetch via `curl`; mark
+   anything unfetched `[UNVERIFIED]`.
 3. Factcheck each new cluster's load-bearing claims (recompute math; cite source for empirical/
    historical claims). Patch blockers.
-4. If 13 coverage is now honest, reconcile into `13-scaling-fundamentals/_research.md` (standard
-   six sections), preserving every logged `[UNVERIFIED]`/residual gap. If thin or a blocker can't
-   clear, stop at a clean cluster checkpoint; do not fake completeness (raccoon-shaped docs forbidden).
-5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 13 + 11 + 12
+4. If 14 coverage is honest, reconcile into `14-data-modeling-partitioning-sharding/_research.md`
+   (standard six sections), preserving every logged `[UNVERIFIED]`/residual gap. If thin or a
+   blocker can't clear, stop at a clean cluster checkpoint; do not fake completeness
+   (raccoon-shaped docs forbidden).
+5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 13 + 12 + 11
    primaries above and upgrade the corresponding `[UNVERIFIED]` flags to verified, updating the
    relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md`

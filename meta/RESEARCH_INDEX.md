@@ -344,8 +344,33 @@ own compiler/interpreter · own search engine · own message queue · own coding
   (M/M/1, M/G/1 / Pollaczek–Khinchine); Amdahl 1967 (AFIPS); Gunther *Guerrilla Capacity
   Planning* (USL); Dean & Barroso "The Tail at Scale" CACM 2013 (also in 12 canon). Do NOT
   harden any exact latency number into Phase-2 prose until fetched.
-- 13 is NOT reconciled (one clean cluster). Planned next clusters: B — USE method /
-  bottleneck identification (Gregg; site HTTP 000 this session); C — horizontal vs vertical /
-  statelessness / AKF scaling cube (X/Y/Z); D — load testing & capacity planning (open vs
-  closed models, coordinated omission — Tene). Cross-link down into appendix N-math-for-systems
-  for full queueing/probability derivations.
+- **13 is now RECONCILED** (`13-scaling-fundamentals/_research.md`, six sections) on the basis
+  of FOUR factchecked clusters (A–D), 0 factcheck blockers. Added this session:
+  - Cluster B — `_research_bottlenecks-use-method.md`: USE method (Utilization/Saturation/
+    Errors per resource), resource-vs-workload analysis, sampling profilers, flame graphs
+    (width = cost, x-axis = merged stacks NOT time), on/off-CPU = all of `W`, "bottleneck
+    moves" corollary. Saturation is the operational face of the `1/(1−ρ)` queue from Cluster A.
+  - Cluster C — `_research_horizontal-vertical-akf-cube.md`: scale up (Amdahl/USL/physics cap)
+    vs. scale out (passes ceiling, owes 11's coordination = USL `β`); statelessness as the
+    lever that relocates state (session→token/cache, durable→DB(14), hot reads→cache(16));
+    AKF Scale Cube X (clone) / Y (functional split) / Z (shard by key), orthogonal+composable;
+    axis→downstream handoffs (X→10/15, Y→17/19, Z→14/15).
+  - Cluster D — `_research_load-testing-capacity-planning.md`: open vs. closed load models
+    (closed self-limits `N=X·R`; open can overload; internet ≈ open); coordinated omission
+    (Tene) VERIFIED BY RECOMPUTATION this session (Python): naive closed measurement of
+    9999×1 ms + 1×1000 ms gives p99.9 = 1.0 ms, but CO-corrected back-fill gives p99.9 ≈ 989 ms
+    (~3 orders of magnitude understatement); percentile/histogram discipline (merge HDR
+    histograms, never average percentiles); capacity loop (find bottleneck → measure wall
+    open+CO-corrected → target ρ with headroom → size via Little's Law → re-test).
+  - Factcheck: `13-scaling-fundamentals/_factcheck_clusterBCD.md` (B/C/D logic verified by
+    recomputation + reuse of 01/06/10/11/Cluster-A; 0 blockers).
+- Blocked `[UNVERIFIED from fetched source]` B/C/D primaries (network HTTP 000, 5th consecutive
+  session — `brendangregg.com`, `akfpartners.com`, Tene/HdrHistogram/wrk2 hosts, NSDI 2006):
+  Gregg "The USE Method" + flame-graph pages + _Systems Performance_; RED method
+  (Wilkie/Weaveworks); Linux PSI `/proc/pressure`; AKF "Scale Cube" + Abbott&Fisher _The Art
+  of Scalability_; Twelve-Factor factor VI; Fowler microservices/distributed-monolith; Gil Tene
+  "How NOT to Measure Latency"; HdrHistogram `recordValueWithExpectedInterval`; `wrk2`;
+  Schroeder/Wierman/Harchol-Balter "Open Versus Closed" (NSDI 2006); Harchol-Balter
+  _Performance Modeling..._. Do NOT harden any attribution/exact wording into Phase-2 prose
+  until fetched. Cross-link down into appendix N-math-for-systems for full queueing/probability
+  derivations and B-linux-internals for the actual USE counters. Next Phase-1 batch: **14–21**.

@@ -2,6 +2,51 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 5: 13 scaling-fundamentals clusters B/C/D + RECONCILE 13
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
+  checkpoint was `8983e44`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
+  `/Users/m0t0hu6/.code-puppy-venv` was not modified; Code Puppy was not reinstalled.
+- shipped: confirmed network reality (5th consecutive session): only `lamport.azurewebsites.net` (HTTP 200) resolves;
+  `brendangregg.com` (USE method + flame graphs), `akfpartners.com` (AKF Scale Cube), `gist.githubusercontent.com`,
+  `raw.githubusercontent.com`, `arxiv.org` all HTTP 000 by direct `curl`. Gil Tene / HdrHistogram / wrk2 / NSDI-2006
+  hosts are the same blocked families. No new primary was fetchable this session.
+- shipped: wrote THREE new tightly-scoped 13 clusters (standard six sections each, briefs only):
+  - `13-scaling-fundamentals/_research_bottlenecks-use-method.md` (Cluster B — USE method: Utilization/Saturation/
+    Errors per resource; resource-vs-workload analysis; sampling profilers; flame graphs width=cost, x-axis=merged
+    stacks NOT time; on/off-CPU = all of `W`; "bottleneck moves" corollary). Saturation tied to Cluster A's `1/(1−ρ)`.
+  - `13-scaling-fundamentals/_research_horizontal-vertical-akf-cube.md` (Cluster C — scale up vs out; statelessness
+    relocates state; AKF Scale Cube X clone / Y functional split / Z shard-by-key, orthogonal+composable;
+    axis→downstream handoffs X→10/15, Y→17/19, Z→14/15). Reused 06 consistent-hashing + 11 replication/quorums +
+    10 LB peer-selection canon by cross-reference, not re-fetched.
+  - `13-scaling-fundamentals/_research_load-testing-capacity-planning.md` (Cluster D — open vs closed load models;
+    coordinated omission — Tene; percentile/histogram discipline; capacity-planning loop). Reused Cluster-A fan-out
+    + utilization-wall + 08 cache-realism canon.
+- shipped: VERIFIED the load-bearing math by independent recomputation (pure Python this session, no numpy) and saved
+  `13-scaling-fundamentals/_factcheck_clusterBCD.md`: coordinated omission — naive closed measurement of
+  9999×1 ms + 1×1000 ms gives p99=1.0, p99.9=1.0, p99.99≈1.10 ms, max=1000 ms; CO-corrected back-fill (~1000 samples
+  1000→1 ms) gives p99≈890 ms, p99.9≈989 ms, p99.99≈999 ms — a ~3-orders-of-magnitude p99.9 understatement.
+  Closed `N=X·R` feedback (N=200: R=.02→10000/s, R=.10→2000/s). Fan-out `0.99^100=0.366` reused. Patched the Cluster-D
+  brief to match the recomputed numbers (my first-draft p99 estimates were too low). 0 blockers across B/C/D; B/C logic
+  verified by reuse of Cluster-A math + 01/06/10/11 line-checked sources.
+- shipped: RECONCILED all four 13 clusters into `13-scaling-fundamentals/_research.md` (standard six sections) with the
+  cross-cluster thesis: A proves the `1/(1−ρ)` wall must exist → B finds which resource owns it → C gives the
+  structural moves (up/out, statelessness, AKF X/Y/Z) to spread load → D measures it honestly (open vs closed,
+  coordinated omission) so you provision before hitting it. Every `[UNVERIFIED]`/residual gap preserved; all downstream
+  boundaries (14/15/16/17/19/20 + appendix N/B) recorded as cross-links, not duplicated mechanics.
+- shipped: expanded `meta/RESEARCH_INDEX.md` with the reconciled-13 anchors + the full blocked B/C/D primary list;
+  updated `meta/PROGRESS.md` (13 = RESEARCHING/reconciled, four clusters).
+- shipped: opportunistic step-5 retry of the carried-forward 13/11/12 primaries — all hosts (Dean gist, Drepper,
+  Gregg, AKF, Tene/HdrHistogram/wrk2, Gilbert-Lynch/Brewer/Abadi, Herlihy-Wing, Dynamo, Keshav, MapReduce/GFS/
+  Bigtable, Dapper/Tail-at-Scale) remain HTTP 000. Nothing upgraded; every `[UNVERIFIED]` flag stands, none erased.
+- decisions: no ADR. Chose to reconcile 13 now (same discipline as 11/12: waited for four honest clusters): the
+  load-bearing content is the *method/math*, which is verified end-to-end by recomputation+reuse with 0 blockers; the
+  blocked items are empirical/historical *attributions* that are NOT load-bearing for the method and stay flagged.
+  This is an honest reconciliation, not a raccoon-shaped doc — the empirical latency table is still openly deferred.
+- stopped-at: Phase 1 with ALL foundations 01-12 reconciled/factchecked AND **13 now reconciled/factchecked** (four
+  clusters). Part II 14-21 remain untouched. Next session: start 14 (data modeling/partitioning/sharding) Phase-1
+  briefs (the Z-axis handoff from 13), and opportunistically fetch the blocked 13/11/12 primaries when a healthier
+  network exists. No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 5: START Part II System Design — 13 scaling-fundamentals Cluster A
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
   checkpoint was `ac39c0b`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
