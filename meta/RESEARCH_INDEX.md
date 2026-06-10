@@ -282,7 +282,16 @@ own compiler/interpreter · own search engine · own message queue · own coding
   due to blocked PDFs; FLP/JACM 1985 anchors asynchronous model and DLS/PODC 1984 citation; DLS/JACM 1988 partial
   synchrony model taxonomy remains `[UNVERIFIED from fetched source]`; Paxos Made Simple was fetched/extracted and
   verifies asynchronous non-Byzantine model plus liveness requiring randomness or real time/timeouts.
-- Remaining 11 gaps before reconciliation: linearizability and consistency vocabulary, leader/follower replication,
-  quorums, consensus bridge into Raft/Paxos internals, CAP/partitions, transactions/distributed commit, cleaner
-  Chandra-Toueg text, direct Fidge/Mattern/DLS/Dynamo/CBCAST primary text, and source pin for the f+1 synchronous
-  crash-fault rotating-coordinator claim before exact Phase 2 prose.
+- Consistency/replication/quorums cluster anchors, factchecked in `_factcheck_cluster3.md` with exact line receipts:
+  Lamport IEEE TC 1979 `lamport-multiprocessor.txt` (sequential consistency definition); Spanner OSDI 2012 (external
+  consistency ≡ linearizability, T1-commits-before-T2-starts ⇒ smaller commit timestamp; single Paxos state machine
+  per tablet; writes initiate Paxos at leader; reads from any sufficiently-up-to-date replica; 10s time-based leader
+  leases; 2PC over Paxos; commit wait `TT.after(si)`; Bigtable eventually-consistent contrast); Paxos Made Simple
+  (asynchronous non-Byzantine model; value chosen by a majority; any two majorities intersect; safety properties;
+  progress needs a distinguished proposer + randomness/real time, citing FLP); Raft USENIX ATC 2014 (majority votes →
+  leader, AppendEntries replication, entry committed once replicated on a majority, Log Matching, Leader Completeness,
+  replicated-state-machine framing). Herlihy/Wing TOPLAS 1990 and Dynamo SOSP 2007 remain `[UNVERIFIED from fetched
+  source]` (network-blocked); MIT 6.5840 notes blocked, supporting context only.
+- Remaining 11 gaps before reconciliation: CAP/partitions (and PACELC), transactions/distributed commit (2PC/3PC
+  blocking, isolation levels), cleaner Chandra-Toueg text, direct Herlihy/Wing + Dynamo + Fidge/Mattern/DLS/CBCAST
+  primary text, and source pin for the f+1 synchronous crash-fault rotating-coordinator claim before exact Phase 2 prose.

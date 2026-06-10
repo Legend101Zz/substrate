@@ -16,7 +16,7 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 08 | caches-and-storage-systems | RESEARCHING | Phase 1 briefs deepened, factchecked via `_factcheck_phase1.md`, and reconciled into `_research.md`; residual taxonomy/source pinning gaps logged | brain |
 | 09 | message-queues-logs-and-kafka | RESEARCHING | Phase 1 briefs deepened, factchecked via `_factcheck_phase1.md`, blockers patched, and reconciled into `_research.md`; residual Kafka paper/KIP/source-tracing gaps logged | brain |
 | 10 | nginx-proxies-and-load-balancing | RESEARCHING | Phase 1 core briefs drafted, factchecked via `_factcheck_phase1.md`, blockers patched, and reconciled into `_research.md`; residual TLS/HTTP2/HTTP3/reuseport/docs wording gaps logged | brain |
-| 11 | distributed-systems-foundations | RESEARCHING | Two clusters drafted/factchecked: time/clocks/partial failure and vector clocks/model taxonomy; next add consistency/replication/quorums/Raft-Paxos/CAP before reconciliation | brain |
+| 11 | distributed-systems-foundations | RESEARCHING | Three clusters drafted/factchecked: time/clocks/partial failure, vector clocks/model taxonomy, and consistency/replication/quorums/Paxos-Raft; next add CAP/partitions + distributed-commit, then reconcile | brain |
 | 12 | research-papers-for-engineers | TODO | wave 4 after 11; do not start until 11 has a clean reconciled checkpoint | — |
 | 13 | scaling-fundamentals | TODO | Phase 1 batch 2 | — |
 | 14 | data-modeling-partitioning-sharding | TODO | Phase 1 batch 2 | — |

@@ -2,6 +2,29 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 4: add 11 consistency/replication/quorums cluster
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; current checkpoint was `78c79ae`. A transient
+  `git: Unable to read current working directory: Operation not permitted` (OneDrive/macOS privacy gremlin) appeared
+  mid-session but cleared on retry; `/Users/m0t0hu6/.code-puppy-venv` was not modified and Code Puppy was not reinstalled.
+- shipped: invoked the `researcher` subagent once (sequential, no fan-out); it failed with `httpx.ReadTimeout`. Fell
+  back to a manual BRAIN primary-source pass rather than touching the venv.
+- shipped: fetched/extracted primary PDFs into `/tmp/substrate-11-sources` with a throwaway `uv run --with pypdf`
+  (Walmart index): Lamport "How to Make a Multiprocessor Computer" (sequential consistency), Paxos Made Simple,
+  Raft USENIX ATC 2014, and Spanner OSDI 2012. Herlihy/Wing, Dynamo, and MIT 6.5840 notes were blocked by network
+  resets (ACM/Brown/CMU/Cornell/Princeton/UW/pdos/allthingsdistributed) and remain `[UNVERIFIED from fetched source]`.
+- shipped: wrote `11-distributed-systems-foundations/_research_consistency-replication-quorums.md` (266 lines, standard
+  six brief sections) covering consistency-as-contract, sequential vs linearizability vs eventual, leader/follower
+  replication, quorum=majority-intersection, Paxos chooses values / Raft+Multi-Paxos build the log, and the Spanner
+  bridge to externally-consistent transactions.
+- shipped: manual factcheck saved as `11-distributed-systems-foundations/_factcheck_cluster3.md` — 13 load-bearing
+  claims verified against primary text with exact line receipts, 0 blockers, 2 citation line-drift warnings (Paxos
+  progress 282–293; Spanner commit-wait 603/731 + tightened Paxos majority/chosen lines) patched in the brief.
+- decisions: no ADR. Chose **not** to reconcile 11 into `_research.md`: it now has three clean clusters but still
+  lacks CAP/partitions and distributed-commit coverage, and Herlihy/Wing + Dynamo primaries are unfetched. One clean
+  cluster checkpoint beats a raccoon-shaped `_research.md`.
+- stopped-at: Phase 1 with 11 having THREE factchecked clusters but no reconciled `_research.md`. 12 untouched. Next
+  session adds CAP/partitions + distributed-commit/transactions, then reconciles 11 if coverage is honestly enough.
+
 ## 2026-06-10 — Phase 1 Wave 4: add 11 vector-clocks/model-taxonomy cluster
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current checkpoint
   was `81f0769`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and `/Users/m0t0hu6/.code-puppy-venv` was
