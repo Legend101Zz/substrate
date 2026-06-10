@@ -55,13 +55,17 @@ to a non-OneDrive workspace and continue there.
   BRAIN patches applied after factcheck: release-pinned remaining URLs, added `ngx_posted_next_events` event-loop step,
   and annotated nginx.org doc-wording caveats.
 - `meta/RESEARCH_INDEX.md` now includes verified 10 NGINX source anchors and residual 10 gaps.
-- **Phase 1 / Wave 4 / 11 distributed-systems-foundations — starter cluster begun, factchecked, not reconciled.**
+- **Phase 1 / Wave 4 / 11 distributed-systems-foundations — two clusters drafted/factchecked, not reconciled.**
   Artifacts:
   - `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md`
   - `11-distributed-systems-foundations/_factcheck_phase1.md`
+  - `11-distributed-systems-foundations/_research_vector-clocks-model-taxonomy.md`
+  - `11-distributed-systems-foundations/_factcheck_cluster2.md`
 - 11 starter factcheck checked 22 load-bearing claims against Lamport 1978, Chandy-Lamport 1985, FLP/JACM 1985,
-  Spanner OSDI 2012, and Chandra-Toueg JACM 1996 PostScript. No blockers remain. Warning: Chandra-Toueg exact
-  definitions need cleaner text before Phase 2 prose.
+  Spanner OSDI 2012, and Chandra-Toueg JACM 1996 PostScript. Cluster 2 factcheck checked vector-clock/model-taxonomy
+  claims; two blockers were patched. No cluster-2 blockers remain. Carry-forward warnings: direct Fidge/Mattern/DLS/
+  Dynamo/CBCAST primary text is still blocked, Chandra-Toueg exact definitions need cleaner text, and the f+1
+  synchronous crash-fault rotating-coordinator claim needs a source pin before Phase 2 prose.
 
 ---
 
@@ -72,10 +76,10 @@ to a non-OneDrive workspace and continue there.
   operational interaction, `ngx_thread_pool.c`, full HTTP phase engine, `X-Accel-Buffering`, cache-specific proxy paths,
   TLS termination/OpenSSL, HTTP/2 stream multiplexing/flow control, HTTP/3/QUIC, and commercial/open-source boundaries
   for `slow_start`, active health checks, sticky, queue, random, least_time, and dynamic membership.
-- **11 distributed-systems-foundations is started but not reconciled.** One starter cluster on time/clocks/ordering/
-  global state/partial failure is factchecked. Remaining 11 gaps: vector clocks/version vectors, synchronous vs.
-  asynchronous vs. partially/evenually synchronous model taxonomy, linearizability/consistency vocabulary,
-  replication/quorums, consensus, CAP/partitions, distributed commit/transactions, and cleaner Chandra-Toueg text.
+- **11 distributed-systems-foundations is started but not reconciled.** Two clusters are factchecked: time/clocks/
+  global state/partial failure and vector clocks/model taxonomy. Remaining 11 gaps: linearizability/consistency
+  vocabulary, leader/follower replication, quorums, Raft/Paxos internals bridge, CAP/partitions, distributed commit/
+  transactions, cleaner Chandra-Toueg text, and direct blocked primary text for Fidge/Mattern/DLS/Dynamo/CBCAST.
 - **12 research-papers-for-engineers is untouched.** Do not start 12 until 11 has a clean reconciled checkpoint.
 
 ---
@@ -106,7 +110,7 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3�
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
 - that 07, 08, 09, and 10 are reconciled/factchecked,
-- that 11 has one factchecked starter cluster but is not reconciled,
+- that 11 has two factchecked clusters but is not reconciled,
 - that 12 is untouched,
 - and the exact plan you will run.
 
@@ -129,31 +133,27 @@ Current state to preserve:
 - Wave 4:
   - 10 nginx-proxies-and-load-balancing has three core cluster briefs, `_factcheck_phase1.md`, and reconciled
     `_research.md`. Residual TLS/HTTP2/HTTP3/reuseport/docs wording gaps are logged; do not erase them.
-  - 11 distributed-systems-foundations has one starter cluster,
-    `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md`, plus
-    `11-distributed-systems-foundations/_factcheck_phase1.md`. It is factchecked but not reconciled into `_research.md`.
-    Residual gaps are logged; do not erase them.
+  - 11 distributed-systems-foundations has two factchecked clusters:
+    `11-distributed-systems-foundations/_research_time-clocks-ordering-failure.md` + `_factcheck_phase1.md`, and
+    `11-distributed-systems-foundations/_research_vector-clocks-model-taxonomy.md` + `_factcheck_cluster2.md`.
+    It is not reconciled into `_research.md`. Residual gaps are logged; do not erase them.
   - 12 research-papers-for-engineers is untouched.
 
 Run this plan, but only do as much as can be completed well in one session. Prefer one clean, factchecked checkpoint
 over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. Continue 11 distributed-systems-foundations with the next source cluster. Recommended options:
-   - **Option A (preferred): vector clocks + model taxonomy.** Cover vector clocks/version vectors, causal histories,
-     scalar Lamport-clock limitations, synchronous/asynchronous/partially synchronous/eventually synchronous models,
-     and why timing assumptions change what can be solved.
-     Primary sources to prioritize: Fidge/Mattern vector-clock papers if accessible; Birman/Schiper/Stephenson or
-     version-vector primary sources if accessible; Dwork/Lynch/Stockmeyer partial synchrony; FLP as already fetched;
-     MIT 6.5840 notes only as supporting course context.
-   - **Option B: consistency + replication vocabulary.** Cover leader/follower, quorums, linearizability vs.
-     sequential/eventual consistency, and the bridge into Raft/Paxos.
-     Primary sources to prioritize: Herlihy/Wing linearizability, MIT 6.5840 linearizability notes, Raft extended paper,
-     Paxos Made Simple, Dynamo paper, Spanner sections where relevant.
+2. Continue 11 distributed-systems-foundations with the next source cluster.
+   - **Option B (preferred): consistency + replication vocabulary.** Cover leader/follower replication, quorums,
+     linearizability vs. sequential/eventual consistency, and the bridge into Raft/Paxos.
+     Primary sources to prioritize: Herlihy/Wing linearizability, MIT 6.5840 linearizability notes only as supporting
+     context, Raft extended paper, Paxos Made Simple, Dynamo paper if accessible, Spanner sections where relevant.
+   - Optional follow-up if time remains: CAP/partitions or distributed commit/transactions, but only after the
+     consistency/replication cluster is clean.
 3. Factcheck the new 11 cluster's load-bearing claims against primary sources. Patch blockers.
-4. If 11 now has enough coverage, reconcile cluster briefs into `11-distributed-systems-foundations/_research.md` with
-   the standard six sections. If not, stop at another clean cluster checkpoint; do not fake completeness. Sneaky fake
-   completeness is how documentation gets raccoon-shaped.
+4. If 11 now has enough coverage after consistency/replication (and ideally CAP/distributed commit), reconcile cluster
+   briefs into `11-distributed-systems-foundations/_research.md` with the standard six sections. If not, stop at another
+   clean cluster checkpoint; do not fake completeness. Sneaky fake completeness is how documentation gets raccoon-shaped.
 5. Do not start 12 unless 11 has a clean reconciled checkpoint and there is meaningful time left. Do not start Phase 2.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md` with the exact
    next-session prompt, ensure files stay under 600 lines where reasonable, run `git status --short`, commit, and

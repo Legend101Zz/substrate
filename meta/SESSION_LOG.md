@@ -2,6 +2,29 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 4: add 11 vector-clocks/model-taxonomy cluster
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current checkpoint
+  was `81f0769`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and `/Users/m0t0hu6/.code-puppy-venv` was
+  not modified.
+- shipped: used the `researcher` subagent sequentially (no parallel fan-out) to draft
+  `11-distributed-systems-foundations/_research_vector-clocks-model-taxonomy.md`; then independently fetched/checked
+  sources in `/tmp/substrate-11-sources`. Paxos Made Simple was fetched and extracted with a throwaway
+  `uv run --with pypdf` command using the Walmart PyPI index; Fidge/Mattern/DLS/Dynamo/CBCAST direct PDFs remained
+  blocked and are kept `[UNVERIFIED from fetched source]` in the brief.
+- shipped: ran the `factchecker` subagent on the new cluster and saved
+  `11-distributed-systems-foundations/_factcheck_cluster2.md`; patched both blockers: the synchronous rotating-
+  coordinator process bound now says `N >= f+1` with source-needed caveat, and Paxos/Raft wording now distinguishes
+  Paxos Made Simple's asynchronous model from the teaching "behaves as if partial synchrony" framing.
+- shipped: patched follow-up warnings: FLP now uses the exact "totally correct" wording, vector-clock "Strong Clock
+  Condition" now notes the Lamport naming collision, and stale Paxos extraction metadata was corrected.
+- shipped: expanded `meta/RESEARCH_INDEX.md` with cluster-2 verified anchors/gaps, updated `meta/PROGRESS.md`, and
+  updated `meta/NEXT_SESSION.md` with the exact next-session prompt.
+- decisions: no ADR. Chose not to reconcile 11 because it still lacks consistency/replication/quorums/Raft-Paxos/CAP/
+  distributed-commit coverage; one clean factchecked cluster is better than a raccoon-shaped `_research.md`.
+- stopped-at: Phase 1 with 11 having two factchecked clusters but no reconciled `_research.md`. 12 remains untouched.
+  Next session should add the consistency + replication vocabulary cluster, factcheck it, then decide whether 11 has
+  enough coverage to reconcile. No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 4: start 11 time/clocks/partial-failure cluster
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current checkpoint
   was `e227319`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and `/Users/m0t0hu6/.code-puppy-venv` was

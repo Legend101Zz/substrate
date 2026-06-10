@@ -275,7 +275,14 @@ own compiler/interpreter · own search engine · own message queue · own coding
   or death detector, no deterministic consensus termination with one unannounced crash), Spanner OSDI 2012
   `spanner-osdi2012.pdf` (TrueTime interval, bounded uncertainty, wait out uncertainty), and Chandra-Toueg JACM 1996
   `CT96-JACM.ps` (unreliable failure detectors; completeness/accuracy framing; exact definitions need cleaner text).
-- Remaining 11 gaps before reconciliation: vector clocks/version vectors, model taxonomy (synchronous/asynchronous/
-  partially synchronous/eventually synchronous), linearizability and consistency vocabulary, replication/quorums,
-  consensus (Raft/Paxos), CAP/partitions, transactions/distributed commit, and cleaner Chandra-Toueg text before exact
-  Phase 2 prose.
+- Vector-clocks/model-taxonomy cluster anchors, factchecked in `_factcheck_cluster2.md`: Lamport 1978 scalar-clock
+  converse limitation; Fidge 1988 and Mattern 1989 vector-clock algorithm / bidirectional clock condition remain
+  `[UNVERIFIED from fetched source]` because primary PDFs were blocked; Charron-Bost 1991 O(N) lower bound remains
+  `[UNVERIFIED]`; Dynamo SOSP 2007 version vectors and Birman/Schiper/Stephenson 1991 CBCAST remain `[UNVERIFIED]`
+  due to blocked PDFs; FLP/JACM 1985 anchors asynchronous model and DLS/PODC 1984 citation; DLS/JACM 1988 partial
+  synchrony model taxonomy remains `[UNVERIFIED from fetched source]`; Paxos Made Simple was fetched/extracted and
+  verifies asynchronous non-Byzantine model plus liveness requiring randomness or real time/timeouts.
+- Remaining 11 gaps before reconciliation: linearizability and consistency vocabulary, leader/follower replication,
+  quorums, consensus bridge into Raft/Paxos internals, CAP/partitions, transactions/distributed commit, cleaner
+  Chandra-Toueg text, direct Fidge/Mattern/DLS/Dynamo/CBCAST primary text, and source pin for the f+1 synchronous
+  crash-fault rotating-coordinator claim before exact Phase 2 prose.
