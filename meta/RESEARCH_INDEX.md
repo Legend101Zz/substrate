@@ -208,3 +208,48 @@ own compiler/interpreter · own search engine · own message queue · own coding
   cache keys/freshness/validation/stale constraints/unsafe-method invalidation). Remaining gaps: release-pin
   Redis/Memcached source, ARC pseudo-code/patent status, Count-Min formal error bounds, write-through/write-back
   taxonomy source, and XFetch/probabilistic early expiration primary source.
+
+### 09 message-queues-logs-and-kafka
+- Kafka 3.9 repo docs as primary anchors: `docs/design/design.md` (log abstraction, consumer position,
+  delivery semantics, replication/ISR/acks/unclean election, compaction), `docs/implementation/log.md`
+  (offset-as-id, segment/index mechanics), and `docs/operations/kraft.md` (KRaft roles/controller quorum).
+  Public `kafka.apache.org/*/documentation.html` currently resolves to a redirect/JS shell in this harness;
+  use repo Markdown for exact text.
+- Kafka 3.9 log/storage source anchors: `core/src/main/scala/kafka/log/LocalLog.scala` (3.9 path;
+  trunk later has Java/storage `LocalLog`), `storage/.../LogSegment.java`, `storage/.../LogConfig.java`,
+  and `core/src/main/scala/kafka/log/LogCleaner.scala` for segments, retention, and compaction.
+- Kafka 3.9 replication/availability anchors: `core/.../cluster/Partition.scala` (leader append,
+  ISR shrink/expand, high watermark, min ISR), `core/.../server/ReplicaFetcherThread.scala`,
+  `core/.../server/AbstractFetcherThread.scala`, `storage/.../epoch/LeaderEpochFileCache.java`,
+  `server/.../ReplicationConfigs.java`, `server-common/.../ServerLogConfigs.java`,
+  `core/.../controller/PartitionStateMachine.scala`, plus KRaft `metadata/.../QuorumController.java`,
+  `metadata/.../ReplicationControlManager.java`, and `raft/.../KafkaRaftClient.java`.
+- Kafka 3.9 consumer-group anchors: `clients/.../common/internals/Topic.java` (`__consumer_offsets`),
+  `group-coordinator/.../GroupCoordinatorService.java` (group→offsets-partition formula),
+  `GroupCoordinatorConfig.java` (50 partitions, 100MB segments, 7-day retention, consumer protocol early
+  access warning), `OffsetMetadataManager.java`, `CoordinatorRecordHelpers.java`, `ClassicGroupState.java`,
+  `ConsumerPartitionAssignor.java`, `CooperativeStickyAssignor.java`, `ConsumerGroupHeartbeatRequest.json`,
+  `OffsetCommitRequest.json`, `FetchRequest.json`, `FetchResponse.json`, and `CompletedFetch.java`.
+- Kafka 3.9 idempotence/transaction anchors: KIP-98 (cwiki, fetched), `ProducerConfig.java` (`acks="all"`,
+  `enable.idempotence=true`, max in-flight ≤5), `DefaultRecordBatch.java`, `ProducerAppendInfo.java`,
+  `ProducerStateManager.java`, `TransactionCoordinator.scala`, `TransactionLog.scala`,
+  `TransactionMetadata.scala`, `TransactionStateManager.scala`, `EndTransactionMarker.java`,
+  `TransactionIndex.java`, `AbortedTxn.java`, `UnifiedLog.scala` (`lastStableOffset`), `FetchIsolation.java`,
+  `KafkaProducer.java`, and `TransactionManager.java`.
+- Remaining 09 gaps: replace mirrored Kafka paper URL with canonical if accessible; read KIP-101/497/500/848/360
+  before quoting rationale; trace `CoordinatorRuntime`, offset-expiration scheduler, fetch-from-follower routing,
+  sticky assignor/static membership fencing, `TransactionMarkerChannelManager`, `__transaction_state` expiry,
+  and long-open-transaction/log-cleaner interactions before Phase 2 prose.
+
+### 10 nginx-proxies-and-load-balancing
+- Starter cluster only: NGINX event-driven reverse-proxy architecture. Primary anchors discovered/partially
+  verified: AOSA Vol. 2 NGINX chapter (`raw.githubusercontent.com/aosabook/.../nginx.html`), NGINX master
+  `src/os/unix/ngx_process_cycle.c` (master/worker lifecycle), `src/event/ngx_event.c` (event loop and accept
+  mutex), `src/event/modules/ngx_epoll_module.c` (epoll dispatch and stale event checks),
+  `src/event/ngx_event_accept.c` (accept/backoff), `src/event/ngx_event.h`, `src/core/ngx_connection.h`,
+  `src/http/ngx_http_request.c/.h`, `src/http/ngx_http_upstream.c`, `src/http/modules/ngx_http_proxy_module.c`,
+  and `src/http/modules/ngx_http_upstream_keepalive_module.c`.
+- Remaining 10 starter gaps: factcheck not yet run; pin NGINX source to a release tag/commit instead of `master`;
+  verify current `accept_mutex`/`reuseport`/`EPOLLEXCLUSIVE` defaults; trace `ngx_event_core_init_conf`,
+  `ngx_thread_pool.c`, HTTP phase engine, load-balancing peer selection modules, proxy buffering/streaming,
+  TLS, HTTP/2, and HTTP/3/QUIC in later source clusters.

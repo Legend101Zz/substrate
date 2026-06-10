@@ -35,12 +35,12 @@ into segment files. Current Kafka source preserves this model:
 
 - `LocalLog.java` comment: “An append-only log for storing messages locally. The log is a sequence of
   LogSegments, each with a base offset.” New segments are created according to size/time policy.
-  Source: `https://raw.githubusercontent.com/apache/kafka/trunk/storage/src/main/java/org/apache/kafka/storage/internals/log/LocalLog.java`.
+  Source: `https://raw.githubusercontent.com/apache/kafka/3.9/core/src/main/scala/kafka/log/LocalLog.scala` (Kafka 3.9 Scala file in `core`; trunk later has a Java `storage` version).
 - `LogSegment.java` is the per-segment storage unit. It carries a base offset and associated index/time-index
   structures. Source: `https://raw.githubusercontent.com/apache/kafka/3.9/storage/src/main/java/org/apache/kafka/storage/internals/log/LogSegment.java`.
 - `LogConfig.java` exposes segment and retention knobs such as `segmentSize`, `segmentMs`, `retentionSize`,
   `retentionMs`, and compaction lag settings. Source:
-  `https://raw.githubusercontent.com/apache/kafka/trunk/storage/src/main/java/org/apache/kafka/storage/internals/log/LogConfig.java`.
+  `https://raw.githubusercontent.com/apache/kafka/3.9/storage/src/main/java/org/apache/kafka/storage/internals/log/LogConfig.java`.
 
 ### 1.4 Efficiency: sequential IO, batching, zero-copy/page cache direction
 
@@ -79,7 +79,7 @@ Source: `https://raw.githubusercontent.com/apache/kafka/3.9/core/src/main/scala/
 
 This starter only lightly touches replication. `Partition.scala` shows leader/follower state, ISR, high watermark,
 leader epoch, and min ISR checks. Source:
-`https://raw.githubusercontent.com/apache/kafka/trunk/core/src/main/scala/kafka/cluster/Partition.scala`.
+`https://raw.githubusercontent.com/apache/kafka/3.9/core/src/main/scala/kafka/cluster/Partition.scala`.
 
 Do not teach exact replication semantics from this starter alone. A later 09 cluster should cover leader election,
 ISR, high watermark, acknowledgements, producer idempotence, transactions, and controller/KRaft.
@@ -91,12 +91,12 @@ ISR, high watermark, acknowledgements, producer idempotence, transactions, and c
 | Area | Primary source | Status |
 |---|---|---|
 | Original Kafka design/paper | `https://notes.stephenholiday.com/Kafka.pdf` | VERIFIED via PDF extraction; mirror URL, should replace with canonical ACM/LinkedIn if accessible |
-| Local append-only log and segments | `https://raw.githubusercontent.com/apache/kafka/trunk/storage/src/main/java/org/apache/kafka/storage/internals/log/LocalLog.java` | VERIFIED snippets |
+| Local append-only log and segments | `https://raw.githubusercontent.com/apache/kafka/3.9/core/src/main/scala/kafka/log/LocalLog.scala` | VERIFIED snippets; Kafka 3.9 Scala/core path |
 | Segment implementation | `https://raw.githubusercontent.com/apache/kafka/3.9/storage/src/main/java/org/apache/kafka/storage/internals/log/LogSegment.java` | VERIFIED snippets |
-| Log config: retention, segment, compaction knobs | `https://raw.githubusercontent.com/apache/kafka/trunk/storage/src/main/java/org/apache/kafka/storage/internals/log/LogConfig.java` | VERIFIED snippets |
+| Log config: retention, segment, compaction knobs | `https://raw.githubusercontent.com/apache/kafka/3.9/storage/src/main/java/org/apache/kafka/storage/internals/log/LogConfig.java` | VERIFIED snippets |
 | Compaction cleaner | `https://raw.githubusercontent.com/apache/kafka/3.9/core/src/main/scala/kafka/log/LogCleaner.scala` | VERIFIED |
-| Partition leader/ISR/high watermark source | `https://raw.githubusercontent.com/apache/kafka/trunk/core/src/main/scala/kafka/cluster/Partition.scala` | VERIFIED snippets; deeper pass needed |
-| Apache Kafka HTML docs | `https://kafka.apache.org/40/documentation.html` | PARTIAL/REDIRECT issues in this pass; do not rely on docs text yet |
+| Partition leader/ISR/high watermark source | `https://raw.githubusercontent.com/apache/kafka/3.9/core/src/main/scala/kafka/cluster/Partition.scala` | VERIFIED snippets; deeper pass needed |
+| Kafka repo design docs | `https://raw.githubusercontent.com/apache/kafka/3.9/docs/design/design.md`; `https://raw.githubusercontent.com/apache/kafka/3.9/docs/implementation/log.md` | VERIFIED after starter; public HTML docs redirect/JS shell was not used |
 | Kreps “The Log” essay | LinkedIn engineering URL | Fetch unreliable in this pass; queued |
 
 ---

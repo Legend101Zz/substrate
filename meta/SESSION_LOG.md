@@ -2,6 +2,38 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 3/4: finish 09; start 10 starter cluster
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; confirmed git HEAD `f5e4069` and clean
+  working tree before edits; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
+  `/Users/m0t0hu6/.code-puppy-venv` was not touched.
+- shipped: spot-checked the existing 09 Kafka storage starter against Kafka 3.9 source/docs; patched source links
+  to pin Kafka 3.9 and later corrected `LocalLog` to the actual 3.9 path
+  `core/src/main/scala/kafka/log/LocalLog.scala`.
+- shipped: added 09 replication/availability cluster
+  `09-message-queues-logs-and-kafka/_research_replication-availability.md` covering leader/follower replication,
+  ISR, high watermark, `acks`, min ISR, unclean leader election, leader epochs, and KRaft/controller caveats.
+- shipped: added 09 consumer groups/offsets cluster
+  `09-message-queues-logs-and-kafka/_research_consumer-groups-offsets.md` covering group coordinator routing,
+  `__consumer_offsets`, committed vs current offsets, classic/cooperative rebalance, early-access 3.9 consumer
+  protocol, lag/replay, and fetch isolation.
+- shipped: added 09 delivery semantics/transactions cluster
+  `09-message-queues-logs-and-kafka/_research_delivery-semantics-transactions.md` covering at-most/at-least/EOS
+  caveats, idempotent producer IDs/epochs/sequences, transaction coordinator, `__transaction_state`, markers,
+  LSO, `read_committed`, and transactional offset commits.
+- shipped: ran `factchecker` on 09; saved `09-message-queues-logs-and-kafka/_factcheck_phase1.md`; patched the
+  one blocker and two precision warnings. No 09 factcheck blockers remain.
+- shipped: reconciled all 09 clusters into `09-message-queues-logs-and-kafka/_research.md` with the standard six
+  sections; expanded `meta/RESEARCH_INDEX.md` with verified Kafka 3.9 source anchors and residual gaps.
+- shipped: created `10-nginx-proxies-and-load-balancing/` and starter brief
+  `10-nginx-proxies-and-load-balancing/_research_event-driven-reverse-proxy.md`, covering NGINX master/worker,
+  event loop, epoll dispatch, accept mutex/backoff, HTTP request state, upstream reverse-proxy path, and keepalive.
+  This 10 starter is not factchecked or reconciled.
+- decisions: no ADR. Chose to start only one tightly scoped 10 cluster after 09 was clean, rather than rushing all
+  of Wave 4 like a caffeinated squirrel with `grep`.
+- stopped-at: Phase 1 with 07, 08, and 09 reconciled/factchecked; 10 has exactly one starter cluster and needs
+  factcheck + deeper clusters on load-balancing/peer selection, proxy buffering/timeouts/retries/backpressure,
+  optionally TLS/HTTP2/HTTP3, then reconciliation. 11–12 untouched. No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 3: reconcile/factcheck 08; start 09 starter cluster
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean;
   no `os.getcwd()` / `Path.cwd()` PermissionError occurred and `/Users/m0t0hu6/.code-puppy-venv` was not modified.
