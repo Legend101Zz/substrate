@@ -18,7 +18,7 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 10 | nginx-proxies-and-load-balancing | RESEARCHING | Phase 1 core briefs drafted, factchecked via `_factcheck_phase1.md`, blockers patched, and reconciled into `_research.md`; residual TLS/HTTP2/HTTP3/reuseport/docs wording gaps logged | brain |
 | 11 | distributed-systems-foundations | RESEARCHING | Four clusters drafted/factchecked (time/clocks, vector-clocks/taxonomy, consistency/replication/quorums, CAP/partitions+distributed-commit) and reconciled into `_research.md`; residual CAP/PACELC/Herlihy-Wing/Dynamo/Skeen/ANSI-isolation primary gaps logged | brain |
 | 12 | research-papers-for-engineers | RESEARCHING | Two clusters drafted/factchecked (reading-method + canon-walkthroughs) and reconciled into `_research.md`; 4 fresh Lamport primaries verified (Byzantine, Reaching Agreement, Part-Time Parliament, State-the-Problem); residual Keshav + storage-trilogy (MapReduce/GFS/Bigtable/Dynamo/Dapper/Tail) `[UNVERIFIED]` gaps logged | brain |
-| 13 | scaling-fundamentals | TODO | Phase 1 batch 2 | — |
+| 13 | scaling-fundamentals | RESEARCHING | Cluster A (back-of-envelope/latency/queueing) drafted + factchecked (math verified by recomputation; Dean/Drepper empirical numbers `[UNVERIFIED]` network-blocked); NOT reconciled — needs clusters B (USE/bottlenecks), C (horiz/vert/AKF cube), D (load testing/coordinated omission) | brain |
 | 14 | data-modeling-partitioning-sharding | TODO | Phase 1 batch 2 | — |
 | 15 | replication-and-consistency-in-practice | TODO | Phase 1 batch 2 | — |
 | 16 | caching-and-cdn-strategies | TODO | Phase 1 batch 2 | — |

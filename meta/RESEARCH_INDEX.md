@@ -323,3 +323,29 @@ own compiler/interpreter · own search engine · own message queue · own coding
   verified in 06-11 is reused. Remaining gaps `[UNVERIFIED]` (fetch before Phase 2): Keshav/Roscoe/Mitzenmacher/Smith;
   MapReduce/GFS/Bigtable/Dynamo; Dapper/Tail-at-Scale/Chubby/ZooKeeper; Herlihy/Wing, End-to-End, Lampson Hints.
   12 is now reconciled into `_research.md` (two clusters, six sections). Opportunistic 11-primary retry stayed HTTP 000.
+
+## Wave 5 — Part II System Design begins (sub-course 13 started)
+
+### 13 scaling-fundamentals
+- Cluster A anchor file: `13-scaling-fundamentals/_research_back-of-envelope-latency-queueing.md`
+  + `_factcheck_clusterA.md`. The capacity *method/math* is VERIFIED BY RECOMPUTATION this
+  session (Python): Little's Law `L=λW` (distribution-free, area derivation); M/M/1
+  `L=ρ/(1−ρ)`, `W=S/(1−ρ)`, utilization wall `W/S=1/(1−ρ)` (ρ=.5→2×,.8→5×,.9→10×,.95→20×,.99→100×);
+  Amdahl `1/((1−p)+p/N)`, ceiling `1/(1−p)` (p=.95→20×); USL
+  `C(N)=N/(1+α(N−1)+βN(N−1))`, knee `N*=√((1−α)/β)`; fan-out tail `1−(1−q)^N`
+  (q=.01,N=100→63%). Memory-hierarchy + 64B cache-line + false-sharing canon REUSED from
+  verified 01 (CS:APP ch.6) and 06 (Disruptor/RocksDB `bloom_impl.h`) rather than re-fetched.
+- Network reality (4th consecutive session): only `lamport.azurewebsites.net` + Walmart
+  artifactory (PyPI / github-*releases*) resolve. Blocked `[UNVERIFIED from fetched source]`
+  Cluster-A primaries to fetch when network heals: Jeff Dean "Latency Numbers Every Programmer
+  Should Know" (jboner gist 2841832 / Colin Scott interactive page / Stanford-295 talk PDF —
+  the exact ns/ms table); Drepper "What Every Programmer Should Know About Memory"
+  (akkadia.org / LWN 2007); Little 1961 (Operations Research); Kleinrock *Queueing Systems v1*
+  (M/M/1, M/G/1 / Pollaczek–Khinchine); Amdahl 1967 (AFIPS); Gunther *Guerrilla Capacity
+  Planning* (USL); Dean & Barroso "The Tail at Scale" CACM 2013 (also in 12 canon). Do NOT
+  harden any exact latency number into Phase-2 prose until fetched.
+- 13 is NOT reconciled (one clean cluster). Planned next clusters: B — USE method /
+  bottleneck identification (Gregg; site HTTP 000 this session); C — horizontal vs vertical /
+  statelessness / AKF scaling cube (X/Y/Z); D — load testing & capacity planning (open vs
+  closed models, coordinated omission — Tene). Cross-link down into appendix N-math-for-systems
+  for full queueing/probability derivations.

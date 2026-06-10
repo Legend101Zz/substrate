@@ -2,7 +2,44 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
-## 2026-06-10 — Phase 1 Wave 4: research + factcheck + RECONCILE 12 (research-papers-for-engineers)
+## 2026-06-10 — Phase 1 Wave 5: START Part II System Design — 13 scaling-fundamentals Cluster A
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
+  checkpoint was `ac39c0b`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
+  `/Users/m0t0hu6/.code-puppy-venv` was not modified; Code Puppy was not reinstalled.
+- shipped: confirmed network reality (4th consecutive session): only `lamport.azurewebsites.net` and Walmart
+  artifactory (PyPI 200 / github-releases-generic 200, gists 404) and `example.com` resolve. Every Cluster-A primary
+  was HTTP 000 by direct `curl`: Drepper (akkadia/LWN/freebsd/gwern mirrors), arXiv, raw.githubusercontent, usenix,
+  research.google, jboner gist 2841832, Colin Scott interactive page, Stanford-295 talk PDF, Cornell/MIT/CSAIL,
+  Wikipedia Little's-law, allthingsdistributed, brendangregg.com. The github-releases artifactory remote 404s for gists.
+- shipped: created `13-scaling-fundamentals/` and wrote `13-scaling-fundamentals/_research_back-of-envelope-latency-queueing.md`
+  (Cluster A, standard six sections) covering Little's Law (distribution-free), the M/M/1 utilization wall, M/G/1
+  Pollaczek–Khinchine variance, Amdahl's Law, the Universal Scalability Law (contention+coherency, retrograde knee),
+  tail-latency/fan-out arithmetic, and the latency hierarchy. Memory-hierarchy + 64B cache-line + false-sharing canon
+  was REUSED via cross-reference from already-verified 01 (CS:APP ch.6) and 06 (Disruptor/RocksDB `bloom_impl.h`),
+  not re-fetched.
+- shipped: factchecked the cluster's load-bearing MATH by independent recomputation (Python this session) and saved
+  `13-scaling-fundamentals/_factcheck_clusterA.md`: verified `W/S=1/(1−ρ)` (.5→2×,.8→5×,.9→10×,.95→20×,.99→100×),
+  Amdahl ceiling p=.95→20×, fan-out `0.99^100=0.366` ⇒ ~63% slow, USL knee N*≈98.5 for α=.03/β=1e-4, M/M/1
+  L=4 at ρ=.8, and Little's-Law derivation. 0 blockers. Empirical numbers (Dean latency table, Drepper) +
+  historical attributions (Little 1961, Kleinrock, Amdahl 1967, Gunther, P-K) correctly flagged `[UNVERIFIED from
+  fetched source]`.
+- shipped: expanded `meta/RESEARCH_INDEX.md` with a Wave-5 / 13 section (verified-by-recomputation anchors + the
+  blocked Cluster-A primary list + planned clusters B/C/D); updated `meta/PROGRESS.md` (13 = RESEARCHING, Cluster A
+  done, not reconciled).
+- shipped: opportunistic step-5 retry of the carried-forward 11 + 12 primaries (Gilbert/Lynch, Brewer, Abadi,
+  Herlihy/Wing, Dynamo, Keshav, MapReduce/GFS/Bigtable, Dapper/Tail-at-Scale) — all live on ACM/arXiv/academic/
+  research.google hosts already confirmed HTTP 000 this session. Nothing upgraded; every 11/12 `[UNVERIFIED]` flag
+  stands unchanged, none erased.
+- decisions: no ADR. Chose NOT to reconcile 13 into `_research.md`: Pillar 2 (the headline empirical latency table) is
+  entirely network-blocked and this is cluster 1 of a planned multi-cluster sub-course (B/C/D outlined). Followed the
+  same discipline as 11 (waited for 4 honest clusters): one clean factchecked cluster checkpoint beats a raccoon-shaped
+  `_research.md`. Verified the theorem-grade math by recomputation (the correct mode for closed-form results) rather
+  than faking a secondary-source citation.
+- stopped-at: Phase 1 with ALL foundations 01-12 reconciled/factchecked AND 13 having ONE clean factchecked Cluster A
+  (not reconciled). Next session: add 13 Cluster B (USE method / bottlenecks), C (horizontal vs vertical / AKF cube),
+  D (load testing / coordinated omission), then reconcile 13 if coverage is honest; opportunistically fetch the
+  blocked Dean/Drepper/queueing primaries + the carried-forward 11/12 canon when a healthier network exists. Part II
+  14-21 remain untouched. No chapters. No Phase 2.
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
   checkpoint was `ac2d61e`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and `/Users/m0t0hu6/.code-puppy-venv`
   was not modified; Code Puppy was not reinstalled.
