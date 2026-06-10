@@ -410,3 +410,54 @@ own compiler/interpreter · own search engine · own message queue · own coding
   (storage engines / consistent hashing / HLL), 07 (optimizer), 11 (replication/consistency/
   atomic commit), 13 (fan-out math / AKF Z-axis), 15 (replication in practice), 16 (caching),
   17 (saga orchestration / CDC), 20 (hedged requests). Next Phase-1 batch: **15-21**.
+
+---
+
+## Wave 5 / 15 replication-and-consistency-in-practice (RECONCILED; 11 theory -> practice; absorbs 14's consistency tax)
+
+- Reconciled `_research.md` synthesizes four factchecked clusters (six sections):
+  - Cluster A - `_research_replication-topologies-and-log.md`: three reasons to replicate
+    (availability / read-scale / locality), orthogonal to partitioning (14); topology = who may
+    write (single-leader = total order, no conflicts, failover liability / multi-leader = per-region
+    writers, conflicts / leaderless = quorum, no leader, no failover); sync/async/semi-sync as the
+    durability-vs-latency dial (async has a lost-write window); replication log formats
+    statement (nondeterministic -> diverges) / WAL-physical (exact, version-coupled) / logical-row
+    (decoupled, feeds CDC -> 14/17) / trigger; read replicas scale reads not writes.
+  - Cluster B - `_research_replication-lag-anomalies-and-fixes.md`: the lag window; three named
+    anomalies read-your-writes / monotonic-reads / consistent-prefix and their session-guarantee
+    fixes (read-from-leader / sticky routing / causal token / replica pinning / same-partition
+    placement / causal metadata / global clock) as a monotone ladder onto 11's consistency models.
+  - Cluster C - `_research_conflicts-and-quorum-tuning.md`: conflict = concurrency detected by
+    version vectors not wall clocks (reuse 11); resolution ladder LWW (lossy) -> version vectors +
+    merge (lossless, app) -> CRDT (lossless, automatic, semilattice merge commutative/associative/
+    idempotent); background convergence read-repair + Merkle anti-entropy (O(log n) diff, reuse 06)
+    + hinted handoff / sloppy quorum; quorum tuning W+R>N VERIFIED BY RECOMPUTATION this session
+    (exhaustive: W+R>N <=> guaranteed overlap, and W+R=N is INSUFFICIENT; stale-read prob 0 iff
+    W+R>N, N=3,W=R=1 -> 2/3 stale, N=5,W=R=1 -> 0.8 stale; majority quorum tolerates floor((N-1)/2)
+    failures, N in {3,5,7} -> {1,2,3}); W+R>N != linearizable.
+  - Cluster D - `_research_failover-split-brain-real-systems.md`: failover detect (a guess, FLP) ->
+    elect (quorum vote) -> reconfigure; split-brain (two leaders -> corruption) fixed by fencing
+    (quorum-gated commits = minority can't commit + monotonic fencing tokens + STONITH); real
+    systems Postgres/MySQL (single-leader + external failover) / Raft-based etcd/CockroachDB
+    (consensus-native) / Dynamo-style (leaderless, no failover) / Spanner (Paxos+2PC+TrueTime);
+    CAP/PACELC made concrete (partition -> CP or AP; healthy -> consistency still costs latency).
+  - Factcheck: `15-replication-and-consistency-in-practice/_factcheck_phase1.md` (math by
+    recomputation; mechanisms by reuse of 06/07/11/13/14 with per-claim pointers; 0 blockers;
+    no first-draft numeric error survived - the W+R=N-insufficiency subtlety caught and stated).
+- The one primitive doing triple duty = majority intersection (quorum freshness C, single-leader
+  election D, minority-can't-corrupt D), all the same pigeonhole verified in 11 sec.1.5.
+- Blocked `[UNVERIFIED from fetched source]` primaries (network HTTP 000, 7th consecutive session;
+  only lamport.azurewebsites.net + Walmart artifactory resolve): Kleppmann DDIA ch.5/8/9; Dynamo
+  SOSP 2007 (leaderless quorum, sloppy quorum, hinted handoff, Merkle anti-entropy, read-repair,
+  sibling version vectors); Terry et al. "Session Guarantees" (Bayou) PDIS 1994 (A/B); Shapiro et
+  al. CRDTs INRIA RR-7506 / SSS 2011 (C); CAP/PACELC Gilbert-Lynch 2002 / Brewer 2000-2012 / Abadi
+  2012 (D, also carried in 11); vendor docs Postgres (streaming/physical repl, synchronous_commit
+  levels, logical decoding/pgoutput, Patroni), MySQL (binlog STATEMENT/ROW/MIXED, semi-sync, GTID,
+  Group Replication), MongoDB (replica sets, oplog, write concern), Cassandra (LWW default, tunable
+  consistency, hinted handoff, read repair), Riak (siblings, dotted version vectors, CRDT types),
+  etcd/CockroachDB/Consul/TiKV (Raft ranges/leases), ZooKeeper (Zab/zxid)/Chubby, Pacemaker/STONITH.
+  Do NOT harden any attribution into Phase-2 prose until fetched. Cross-link: 06 (Merkle/hashing/
+  LRU), 07 (WAL/storage), 11 (consensus/consistency theory/CAP-PACELC/Spanner), 13 (X-axis
+  read-scale, fan-out/lag), 14 (denormalization tax, hot shards), 16 (caching staleness), 17
+  (CDC/saga), 19/20 (SLO/failover headroom, tail tolerance), appendix L (consensus). Next Phase-1
+  batch: **16-21**; 16 (caching-and-cdn-strategies) is the natural next start.

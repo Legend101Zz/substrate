@@ -2,6 +2,55 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 5: START Part II 15 replication-and-consistency-in-practice (A/B/C/D) + RECONCILE 15
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
+  checkpoint was `6597b14`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and
+  `/Users/m0t0hu6/.code-puppy-venv` was not modified; Code Puppy was not reinstalled. Confirmed Wave 2 milestone
+  `4a1cc71` still in history and ALL of 01-14 reconciled/factchecked.
+- shipped: confirmed network reality (7th consecutive session): only `lamport.azurewebsites.net` resolves (HTTP 200);
+  `arxiv.org`, `raw.githubusercontent.com`, `allthingsdistributed.com`, `research.google`, `postgresql.org`,
+  `raft.github.io` all HTTP 000. Step-5 opportunistic fetch of carried-forward 14/13/12/11 primaries failed
+  identically; no new primary fetchable.
+- shipped: created `15-replication-and-consistency-in-practice/` and wrote FOUR tightly-scoped clusters (standard six
+  sections each, briefs only) turning 11's consistency THEORY into PRACTICE and absorbing 14's denormalization +
+  cross-partition consistency tax:
+  - `_research_replication-topologies-and-log.md` (A — why replicate; single/multi/leaderless topologies; sync/async/
+    semi-sync durability dial; replication log statement/WAL-physical/logical-row/trigger + determinism; read replicas
+    scale reads not writes).
+  - `_research_replication-lag-anomalies-and-fixes.md` (B — lag window; read-your-writes / monotonic-reads /
+    consistent-prefix anomalies + their session-guarantee fixes as a monotone ladder onto 11's consistency models).
+  - `_research_conflicts-and-quorum-tuning.md` (C — conflict = concurrency detected by version vectors not clocks; LWW
+    vs VV+merge vs CRDT semilattice; read-repair + Merkle anti-entropy + hinted handoff/sloppy quorum; quorum tuning
+    W+R>N).
+  - `_research_failover-split-brain-real-systems.md` (D — failover detect/elect/reconfigure; split-brain + fencing via
+    quorum-gated commits + monotonic tokens + STONITH; Postgres/MySQL/Raft-based/Dynamo-style/Spanner topologies;
+    CAP/PACELC made concrete).
+- shipped: factchecked the load-bearing MATH by independent recomputation (pure Python, no deps) and saved
+  `15-replication-and-consistency-in-practice/_factcheck_phase1.md`: exhaustive proof that `W+R>N <=> guaranteed
+  read/write overlap` (and that `W+R=N` is INSUFFICIENT — strict `>` required); stale-read prob = 0 iff W+R>N
+  (N=3,W=R=1 -> 2/3 stale; N=5,W=R=1 -> 0.8 stale); majority quorum W=R=floor(N/2)+1 tolerates floor((N-1)/2) failures
+  (N in {3,5,7} -> {1,2,3}); async durability window kept STRUCTURAL (no false precision). 0 blockers; no first-draft
+  numeric error survived (the W+R=N subtlety was caught and stated explicitly). 14 mechanism claims verified by REUSE of
+  line-checked 06/07/11/13/14 with per-claim pointers.
+- shipped: RECONCILED all four 15 clusters into `15-replication-and-consistency-in-practice/_research.md` (standard six
+  sections) with the cross-cluster thesis: once a fact lives in >1 place, decide who may write it (A topology -> whether
+  conflicts exist), how stale a reader may be (B lag anomalies + session-guarantee ladder), what happens when copies
+  disagree (C detect+converge+quorum), and what happens when the writer dies (D failover+fencing+CAP/PACELC). The one
+  primitive doing triple duty = majority intersection (quorum freshness C, single-leader election D, minority-can't-
+  corrupt D). Every `[UNVERIFIED]`/residual gap + downstream boundary (06/07/11/13/14/16/17/19/20 + appendices)
+  preserved as cross-links, not duplicated.
+- shipped: updated `meta/PROGRESS.md` (15 = RESEARCHING/reconciled, four clusters) and this log.
+- decisions: no ADR. Reconciled 15 now (same discipline as 11/12/13/14): the load-bearing content is the *method/math*
+  of replicating + paying the lag/consistency tax + resolving conflicts + tuning quorums + surviving leader failure,
+  verified end-to-end by recomputation + reuse with 0 blockers; the blocked items are canonical/vendor/historical
+  *attributions* that are NOT load-bearing for the method and stay flagged. Honest reconciliation, not a raccoon-shaped
+  doc.
+- stopped-at: Phase 1 with ALL foundations 01-12 + Part II 13/14 AND **15 now reconciled/factchecked** (four clusters).
+  Part II 16-21 remain untouched. Next session: start 16 (caching-and-cdn-strategies) Phase-1 briefs — it absorbs the
+  hot-key + read-scale + staleness pressures that 14 (hot shards) and 15 (read replicas, lag) both hand off — and
+  opportunistically fetch the blocked 15/14/13/12/11 primaries when a healthier network exists. No chapters. No
+  Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 5: START Part II 14 data-modeling-partitioning-sharding (A/B/C) + RECONCILE 14
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean and current
   checkpoint was `add4786`; no `os.getcwd()` / `Path.cwd()` PermissionError occurred and

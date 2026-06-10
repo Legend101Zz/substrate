@@ -115,6 +115,30 @@ to a non-OneDrive workspace and continue there.
   - `14-data-modeling-partitioning-sharding/_research.md` (RECONCILED, six sections).
   All load-bearing math verified by recomputation; canonical/vendor attributions `[UNVERIFIED]` (network HTTP 000, 6th
   session). **ALL of 01-14 now reconciled.**
+- **Phase 1 / Wave 5 / 15 replication-and-consistency-in-practice — Part II THIRD sub-course RECONCILED (four clusters
+  A-D); absorbs 14's denormalization + cross-partition consistency tax and turns 11's consistency THEORY into PRACTICE.**
+  Artifacts:
+  - `15-replication-and-consistency-in-practice/_research_replication-topologies-and-log.md` (Cluster A — why replicate
+    (HA/read-scale/locality, orthogonal to partitioning); single/multi/leaderless topologies; sync/async/semi-sync
+    durability dial; replication log statement/WAL-physical/logical-row/trigger + determinism; read replicas scale
+    reads not writes).
+  - `15-replication-and-consistency-in-practice/_research_replication-lag-anomalies-and-fixes.md` (Cluster B — lag
+    window; read-your-writes / monotonic-reads / consistent-prefix anomalies + their session-guarantee fixes as a
+    monotone ladder onto 11's consistency models).
+  - `15-replication-and-consistency-in-practice/_research_conflicts-and-quorum-tuning.md` (Cluster C — conflict =
+    concurrency detected by version vectors not clocks; LWW vs VV+merge vs CRDT semilattice merge; read-repair + Merkle
+    anti-entropy + hinted handoff/sloppy quorum; quorum tuning W+R>N).
+  - `15-replication-and-consistency-in-practice/_research_failover-split-brain-real-systems.md` (Cluster D — failover
+    detect/elect/reconfigure; split-brain + fencing via quorum-gated commits + monotonic tokens + STONITH;
+    Postgres/MySQL/Raft-based/Dynamo-style/Spanner topologies; CAP/PACELC made concrete).
+  - `15-replication-and-consistency-in-practice/_factcheck_phase1.md` (math by recomputation, mechanisms by reuse of
+    06/07/11/13/14; 0 blockers).
+  - `15-replication-and-consistency-in-practice/_research.md` (RECONCILED, six sections).
+  All load-bearing math verified by recomputation (exhaustive `W+R>N <=> guaranteed overlap`, and `W+R=N` INSUFFICIENT —
+  strict `>`; stale-read prob 0 iff W+R>N, N=3,W=R=1 -> 2/3, N=5,W=R=1 -> 0.8; majority quorum tolerates floor((N-1)/2)
+  failures, N in {3,5,7} -> {1,2,3}). DDIA ch.5/8/9, Dynamo, Bayou session guarantees, CRDT papers, CAP/PACELC
+  primaries, Postgres/MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper docs `[UNVERIFIED]` (network HTTP 000, 7th
+  session, carried forward). **ALL of 01-15 now reconciled.**
 
 ---
 
@@ -154,8 +178,7 @@ to a non-OneDrive workspace and continue there.
     Schroeder/Wierman/Harchol-Balter "Open Versus Closed" (NSDI 2006); Harchol-Balter _Performance Modeling..._.
   Next Phase-1 work: **15-21** (Part II). 15 (replication-and-consistency-in-practice) is the natural next start — it
   absorbs the consistency tax that 14's denormalization (A) and cross-partition operations (C) both hand off.
-
-- **14 data-modeling-partitioning-sharding is RECONCILED (three clusters A/B/C — do NOT erase carry-forward
+-partitioning-sharding is RECONCILED (three clusters A/B/C — do NOT erase carry-forward
   `[UNVERIFIED]`):** all load-bearing math verified by recomputation this session (`mod N` 4->5 moves 0.800 vs
   consistent-hashing add-1-to-N=10 moves 0.088 ~ 1/(N+1); vnode load spread 1.26x; hot key 30%-on-10-shards busiest
   0.378 / ratio 4.86x; fan-out `1-0.99^100=0.634` ~63% slow; scatter throughput f*QPS per shard constant in N).
@@ -164,6 +187,21 @@ to a non-OneDrive workspace and continue there.
   1997 (A/B); Sagas SIGMOD 1987, MapReduce OSDI 2004, Tail at Scale CACM 2013, Spanner re-pin (C); Avro/Protobuf/Thrift
   evolution; DynamoDB/Cassandra/HBase/Elasticsearch/Mongo/Vitess/Citus/Presto/Spark/CockroachDB docs; Kleppmann DDIA
   ch.2-3/6/7/9.
+
+- **15 replication-and-consistency-in-practice is RECONCILED (four clusters A/B/C/D — do NOT erase carry-forward
+  `[UNVERIFIED]`):** all load-bearing math verified by recomputation this session (exhaustive `W+R>N <=> guaranteed
+  read/write overlap`, with `W+R=N` proven INSUFFICIENT — strict `>` required; stale-read prob = 0 iff W+R>N, e.g.
+  N=3,W=R=1 -> 2/3 stale, N=5,W=R=1 -> 0.8 stale; majority quorum W=R=floor(N/2)+1 tolerates floor((N-1)/2) failures,
+  N in {3,5,7} -> {1,2,3}). Mechanisms reused from line-verified 06/07/11/13/14 (leader=ordering device, quorum=
+  majority intersection, version vectors, FLP, Raft term-fencing, CAP/PACELC, Spanner, Merkle/WAL). Carry-forward
+  blocked primaries to fetch when network heals: Kleppmann DDIA ch.5/8/9; Dynamo SOSP 2007 (leaderless quorum, sloppy
+  quorum, hinted handoff, Merkle anti-entropy, read-repair, sibling version vectors); Terry et al. "Session Guarantees"
+  (Bayou) PDIS 1994 (A/B); Shapiro et al. CRDTs INRIA RR-7506 / SSS 2011 (C); CAP/PACELC Gilbert-Lynch 2002 / Brewer
+  2000-2012 / Abadi 2012 (D, also carried in 11); vendor docs Postgres (streaming/physical repl, `synchronous_commit`
+  levels, logical decoding/`pgoutput`, Patroni), MySQL (binlog STATEMENT/ROW/MIXED, semi-sync, GTID, Group Replication),
+  MongoDB (replica sets, oplog, write concern), Cassandra (LWW default, tunable consistency, hinted handoff, read
+  repair), Riak (siblings, dotted version vectors, CRDT types), etcd/CockroachDB/Consul/TiKV (Raft ranges/leases),
+  ZooKeeper (Zab/`zxid`)/Chubby, Pacemaker/STONITH.
 
 ---
 
@@ -192,9 +230,10 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that ALL of 01-14 are reconciled/factchecked (all foundations 01-12 PLUS Part II sub-courses
-  13 scaling-fundamentals (clusters A-D) and 14 data-modeling-partitioning-sharding (clusters A-C)),
-- that Part II 15-21 are still untouched,
+- that ALL of 01-15 are reconciled/factchecked (all foundations 01-12 PLUS Part II sub-courses
+  13 scaling-fundamentals (A-D), 14 data-modeling-partitioning-sharding (A-C), and
+  15 replication-and-consistency-in-practice (A-D)),
+- that Part II 16-21 are still untouched,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
@@ -202,20 +241,27 @@ stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneD
 Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 14 is reconciled; ALL its math is VERIFIED BY RECOMPUTATION (mod-N vs consistent-hashing
-  movement, vnode load spread, hot-shard skew ratio, scatter-gather fan-out tail, scatter
-  throughput amplification). Every canonical/vendor/historical ATTRIBUTION stays blocked
-  `[UNVERIFIED]` (network HTTP 000, now 6 sessions): Codd CACM 1970 + normal forms + Kent 1983 (A);
-  Bigtable OSDI 2006, Dynamo SOSP 2007, Karger consistent-hashing STOC 1997 (A/B); Sagas SIGMOD
-  1987, MapReduce OSDI 2004, Tail at Scale CACM 2013, Spanner re-pin (C); Avro/Protobuf/Thrift
-  evolution; DynamoDB/Cassandra/HBase/Elasticsearch/Mongo/Vitess/Citus/Presto/Spark/CockroachDB
-  docs; Kleppmann DDIA ch.2-3/6/7/9.
-- 13 stays reconciled with its math verified by recomputation and its Dean/Drepper/Gregg/AKF/Tene
-  empirical+historical attributions still blocked `[UNVERIFIED]`.
-- Network reality (6 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
-  resolve; academic/ACM/arXiv/raw.github/research.google/gregg/akfpartners = HTTP 000.
-  Carried-forward blocked primaries to fetch when the network is healthier:
-  - 14: the A/B/C primaries listed above (see NEXT_SESSION "Things LEFT" for the full list).
+- 15 is reconciled; ALL its math is VERIFIED BY RECOMPUTATION (exhaustive `W+R>N <=> guaranteed
+  read/write overlap`, with `W+R=N` proven INSUFFICIENT — strict `>`; stale-read prob = 0 iff
+  W+R>N, N=3,W=R=1 -> 2/3 stale, N=5,W=R=1 -> 0.8 stale; majority quorum tolerates floor((N-1)/2)
+  failures, N in {3,5,7} -> {1,2,3}). Every canonical/vendor/historical ATTRIBUTION stays blocked
+  `[UNVERIFIED]` (network HTTP 000, now 7 sessions): DDIA ch.5/8/9; Dynamo SOSP 2007; Terry et al.
+  "Session Guarantees" (Bayou) PDIS 1994; Shapiro et al. CRDTs (INRIA RR-7506 / SSS 2011);
+  CAP/PACELC (Gilbert-Lynch 2002, Brewer 2000/2012, Abadi 2012); vendor docs Postgres
+  (synchronous_commit, logical decoding, Patroni), MySQL (binlog formats, semi-sync, GTID, Group
+  Replication), MongoDB (oplog/write concern), Cassandra (LWW/tunable consistency/hinted handoff/
+  read repair), Riak (siblings/dotted version vectors/CRDT types), etcd/CockroachDB/Consul/TiKV
+  (Raft ranges/leases), ZooKeeper (Zab/zxid)/Chubby, Pacemaker/STONITH.
+- 14 stays reconciled; math verified by recomputation; Codd/Bigtable/Dynamo/Karger/Sagas/MapReduce/
+  DDIA/vendor-doc attributions still `[UNVERIFIED]`.
+- 13 stays reconciled; math verified by recomputation; Dean/Drepper/Gregg/AKF/Tene empirical+
+  historical attributions still `[UNVERIFIED]`.
+- Network reality (7 sessions running): only `lamport.azurewebsites.net` + Walmart artifactory
+  resolve; academic/ACM/arXiv/raw.github/research.google/postgresql.org/raft.github.io/gregg/
+  akfpartners = HTTP 000. Carried-forward blocked primaries to fetch when the network is healthier:
+  - 15: DDIA ch.5/8/9; Dynamo; Bayou session guarantees; CRDT papers; CAP/PACELC; the Postgres/
+    MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper/Patroni/Pacemaker docs (see "Things LEFT").
+  - 14: the A/B/C primaries (see "Things LEFT" for the full list).
   - 13: Dean latency table, Drepper, Little/Kleinrock/Amdahl/Gunther USL/Tail-at-Scale (A); Gregg
     USE+flame graphs/RED/PSI (B); AKF Scale Cube/Art of Scalability/Twelve-Factor/Fowler (C); Tene
     coordinated omission/HdrHistogram/wrk2/NSDI-2006 open-vs-closed (D).
@@ -231,30 +277,30 @@ Run this plan, but only as much as can be completed well in one session. Prefer 
 multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. START 15-replication-and-consistency-in-practice (Phase 1 briefs ONLY - no chapters, no Phase 2).
-   It absorbs the consistency tax that 14's denormalization (Cluster A) and cross-partition
-   operations (Cluster C) both hand off, and turns 11's consistency THEORY into PRACTICE. Add
-   tightly-scoped clusters, e.g.:
-   - replication topologies: single-leader vs multi-leader vs leaderless; sync vs async; the
-     replication log (statement / WAL-ship / logical/row); read replicas + read-scaling.
-   - replication lag + read-your-writes / monotonic-reads / consistent-prefix anomalies and the
-     reads-from-leader / sticky-routing / causal fixes (reuse 11 consistency models).
-   - conflict handling: multi-leader/leaderless write conflicts, LWW vs version vectors vs CRDTs,
-     read-repair + anti-entropy + hinted handoff, quorum tuning (W+R>N) (reuse 11 quorums/Dynamo).
-   - failover + practice: leader election, split-brain/fencing, replication in real systems
-     (Postgres/MySQL/Raft-based/Dynamo-style), and the CAP/PACELC choice made concrete.
-   Reuse canon already verified in 11 (consistency models, quorum=majority-intersection,
-   leader/follower replication, Paxos/Raft, Spanner) and 14 (the denormalization + cross-partition
-   consistency obligations that land here). Prefer primary sources; fetch via `curl`; mark anything
-   unfetched `[UNVERIFIED]`.
-3. Factcheck each new cluster's load-bearing claims (recompute any math; cite source for empirical/
-   historical claims). Patch blockers.
-4. If 15 coverage is honest, reconcile into
-   `15-replication-and-consistency-in-practice/_research.md` (standard six sections), preserving
-   every logged `[UNVERIFIED]`/residual gap. If thin or a blocker can't clear, stop at a clean
-   cluster checkpoint; do not fake completeness (raccoon-shaped docs forbidden).
-5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 14 + 13 + 12 + 11
-   primaries above and upgrade the corresponding `[UNVERIFIED]` flags to verified, updating the
+2. START 16-caching-and-cdn-strategies (Phase 1 briefs ONLY - no chapters, no Phase 2). It absorbs
+   the hot-key + read-scale + staleness pressures that 14 (hot shards / celebrity keys) and 15
+   (read replicas, replication lag, the consistency/staleness ladder) both hand off. Add tightly-
+   scoped clusters, e.g.:
+   - cache placement + patterns: client/CDN/edge/reverse-proxy/app/DB cache layers; cache-aside
+     (lazy) vs read-through vs write-through vs write-back vs write-around; the read/write path.
+   - eviction + sizing: LRU/LFU/ARW/2Q/TinyLFU/W-TinyLFU, admission policies, hit-ratio vs working
+     set, Zipf reuse from 14, the cost model (reuse 08 cache mechanics + 06 structures).
+   - cache consistency + invalidation: TTL vs explicit invalidation vs versioned keys; stampede/
+     thundering-herd (reuse 08), request coalescing, negative caching; staleness reusing 15's
+     consistency ladder + 11 models.
+   - CDN + edge: anycast, PoPs, cache keys, origin shielding, push vs pull, cache-control/ETag/
+     conditional requests, purge/soft-purge, edge compute; geo-locality reusing 13.
+   Reuse canon already verified in 08 (cache strategies/eviction/write paths/stampede), 06 (LRU/
+   structures, HLL), 13 (latency hierarchy, fan-out, X-axis read-scale), 14 (hot shards/Zipf), and
+   15 (read replicas + the staleness/consistency ladder). Prefer primary sources; fetch via `curl`;
+   mark anything unfetched `[UNVERIFIED]`.
+3. Factcheck each new cluster's load-bearing claims (recompute any math — hit-ratio/Zipf, stampede,
+   working-set; cite source for empirical/historical claims). Patch blockers.
+4. If 16 coverage is honest, reconcile into `16-caching-and-cdn-strategies/_research.md` (standard
+   six sections), preserving every logged `[UNVERIFIED]`/residual gap. If thin or a blocker can't
+   clear, stop at a clean cluster checkpoint; do not fake completeness (raccoon-shaped docs forbidden).
+5. Opportunistic: if the network is healthier, fetch the carried-forward blocked 15 + 14 + 13 + 12 +
+   11 primaries above and upgrade the corresponding `[UNVERIFIED]` flags to verified, updating the
    relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md`
    with the exact next-session prompt, keep files under 600 lines where reasonable, run
@@ -262,3 +308,4 @@ multiple shallow briefs.
 
 No chapters. No Phase 2. No hand-waving. Cite the source or mark it `[UNVERIFIED]`.
 ```
+
