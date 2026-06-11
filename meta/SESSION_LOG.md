@@ -2,6 +2,27 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 3 OPENED: sign-off received → PLAN batch for 00 + 01 (outline only). **STOP for annotation before drafting.**
+- User signed off on Phase 2 ("Sign off → start Phase 3 (PLAN only)"). Began Phase 3 per START_HERE:
+  PLAN → STOP for annotation → (later) IMPLEMENT → VERIFY. NO prose/chapters written this turn.
+- checkpoint at start `2e23b60`; `.code-puppy-venv` untouched; no `Path.cwd()` error; no reinstall.
+- **Network retried (opportunistic + 01's owed primary):** eater.net/8bit + /8bit/output **000**;
+  arxiv.org/abs (DPR 2004.04906) **000**. Nothing healed; 01's SAP-1 bit-map gap + DPR stay
+  `[UNVERIFIED]`, carried verbatim, nothing erased.
+- **SHIPPED — two PLAN files (outlines, explicitly NOT drafts):**
+  - `00-how-to-use-this-course/_plan.md` — 6-section orientation-pamphlet outline + D1/D2/D3 diagram
+    plan + 3 open questions; honors the "write 00 after the DAG is final" note (DAG now final).
+  - `01-computers-from-first-principles/_plan.md` — 7-rung build-up-ladder outline (bits→NAND→ALU→
+    memory→CPU→ISA→program-end-to-end) + paired own-cpu lab (Eater SAP-1 / nand2tetris P1-5) +
+    diagram list + IMAGE PROMPT candidate + all carried `[UNVERIFIED]`/`[PARTIAL]`/`[GAP]` flags +
+    3 open questions (x86-64 vs RISC-V sidebar; Hack+SAP-1 both; SAP-1 bits deferred behind flag).
+- PROGRESS.md: 00 + 01 next-action updated to "`_plan.md` written — STOP for annotation before draft"
+  (state stays PLANNED; not DRAFTING until outlines are annotated).
+- **DECISIONS:** none new (ADR-001–004 stand). The 3+3 open questions are for the user, not ADRs yet.
+- **STOPPED-AT:** PLAN outlines for 00 + 01 presented; **awaiting annotation + go to IMPLEMENT.** No
+  drafting, no diagrams authored, no DONE marks. Next step after annotation: `writer` drafts 00 (or
+  whichever you direct), then `factchecker` + `critic` vs QUALITY_BAR.
+
 ## 2026-06-10 — Phase 2 Wave 20: Batch 2e (29–34 structures) + finalize 2f–2i. **PHASE 2 COMPLETE — awaiting sign-off.**
 - rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
   DECISIONS/NEXT_SESSION/STYLE/QUALITY_BAR; `git status --short` clean at start; checkpoint `557a69c`
