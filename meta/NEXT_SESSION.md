@@ -4,11 +4,55 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-11 (Wave 18 — **Appendices batch 4 CONTINUED**: K + A + B + I + J reconciled — the full systems-infra arc K→A→B→I→J; reuse-only (network all 000/403); recompute 15/15/14/12/13. Appendices now **11/15** done.) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-11 (Wave 19 — **Appendices batch 4 COMPLETE**: C + D + E + O reconciled; recompute 15/13/13/14. Appendices now **15/15** → **ENTIRE PHASE 1 CORPUS COMPLETE** (SPINE 01-34 + Appendices A-O). Next gate: **Phase 2** — per-sub-course `_structure.md`, **STOP for sign-off**.) · Phase: 1 DONE → awaiting Phase-2 go · Harness: **code-puppy**
 
 ---
 
-## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 19)
+## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 20 — PHASE 2, requires sign-off)
+
+> You are the BRAIN agent for the Substrate course project. Start safely from
+> `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,
+> meta/RESEARCH_PROTOCOL.md, meta/COURSE_MAP.md, meta/PROGRESS.md, meta/SESSION_LOG.md,
+> meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4 lines: that **Phase 1 is COMPLETE**
+> (SPINE 01-34 reconciled + Appendices A-O all 15/15 reconciled, exercise-free, recompute-green,
+> 0 blockers); Wave-2 milestone `4a1cc71`; current checkpoint from `git rev-parse --short HEAD`; and
+> the exact Phase-2 plan. Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()`/`Path.cwd()`
+> PermissionError recurs, STOP and tell me to grant Desktop/OneDrive access or move the repo off
+> OneDrive. Do not reinstall Code Puppy. Preserve every logged `[UNVERIFIED]`/residual gap.
+>
+> **This is the PHASE 2 GATE (CONSTITUTION / START_HERE).** Phase 2 = design each sub-course's OWN
+> bespoke shape: for each sub-course (and appendix) write `<subcourse>/_structure.md` proposing a
+> structure that fits its material (NOT one shared template) — dependency position, per-chapter 3-5
+> line specs, paired build lab where the spine supports it, diagrams needed. Then finalize
+> meta/COURSE_MAP.md into a full dependency DAG, populate PROGRESS.md per-chapter, draft the public
+> README.md, and present it ALL. **Then STOP for my sign-off. Write NO chapters in Phase 2; no
+> drafting until I annotate and say go.** Any scope/ordering change goes in meta/DECISIONS.md as an ADR.
+> Recommended Phase-2 batching: propose structures in dependency order (Part 0/I first: 00 then 01-12),
+> small batches, STOP at each natural checkpoint so I can annotate before you continue. Opportunistic
+> (still owed, ALL blocked as of Wave 19): Kafka paper/KIPs (kafka.apache.org 000) → 09/17/H; DPR
+> (arXiv 2004.04906, arxiv 000) → 30/M; Raft (raft.github.io 000) → L; CoDel (queue.acm.org 403) →
+> 18/20 — retry each; if any heal, save receipts to meta/fetched_primaries/ and upgrade the carried
+> `[UNVERIFIED]` → VERIFIED, erase nothing.
+>
+> State to preserve (do NOT erase): **Phase 1 COMPLETE.** SPINE 01-34 reconciled (Part I/II/III,
+> bespoke shapes; 21/28/34 capstones). Appendices ALL DONE: N (20/20), L (22/22), M (17/17), F (14/14),
+> G (14/14), H (13/13), K (15/15), A (15/15), B (14/14), I (12/12), J (13/13), **C (15/15), D (13/13),
+> E (13/13), O (14/14)** — all reference-grade, exercise-free, bespoke, 0 blockers. C/D/E are the three
+> concrete instances of appendix K's pipeline + 05's runtime canon (C=GIL+refcount+adaptive-spec;
+> D=event-loop+hidden-classes+tiered-JIT+libuv; E=classloading+verifier+C1/C2+G1/ZGC+safepoints); O is
+> the cloud-primitives reference (five rented planes → spine primitives). Local+VERIFIED primaries
+> unchanged from Wave 17. Carry-forward `[UNVERIFIED]` (none load-bearing): all prior gaps PLUS Wave-19
+> additions — C: docs.python.org/devguide text + PEP 703 perf + Tier-2 JIT internals + exact
+> adaptive-spec counters; D: nodejs.org/v8.dev text + exact Ignition/Maglev/TurboFan thresholds +
+> setTimeout(0) min + Turboshaft/Wasm; E: docs.oracle.com/openjdk + JVM Spec §4 + exact CompileThreshold
+> + thread-local handshakes mapping + ZGC colored-ptr internals + invokedynamic; O: ALL vendor names/
+> numbers (S3 nines, EBS/Lambda limits, AZ counts, pricing) — cited as illustrations only, every
+> mechanism is spine-derived. Network last check (Wave 19): kafka.apache.org + arxiv.org +
+> raft.github.io + docs.python.org + llvm.org + man7.org all **000**; queue.acm.org **403**.
+
+---
+
+## ⏮ Superseded prompt (Wave 19 — full prompt kept for history; ran C/D/E/O → Phase 1 corpus COMPLETE)
 
 > You are the BRAIN agent for the Substrate course project. Start safely from
 > `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,

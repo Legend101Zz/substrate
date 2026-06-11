@@ -2,7 +2,43 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
-## 2026-06-11 — Phase 1 Wave 18: APPENDICES batch 4 CONTINUED — K + A + B + I + J reconciled (the full systems-infra arc K→A→B→I→J). Appendices now 11/15.
+## 2026-06-11 — Phase 1 Wave 19: APPENDICES batch 4 COMPLETE — C + D + E + O reconciled. **ALL 15 APPENDICES DONE → ENTIRE PHASE 1 CORPUS COMPLETE.**
+- rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
+  DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint at start `e2487ff`; Wave-2 milestone
+  `4a1cc71` confirmed; CWD accessible, NO `os.getcwd()`/`Path.cwd()` PermissionError; `.code-puppy-venv`
+  untouched; no reinstall.
+- **Network retried — ALL still blocked (reuse-only wave):** kafka.apache.org / arxiv.org /
+  raft.github.io / docs.python.org / llvm.org / man7.org all **000**; queue.acm.org **403**. So NO new
+  primary fetched; every appendix reused line-verified spine canon (esp. 05 + appendix K) + spine math.
+  Opportunistic owed fetches (Kafka paper/KIPs, DPR 2004.04906, Raft, CoDel) retried → STILL BLOCKED,
+  carried `[UNVERIFIED]`, nothing hardened, nothing erased.
+- **SHIPPED — 4 reference appendices (deep info only, NO exercises, bespoke shapes, CONSTITUTION #5):**
+  - **C python-internals** — bespoke "life of a PyObject" (header → refcount death → the GIL that
+    protects the count → self-adapting stack-VM eval loop (PEP 659) → cyclic GC). Reuses 05's
+    line-verified CPython source reads + appendix K. `_recompute.py` **15/15**. 0 blockers.
+  - **D javascript-v8-nodejs-internals** — bespoke "one JS value through V8, one tick through the loop"
+    (hidden class → IC + Ignition→Maglev→TurboFan → scavenger/mark-compact → libuv phases + microtasks).
+    Reuses 05's line-verified V8+libuv reads + appendix K. `_recompute.py` **13/13**. 0 blockers.
+  - **E java-jvm-internals** — bespoke "life of a class through the JVM" (load → verify (StackMapTable
+    single pass) → init <clinit>-once → interp→C1→C2+deopt → safepoints + G1/ZGC). Reuses 05's
+    line-verified HotSpot reads + appendix K. `_recompute.py` **13/13**. 0 blockers.
+  - **O cloud-infra-basics** — bespoke "cloud = five rented planes" (compute/storage/network/identity/
+    control-plane); vendor-neutral, NO vendor number load-bearing. Reuses spine 13/20/15 + appendices
+    I/J/L. `_recompute.py` **14/14**. 0 blockers.
+- **C/D/E are the three concrete instances of appendix K's generic compiler/JIT pipeline + spine 05's
+  runtime canon, each with a bespoke (non-K, non-four-cluster) shape; O is the cloud-primitives
+  reference that maps every cloud plane DOWN to a spine primitive + the one new forcing function
+  (meter + blast-radius).**
+- Extraction: no PDF this wave; no venv created; `.code-puppy-venv` untouched.
+- **DECISIONS:** none new (followed the Wave-16/17/18 appendix pattern: bespoke per-appendix shape,
+  recompute+factcheck+reconcile, reuse-only since network blocked, carry-forward all gaps). No ADR.
+- **State preserved:** SPINE 01-34 reconciled; appendices N/L/M/F/G/H/K/A/B/I/J untouched and intact.
+- **MILESTONE:** Appendices now **15/15**. Combined with SPINE 01-34, **the entire Phase 1 research
+  corpus is COMPLETE.** Next gate is **Phase 2** (per-sub-course `_structure.md` proposals) — which
+  **requires sign-off before any drafting** (CONSTITUTION / START_HERE Phase 2). No chapters written.
+- **STOPPED-AT:** one clean factchecked checkpoint after C+D+E+O; Phase 1 done; awaiting Phase 2 go.
+
+
 - rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
   DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint at start `84d2638`; CWD accessible,
   NO `os.getcwd()`/`Path.cwd()` PermissionError; `.code-puppy-venv` untouched; no reinstall.
