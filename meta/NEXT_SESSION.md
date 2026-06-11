@@ -4,63 +4,60 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (Wave 15 — **Part III batch 3 COMPLETE**: 33 safety-and-proactive-self-evolving-agents + 34 design-your-own-agentic-system reconciled; Greshake Indirect Prompt Injection (arXiv 2302.12173) fetched/verified; recompute 15/15 + 13/13. **PART III (22-34) DONE; Phase-1 spine 01-34 DONE.**) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-11 (Wave 16 — **Appendices batch 4 OPENED**: N-math-for-systems + L-consensus-replication-and-transactions + M-ai-agent-memory-tools-and-evaluation reconciled; Lamport Paxos + Byzantine Generals fetched/verified; recompute 20/22/17. Appendices 3/15 done.) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
-## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 16)
+## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 17)
 
 > You are the BRAIN agent for the Substrate course project. Start safely from
 > `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,
 > meta/RESEARCH_PROTOCOL.md, meta/COURSE_MAP.md, meta/PROGRESS.md, meta/SESSION_LOG.md,
 > meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4 lines: current Phase 1 state; Wave 2
 > milestone `4a1cc71`; current checkpoint from `git rev-parse --short HEAD`; that **the entire
-> Phase-1 spine corpus is COMPLETE — Part I (01-12) + Part II (13-21) + Part III (22-34), each a
-> BESPOKE structure**; that **the only remaining Phase-1 work is batch 4 — the Appendices A-O**
-> (all currently TODO); and the exact plan you will run. Do not touch `/Users/m0t0hu6/.code-puppy-venv`.
-> If `os.getcwd()`/`Path.cwd()` PermissionError recurs, STOP and tell me to grant Desktop/OneDrive
-> access or move the repo off OneDrive. Do not reinstall Code Puppy. Preserve every logged
-> `[UNVERIFIED]`/residual gap.
+> Phase-1 SPINE (01-34) is COMPLETE** and **Appendices batch 4 is IN PROGRESS — N, L, M reconciled
+> (3/15); A,B,C,D,E,F,G,H,I,J,K,O still TODO**; and the exact plan you will run. Do not touch
+> `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()`/`Path.cwd()` PermissionError recurs, STOP and
+> tell me to grant Desktop/OneDrive access or move the repo off OneDrive. Do not reinstall Code
+> Puppy. Preserve every logged `[UNVERIFIED]`/residual gap.
 >
-> Then either (A) START **Phase 1 batch 4 — the Appendices (A-O)** as briefs ONLY (no chapters, no
-> Phase 2), in dependency-friendly order, as far as ONE clean factchecked checkpoint allows (prefer
-> one clean checkpoint over shallow briefs); OR (B) if I say so, move to **Phase 2** (per-sub-course
-> `_structure.md` proposals) which MUST STOP for my sign-off before any drafting. DEFAULT = (A).
+> CONTINUE **Phase 1 batch 4 — the Appendices** as briefs ONLY (no chapters, no Phase 2), as far as
+> ONE clean factchecked checkpoint allows (prefer one clean checkpoint over shallow briefs).
+> Recommended order (local-primary-friendly first): **F-postgres-internals** (reuse local
+> Postgres-WAL + 07/15/26 canon; postgresql.org was reachable in earlier waves — retry for MVCC/
+> vacuum/heap/btree docs), **H-kafka-internals** (reuse 09/17 + Nishtala; retry kafka.apache.org —
+> JS-shell in Wave 15, try the PDF paper/mirror), **G-redis-internals** (reuse 08; redis.io docs),
+> then **K-compilers-interpreters-and-jit** (reuse 05), **A-computer-architecture** (reuse 01),
+> **B-linux-internals** (reuse 04), **I-docker-containers-cgroups-namespaces** (reuse 04),
+> **J-kubernetes-internals**, **C/D/E** (python/v8-node/jvm internals, reuse 05), **O-cloud-infra-
+> basics**. Bespoke structure per appendix — reference-grade DEEP info only, **NO exercises, NO
+> tests** (CONSTITUTION #5); each goes infinitely deep on ONE real system; spine chapters cross-link
+> DOWN into them. These are NOT spine sub-courses — do NOT reuse the four-cluster or canvas shapes.
 > 1. `git status --short`; if not clean, inspect before editing.
-> 2. Appendices are **reference-grade DEEP info only — NO exercises, NO tests** (per CONSTITUTION
->    non-negotiable #5); each goes infinitely deep on ONE real system; spine chapters cross-link
->    DOWN into them. Recommended start order (each has local primaries already fetched, minimizing
->    network dependence): **F-postgres-internals** (reuse local Postgres-WAL + 07/15/26 canon),
->    **H-kafka-internals** (reuse 09/17 + Nishtala; retry kafka.apache.org for the design doc/paper —
->    note it was a JS-shell in Wave 15, may need the PDF paper or a mirror), **L-consensus-
->    replication-and-transactions** (reuse Lamport/Gilbert-Lynch/Abadi/Dynamo/Spanner all local),
->    **M-ai-agent-memory-tools-and-evaluation** (reuse ReAct/Toolformer/MemGPT/Reflexion/RAG/
->    SWE-bench/Greshake all local), **N-math-for-systems** (queueing/Little/HLL/bloom — recompute,
->    no fetch). Then A/B/C/D/E/G/I/J/K/O as material + reachable primaries allow. Bespoke structure
->    per appendix — these are NOT spine sub-courses; do NOT reuse the four-cluster or canvas shapes.
-> 3. Per appendix: draft `_research_*.md`; RECOMPUTE any quantitative claims in `_recompute.py`;
->    factcheck load-bearing claims; reuse line-verified spine canon + the ~30 local primaries; fetch
->    NEW primaries only where a claim needs one and the host is reachable. Mark anything unfetched
->    `[UNVERIFIED]`. Reconcile each finished appendix into `<appendix>/_research.md` (bespoke).
-> 4. Opportunistic (still owed): Kafka paper/KIPs (kafka.apache.org — JS-shell in Wave 15, try the
->    PDF/mirror) → 09/17/H; DPR (arXiv 2004.04906) → 30/M; retry still-blocked CoDel (queue.acm.org
->    403) / raft (raft.github.io 000) → 18/20/11/L. Save receipts to meta/fetched_primaries/, update
->    the relevant cluster + factcheck files (carry-forward → VERIFIED, erase nothing).
-> 5. End cleanly: append meta/SESSION_LOG.md, update meta/PROGRESS.md + meta/NEXT_SESSION.md, run
->    `git status --short`, commit, report remaining gaps + next batch. No chapters. No Phase 2
->    (unless I explicitly chose B). No hand-waving — cite the source or mark `[UNVERIFIED]`.
+> 2. Per appendix: draft `_research_*.md` if helpful; RECOMPUTE any quantitative claims in
+>    `_recompute.py`; factcheck load-bearing claims; reuse line-verified spine canon + the ~30 local
+>    primaries; fetch NEW primaries only where a claim needs one AND the host is reachable. Mark
+>    anything unfetched `[UNVERIFIED]`. Reconcile each finished appendix into `<appendix>/_research.md`.
+> 3. Opportunistic (still owed): Kafka paper/KIPs (kafka.apache.org) → 09/17/H; DPR (arXiv
+>    2004.04906) → 30/M; retry still-blocked Raft (raft.github.io 000 → L), CoDel (queue.acm.org
+>    403 → 18/20). Save receipts to meta/fetched_primaries/, update cluster + factcheck files
+>    (carry-forward → VERIFIED, erase nothing). Extraction venv: throwaway `/tmp/pdfx-venv*` only —
+>    NEVER `.code-puppy-venv`.
+> 4. End cleanly: append meta/SESSION_LOG.md, update meta/PROGRESS.md + meta/NEXT_SESSION.md, run
+>    `git status --short`, commit, report remaining gaps + next batch. No chapters. No Phase 2. No
+>    hand-waving — cite the source or mark `[UNVERIFIED]`.
 >
-> State to preserve (do NOT erase): 22-34 reconciled, each BESPOKE (NOT the 13-20 four-cluster
-> shape; 28/34 are capstones, NO new primary; 21 likewise). Primaries local+VERIFIED: ReAct/
-> Toolformer/CoT/MemGPT+Reflexion/Postgres-WAL/MCP-arch/RAG(2005.11401)/SWE-bench(2310.06770)/
-> **Greshake-Indirect-Prompt-Injection(2302.12173, NEW Wave 15)**. `_recompute.py` tallies across
-> Part III = **18/15/18/13/12/16/31/18/15/19/14/15/13** (22→34). All 01-21 stay reconciled. The
-> carried injection `[UNVERIFIED]` pointers from 23/25/29/30 landed in 33 (verified root cause).
-> Carry-forward `[UNVERIFIED]` (none load-bearing): 33 (dual-LLM/CaMeL, Constitutional-AI 2212.08073,
-> RLHF 2203.02155, formal sandboxing→App I, agent red-team benchmarks); 34 (none new, inherits home-
-> course gaps); plus ALL prior 22-32 + 13-21 + 01-12 gaps. Network last check (Wave 15): arxiv 200,
-> kafka.apache.org 200 (but doc is JS-rendered shell), queue.acm.org 403 (CoDel) + raft.github.io
-> 000 still blocked.
+> State to preserve (do NOT erase): SPINE 01-34 reconciled (Part I/II/III, bespoke shapes; 21/28/34
+> capstones w/ no new primary). Appendices done: **N (20/20), L (22/22), M (17/17)** — all
+> reference-grade, exercise-free, bespoke. Local+VERIFIED primaries now include **Lamport Paxos +
+> Byzantine Generals (NEW Wave 16)** alongside ReAct/Toolformer/CoT/MemGPT+Reflexion/Postgres-WAL/
+> MCP-arch/RAG(2005.11401)/SWE-bench(2310.06770)/Greshake(2302.12173)/Dynamo/Spanner/Bigtable/GFS/
+> Gilbert-Lynch/Brewer/Kleppmann/Abadi-PACELC/Tail-at-Scale/Dapper/SEDA/Nishtala/SRE-chapters/RFCs.
+> Carry-forward `[UNVERIFIED]` (none load-bearing): L — Raft(raft.github.io 000), FLP, PBFT, Skeen
+> 3PC; M — DPR(2004.04906)/FAISS-HNSW, MT-Bench(2306.05685), SWE-agent(2405.15793), CaMeL/
+> Constitutional-AI(2212.08073)/RLHF(2203.02155); N — original-paper attributions (recomputed, not
+> load-bearing); plus ALL prior 01-34 gaps. Network last check (Wave 16): lamport.azurewebsites.net
+> 200 (Paxos/Byz fetched), raft.github.io 000 + queue.acm.org 403 still blocked.
 
 ---
 

@@ -51,9 +51,9 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | I | docker-containers-cgroups-namespaces | TODO | Phase 1 batch 4 | — |
 | J | kubernetes-internals | TODO | Phase 1 batch 4 | — |
 | K | compilers-interpreters-and-jit | TODO | Phase 1 batch 4 | — |
-| L | consensus-replication-and-transactions | TODO | Phase 1 batch 4 | — |
-| M | ai-agent-memory-tools-and-evaluation | TODO | Phase 1 batch 4 | — |
-| N | math-for-systems | TODO | Phase 1 batch 4 | — |
+| L | consensus-replication-and-transactions | RECONCILED | Phase 1 batch 4 (appendix) — fault-model ladder (crash n≥2f+1 → Byzantine n≥3f+1 → quorum W+R>N → CAP/PACELC → 2PC/commit-wait → isolation). **NEW: Lamport Paxos + Byzantine Generals FETCHED+VERIFIED** (receipt `_VERIFIED_2026-06-11_consensus.md`); upgrades 12's Byzantine/Paxos `[UNVERIFIED]`→VERIFIED. `_recompute.py` 22/22. Reuses 07/11/14/15 + Dynamo/Spanner/Gilbert-Lynch/Brewer/Kleppmann/Abadi. Carry `[UNVERIFIED]`: Raft (raft.github.io 000), FLP, PBFT, Skeen 3PC | brain |
+| M | ai-agent-memory-tools-and-evaluation | RECONCILED | Phase 1 batch 4 (appendix) — primitive-by-primary catalogue (memory→tools→reasoning→retrieval→evaluation→safety); reference companion to Part III spine. NO new primary (all 7 already local+VERIFIED: MemGPT/Reflexion/Toolformer/ReAct/RAG/SWE-bench/Greshake). `_recompute.py` 17/17. Reuses 22/23/25/27/30/31/33 + 06/N. Carry `[UNVERIFIED]`: DPR(2004.04906)/FAISS-HNSW, MT-Bench(2306.05685), SWE-agent(2405.15793), CaMeL/Constitutional-AI/RLHF | brain |
+| N | math-for-systems | RECONCILED | Phase 1 batch 4 (appendix) — formula compendium by question (queueing/capacity→hashing/probabilistic→tail/availability→statistics). NO new primary (standard results RE-DERIVED, not asserted; Tail-at-Scale reused). `_recompute.py` 20/20 (Little; M/M/1; 1/(1−ρ) wall; birthday; consistent-hashing K/N; Bloom k*=(m/n)ln2; HLL 1.04/√m; fan-out 63.4%; availability; Amdahl/USL; eval CI 1068). Reuses 06/07/08/13/14/15/17/18/19/20/27/31. Carry `[UNVERIFIED]`: original-paper attributions (Little/Bloom/Flajolet/Karger/Amdahl/Gunther) — not load-bearing (recomputed) | brain |
 | O | cloud-infra-basics | TODO | Phase 1 batch 4 | — |
 
 ---

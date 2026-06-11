@@ -2,6 +2,50 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-11 — Phase 1 Wave 16: APPENDICES batch 4 OPENED — N-math-for-systems + L-consensus-replication-and-transactions + M-ai-agent-memory-tools-and-evaluation reconciled (Lamport Paxos + Byzantine Generals fetched/verified).
+- rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
+  DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `c640d59`; CWD accessible, no
+  `os.getcwd()`/`Path.cwd()` PermissionError; `.code-puppy-venv` untouched.
+- **DISCREPANCY HANDLED (again):** the launch prompt described the Wave-13 baseline ("22-30
+  reconciled; 31 NEXT untouched; run 31→34"), but disk/PROGRESS/NEXT_SESSION showed Waves 14-15 had
+  ALREADY reconciled 31, 32, 33, 34 (commits `31b7377`, `c640d59`). Per the constitution ("never
+  guess — rehydrate from PROGRESS.md") I STOPPED before touching 31, reported the conflict, and asked
+  the user. User chose **(A) start Appendices batch 4** — the true next work per NEXT_SESSION Wave 16.
+  No committed factchecked work was overwritten.
+- shipped: **THREE reference appendices reconciled** (deep info only, NO exercises per CONSTITUTION
+  #5; bespoke per-appendix structures, NOT the four-cluster/canvas shapes):
+  - **N-math-for-systems** — formula compendium by question (queueing/capacity → hashing/
+    probabilistic → tail/availability → statistics). `_recompute.py` **20/20** (Little's Law; M/M/1;
+    utilization wall 1/(1−ρ); birthday/collision; consistent hashing K/N; Bloom k*=(m/n)ln2 fp 0.82%;
+    HLL 1.04/√m; fan-out tail 63.4%; serial/parallel availability; Amdahl/USL; eval CI ~1068). NO new
+    primary (standard results, re-derived not asserted; Tail-at-Scale reused for fan-out). Reuses
+    06/07/08/13/14/15/17/18/19/20/27/31.
+  - **L-consensus-replication-and-transactions** — fault-model ladder (crash n≥2f+1 → Byzantine
+    n≥3f+1 → quorum W+R>N → CAP/PACELC → 2PC/commit-wait → isolation). **NEW primaries
+    FETCHED+VERIFIED: Lamport Paxos (`lamport-paxos.txt`) + Byzantine Generals (`lamport-byz.txt`)**
+    from lamport.azurewebsites.net (HTTP 200) — receipt `_VERIFIED_2026-06-11_consensus.md`;
+    extracted via throwaway `/tmp/pdfx-venv-l` (pypdf), `.code-puppy-venv` untouched. Verified
+    verbatim: BFT "3m+1"/"more than two-thirds" (byz L10/156/234-5); Paxos majority+quorum+state-
+    machine (paxos L18/108/131/189-193). Spanner TrueTime ε≈1-7ms + commit-wait reused
+    (spanner-osdi2012 L105/448/580-588). `_recompute.py` **22/22**. **Upgrades 12's carried
+    Byzantine/Paxos `[UNVERIFIED]` → LOCAL+VERIFIED.** Reuses 07/11/14/15 + Dynamo/Spanner/Gilbert-
+    Lynch/Brewer/Kleppmann/Abadi.
+  - **M-ai-agent-memory-tools-and-evaluation** — primitive-by-primary catalogue (memory→tools→
+    reasoning→retrieval→evaluation→safety); the reference-grade companion to the Part III spine
+    (22-34). **NO new primary** — all seven primaries already LOCAL+VERIFIED (MemGPT/Reflexion/
+    Toolformer/ReAct/RAG/SWE-bench/Greshake). `_recompute.py` **17/17** (AMAT over tokens; resident
+    0.1%; tool selection compounding; ANN ~430,043×; SWE-bench CI; pass@k vs pass^k; Condorcet judge;
+    injection blast radius + defence-in-depth). Reuses 22/23/25/27/30/31/33 + 06/N.
+- opportunistic primaries: Lamport Paxos+Byz fetched (host reachable). Still blocked: raft.github.io
+  (000, retried) → Raft `[UNVERIFIED]` carried in L; queue.acm.org (403, CoDel) carried in 18/20.
+  Did NOT fetch DPR/FAISS this session (kept the checkpoint clean; M's gaps inherited not load-bearing).
+- decisions: stopped at THREE clean factchecked appendices rather than risk a thin fourth
+  (F-postgres would need postgresql.org docs not yet verified this session). Prefer one clean
+  checkpoint over shallow briefs (per the standing instruction).
+- stopped-at: N/L/M reconciled + committed. Next batch = remaining appendices, recommended order
+  **F-postgres-internals** (local Postgres-WAL + 07/15/26), **H-kafka-internals** (09/17 + Nishtala;
+  retry kafka.apache.org), then A/B/C/D/E/G/I/J/K/O as material + reachable primaries allow.
+
 ## 2026-06-10 — Phase 1 Wave 15: Part III batch 3 COMPLETE — 33 safety-and-proactive-self-evolving-agents + 34 design-your-own-agentic-system reconciled (Greshake indirect-prompt-injection fetched/verified). PART III (22-34) DONE.
 - rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
   DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `31b7377`; no `os.getcwd()`/
