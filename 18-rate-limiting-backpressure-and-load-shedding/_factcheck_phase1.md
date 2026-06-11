@@ -77,3 +77,20 @@
   dl.acm, research.google, raft.github.io, postgresql.org, kafka.apache.org,
   allthingsdistributed, martin.kleppmann — assumed still 000 (not re-probed individually this
   session; carry forward).
+
+## UPGRADE 2026-06-10 (Wave 8, observability session) — SEDA finally fetched + VERIFIED
+The carry-forward `[UNVERIFIED]` "SEDA SOSP'01 (Welsh) [Harvard+usenix-nonlegacy 000]" in
+Cluster B is now **VERIFIED** from a fetched primary. Network healed:
+`https://www.sosp.org/2001/papers/welsh.pdf` (and `people.eecs.berkeley.edu/~brewer/
+papers/SEDA-sosp.pdf`) returned HTTP 200. Saved to `meta/fetched_primaries/seda-sosp01.{pdf,txt}`.
+Verified verbatim: stage = event handler + bounded incoming event queue + thread pool, each
+managed by a controller pulling batches off its queue and enqueuing onto other stages' queues
+(S3.2); well-conditioned = graceful degradation, throughput plateaus at saturation rather than
+collapsing, linear response-time penalty (S2); dynamic resource controllers do thread-pool
+sizing + event batching + admission control (Abstract/S3.1); explicit/bounded queues enable
+per-stage load conditioning by thresholding/filtering (S2/S3). This confirms 18B's stage/queue/
+thread-pool/controller model and the goodput-plateau thesis (18B/18C). Receipt:
+`meta/fetched_primaries/_VERIFIED_2026-06-10_observability.md` (BONUS UPGRADE section).
+Nothing erased; remaining 18 `[UNVERIFIED]` (CoDel 403, Hystrix/resilience4j/Envoy knobs,
+GCRA, Redis cell limiter, Lyft RLS, Reactive Streams, AWS builders', Nygard) carried forward.
+Deep per-figure SEDA factcheck deferred to 18 Phase 2.

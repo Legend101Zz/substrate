@@ -24,8 +24,8 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 16 | caching-and-cdn-strategies | RESEARCHING | FOUR clusters drafted/factchecked (A placement+patterns, B eviction+sizing, C consistency+invalidation, D CDN+edge) and RECONCILED into `_research.md`; all sizing/stampede math VERIFIED by recomputation; 03/06/08/10/13/14/15 canon reused; **UPGRADE 2026-06-10: RFC 9111/5861/7234/4786 + Nishtala NSDI 2013 FETCHED+VERIFIED (net healed) -> see `_factcheck_phase1.md` §F; also clears matching 08 attributions**; Breslau/XFetch/CMS/ARC/vendor-CDN still `[UNVERIFIED]` | brain |
 | 17 | async-queues-and-event-driven-architecture | RESEARCHING | FOUR clusters drafted/factchecked (A messaging-models+delivery-semantics, B EDA-patterns, C producer/consumer-mechanics+failure, D delivery-infra+tradeoffs) and RECONCILED into `_research.md`; 6 math claims VERIFIED by recomputation (`_recompute.py`: dup certainty N*p, dedup-window=redelivery-horizon, batching tput 1/(c/B+m)->1/m, retention vs compaction floor, parallelism<=partitions, dual-write window); 09/11/13/14/15/16/06/08/03 canon reused; Nishtala NSDI'13 FETCHED+verified (leases 17K->1.3K herd, mcsqueal CDC delete-stream); AMQP/SQS/Kafka-KIP/Sagas-1987/Fowler-CQRS/Kreps-2011 attributions `[UNVERIFIED]` carried forward | brain |
 | 18 | rate-limiting-backpressure-and-load-shedding | RESEARCHING | FOUR clusters drafted/factchecked (A rate-limiting algorithms, B backpressure/SEDA, C load-shedding/retry-storms, D timeouts/breakers/bulkheads/hedging/adaptive-concurrency) and RECONCILED into `_research.md`; 9 math claims VERIFIED by recomputation (`_recompute.py`: bucket sizing, fixed-window 2x boundary, sliding log-vs-counter, distributed over-admit (cells-1)*batch, bounded-queue Q/drain, retry amplification 1/(1-r), goodput collapse, adaptive-throttle p); PRIMARIES fetched+verified RFC 6585 §4 + Google SRE Handling-Overload + Cascading-Failures; 03/11/13/14/15/16/17/10 canon reused; SEDA/CoDel/Hystrix/GCRA/AWS-builders attributions `[UNVERIFIED]` (still blocked) | brain |
-| 19 | observability-tracing-and-slos | TODO | Phase 1 batch 2 (NEXT) | — |
-| 20 | resilience-failure-and-capacity-planning | TODO | Phase 1 batch 2 | — |
+| 19 | observability-tracing-and-slos | RESEARCHING | FOUR clusters drafted/factchecked (A metrics/signal-taxonomy, B distributed-tracing/Dapper, C logs-events/three-pillars, D SLI/SLO/error-budgets/burn-rate) and RECONCILED into `_research.md`; 28/28 math VERIFIED by recomputation (`_recompute.py`: error-budget=(1-SLO)*window, burn_rate=P*period/window {36,14.4,6,1}, threshold=burn*(1-SLO), naive-window precision trap, 1/12 short windows, sampling RSE, cardinality 60->60M); PRIMARIES fetched+verified Dapper-2010 + SRE Ch.4 SLO + Ch.6 Monitoring + Workbook Ch.5 Alerting; 11/13/16/17/09/03/10/18 canon reused; OpenTelemetry/W3C-trace-context/exemplars/RED-credit/tail-sampling attributions `[UNVERIFIED]` carried forward | brain |
+| 20 | resilience-failure-and-capacity-planning | TODO | Phase 1 batch 2 (NEXT) | — |
 | 21 | design-case-studies | TODO | Phase 1 batch 2 | — |
 | 22 | the-agent-loop | TODO | Phase 1 batch 3 | — |
 | 23 | tools-and-tool-contracts | TODO | Phase 1 batch 3 | — |
@@ -71,3 +71,31 @@ Opportunistic primaries fetched + verified to `meta/fetched_primaries/` (receipt
 Deep per-paper factchecks deferred to each sub-course's Phase 2; terms + one load-bearing quote per
 paper verified verbatim this session. Still blocked: SEDA SOSP'01, CoDel ACM Queue'12, CAP/PACELC,
 Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, all vendor docs.
+
+## Wave 8 (2026-06-10) — 19 reconciled + SEDA finally unblocked
+
+- **19 observability-tracing-and-slos RECONCILED** (Part II SEVENTH sub-course; four clusters
+  A-D). The sensing half of the control loop whose actuating half is 18: signals (Four Golden
+  Signals, error-budget burn, queue depth, retry ratio, breaker state, latency percentiles)
+  drive 18's controllers. Primaries fetched + verified to `meta/fetched_primaries/`:
+  - **Dapper** (Google TR dapper-2010-1, 2010): `dapper-2010.{pdf,txt}` — span/trace tree,
+    span name/id/parent id + 64-bit trace id, two-host RPC spans, thread-local + async context
+    propagation, clock-skew via send-before-receive bounds, 1/1024 + adaptive sampling,
+    overhead 204/176/9/40 ns + Table 2, out-of-band Bigtable collection median <15 s.
+  - **SRE Book Ch.4** (`sre_slo.txt`): SLI/SLO/SLA, percentiles>means, 100% wrong, "few SLOs".
+  - **SRE Book Ch.6** (`sre_monitoring.txt`): Four Golden Signals; black-box vs white-box.
+  - **SRE Workbook Ch.5** (`sre_workbook_alerting.txt`): burn-rate + multiwindow multi-burn-rate
+    canon (2%/1h/14.4, 5%/6h/6, 10%/3d/1; 1/12 short window; iterations 1->6).
+  - All math RECOMPUTED in `19.../_recompute.py` (28/28 pass). Receipt:
+    `meta/fetched_primaries/_VERIFIED_2026-06-10_observability.md`. **ALL of 01-19 reconciled.**
+- **SEDA finally unblocked (BONUS):** `https://www.sosp.org/2001/papers/welsh.pdf` HTTP 200
+  (blocked 8+ sessions). Fetched + verified `seda-sosp01.{pdf,txt}`; carry-forward `[UNVERIFIED]`
+  in 18 Cluster B upgraded -> VERIFIED (stage=handler+bounded-queue+thread-pool+controller;
+  well-conditioned=graceful degradation; dynamic controllers). UPGRADE appended to
+  `18-.../_factcheck_phase1.md`; nothing erased.
+- Network at session end: NEW HTTP 200 = research.google Dapper mirror, sre.google chapters,
+  sosp.org + people.eecs.berkeley.edu (SEDA), martin.kleppmann.com (CAP blog, deferred),
+  usenix.org/legacy (osdi04/osdi06 mirrors). STILL blocked: queue.acm.org 403 (CoDel),
+  raft.github.io 000, arxiv, dl.acm, postgresql.org, kafka.apache.org, eecs.harvard.edu
+  (SEDA path 404 — use sosp.org/berkeley instead), aws.amazon.com builders'.
+- **20-21 remain untouched.**

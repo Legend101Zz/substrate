@@ -2,6 +2,36 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 8: START + RECONCILE Part II 19 observability-tracing-and-slos (Dapper) (A-D); SEDA finally unblocked + upgraded into 18
+- shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
+  PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `os.getcwd()`/`Path.cwd()` worked (no PermissionError);
+  `git status --short` clean; checkpoint was `e006265`.
+- shipped: **19 observability-tracing-and-slos RECONCILED** (Part II SEVENTH sub-course, four clusters):
+  - `_research_metrics-and-signal-taxonomy.md` (A): counter/gauge/histogram; Four Golden Signals vs RED vs
+    USE; black-box/white-box; cardinality (60->60M); percentiles>means; bucket-additivity.
+  - `_research_distributed-tracing-dapper.md` (B): Dapper trace-tree/spans/context-propagation/clock-skew/
+    sampling/overhead; head vs tail sampling; reconstructs 13 fan-out tail + 17 async flow.
+  - `_research_logs-events-three-pillars.md` (C): structured logging; three pillars cost/cardinality;
+    exemplars metric->trace->log; sampling/retention (reuse 09/16/17).
+  - `_research_sli-slo-error-budgets.md` (D): SLI/SLO/SLA; error budget=(1-SLO)*window; burn rate;
+    multiwindow multi-burn-rate alerting; SRE iterations 1->6.
+  - `_recompute.py` (28/28 pass); `_factcheck_phase1.md` (0 blockers); `_research.md` (six sections).
+- shipped: **PRIMARIES fetched + verified** to `meta/fetched_primaries/` (network healed): Dapper-2010
+  (research.google mirror) + SRE Book Ch.4 SLO + Ch.6 Monitoring + SRE Workbook Ch.5 Alerting (sre.google).
+  Receipt `_VERIFIED_2026-06-10_observability.md`. Throwaway uv venv used for pypdf, removed after.
+- shipped: **SEDA (Welsh SOSP'01) finally unblocked** via `www.sosp.org/2001/papers/welsh.pdf` (HTTP 200
+  after 8+ sessions of 000/404). Fetched + verified `seda-sosp01.{pdf,txt}`; upgraded the carry-forward
+  `[UNVERIFIED]` in 18 Cluster B -> VERIFIED (UPGRADE section appended to `18-.../_factcheck_phase1.md`;
+  nothing erased). Updated RESEARCH_INDEX + PROGRESS.
+- decisions: ADR-001 (per-cluster files reconciled by brain) reused. No new ADR. Prefer one clean
+  factchecked checkpoint over breadth (per the prompt) — stopped after 19 + SEDA, did NOT start 20.
+- decisions: opportunistic retries — still blocked: CoDel (queue.acm.org 403), raft.github.io (000),
+  arxiv/dl.acm/postgresql.org/kafka.apache.org, aws.amazon.com builders', eecs.harvard.edu (use sosp.org).
+  Kleppmann CAP blog now HTTP 200 (fetch+verify deferred; not load-bearing for 19).
+- stopped-at: **ALL of 01-19 reconciled/factchecked.** Clean checkpoint. Next = 20 resilience-failure-
+  and-capacity-planning (The Tail at Scale — already fetched), then 21 design-case-studies. No chapters,
+  no Phase 2. All logged `[UNVERIFIED]`/residual gaps preserved.
+
 ## 2026-06-10 — Phase 1 Wave 7: START + RECONCILE Part II 18 rate-limiting-backpressure-and-load-shedding (SEDA) (A-D); BIG opportunistic canon fetch (network heal)
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` clean; checkpoint
   at session start `5eff696`; no `os.getcwd()`/`Path.cwd()` PermissionError; `.code-puppy-venv` NOT touched;

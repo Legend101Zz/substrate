@@ -585,3 +585,32 @@ own compiler/interpreter · own search engine · own message queue · own coding
 - UPGRADE sections appended to factcheck files of 18D/15/14/13/12. Deep per-paper factchecks deferred
   to each sub-course's Phase 2. Still blocked: SEDA, CoDel, CAP/PACELC, Herlihy-Wing, Bayou, CRDTs,
   Keshav, Codd, Kafka paper/KIPs, all vendor docs.
+
+## 19 observability-tracing-and-slos (Wave 8, 2026-06-10) — primaries fetched + verified
+
+- **Dapper** Google TR dapper-2010-1 (2010) — `meta/fetched_primaries/dapper-2010.{pdf,txt}`,
+  fetched from static.googleusercontent.com research.google mirror (HTTP 200). Anchors the
+  entire span/trace-tree/context-propagation/sampling/overhead model (Cluster B). VERIFIED.
+- **Google SRE Book Ch.4 "Service Level Objectives"** — `sre_slo.txt` (sre.google, HTTP 200).
+  SLI/SLO/SLA definitions; percentiles>means; error-budget rationale; "few SLOs" (Cluster D).
+- **Google SRE Book Ch.6 "Monitoring Distributed Systems"** — `sre_monitoring.txt`. Four Golden
+  Signals (latency/traffic/errors/saturation); black-box vs white-box (Cluster A).
+- **Google SRE Workbook Ch.5 "Alerting on SLOs"** — `sre_workbook_alerting.txt`. Burn-rate +
+  multiwindow multi-burn-rate canon: 2%/1h/14.4, 5%/6h/6, 10%/3d/1; short=1/12 long;
+  iterations 1->6 (precision/recall/detection/reset). All numbers RECOMPUTED (Cluster D).
+- Receipt: `meta/fetched_primaries/_VERIFIED_2026-06-10_observability.md`. Recompute:
+  `19-observability-tracing-and-slos/_recompute.py` (28/28).
+- Carry-forward `[UNVERIFIED]` (not fetched this session): W3C Trace Context, OpenTelemetry,
+  B3/Zipkin/Jaeger, OpenMetrics/Prometheus exemplars + histogram-vs-summary, "RED" credit
+  (Wilkie), HdrHistogram CO specifics, Honeycomb wide-events critique, tail-sampling pattern,
+  Magpie/X-Trace/Pinpoint.
+
+## SEDA upgrade (Wave 8, 2026-06-10) — applies to 18 Cluster B
+
+- **SEDA** Welsh/Culler/Brewer, SOSP 2001 — `meta/fetched_primaries/seda-sosp01.{pdf,txt}`,
+  fetched from `www.sosp.org/2001/papers/welsh.pdf` (also people.eecs.berkeley.edu), HTTP 200
+  after 8+ sessions blocked. VERIFIED: stage = event handler + bounded incoming event queue +
+  thread pool, each managed by a controller; well-conditioned = graceful degradation; dynamic
+  resource controllers (thread-pool sizing, batching, admission control); explicit bounded
+  queues for load conditioning. Upgraded the carry-forward `[UNVERIFIED]` in
+  `18-.../_factcheck_phase1.md` -> VERIFIED. eecs.harvard.edu/~mdw path is 404; use sosp.org.

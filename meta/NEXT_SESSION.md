@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (18 reconciled — ALL foundations 01-12 + Part II 13-18 done; BIG canon haul: Tail-at-Scale/Dynamo/MapReduce/Bigtable/GFS/Spanner fetched+verified) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (19 reconciled — ALL foundations 01-12 + Part II 13-19 done; Dapper + 3 SRE chapters fetched+verified; SEDA finally unblocked + upgraded into 18) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -208,6 +208,35 @@ to a non-OneDrive workspace and continue there.
   03/11/13/14/15/16/17/10. SEDA/CoDel/Hystrix/GCRA/AWS-builders attributions `[UNVERIFIED]` (still blocked).
   **ALL of 01-18 now reconciled.**
 
+- **Phase 1 / Wave 8 / 19 observability-tracing-and-slos (Dapper) — Part II SEVENTH sub-course RECONCILED
+  (four clusters A-D); the SENSING half of the control loop whose actuating half is 18. Signals (Four
+  Golden Signals, error-budget burn, queue depth, retry ratio, breaker state, latency percentiles) drive
+  18's controllers; tracing makes 17 choreographed flows + 13 fan-out tails legible.**
+  Artifacts:
+  - `19-.../_research_metrics-and-signal-taxonomy.md` (A — counter/gauge/histogram; Four Golden Signals
+    vs RED vs USE; black-box/white-box; cardinality 60->60M; percentiles>means; bucket-additivity).
+  - `19-.../_research_distributed-tracing-dapper.md` (B — Dapper trace-tree/spans/context-propagation/
+    clock-skew-via-happens-before/sampling/overhead; head vs tail; reconstructs 13 tail + 17 async flow).
+  - `19-.../_research_logs-events-three-pillars.md` (C — structured logging; three pillars cost/
+    cardinality; exemplars metric->trace->log; sampling/retention reuse 09/16/17).
+  - `19-.../_research_sli-slo-error-budgets.md` (D — SLI/SLO/SLA; error budget=(1-SLO)*window; burn
+    rate; multiwindow multi-burn-rate alerting; SRE iterations 1->6).
+  - `19-.../_recompute.py` (28/28 pass) + `_factcheck_phase1.md` (0 blockers) + RECONCILED `_research.md`.
+  All 28 load-bearing math claims VERIFIED by recomputation. PRIMARIES fetched+verified to
+  `meta/fetched_primaries/`: Dapper-2010 (research.google mirror), SRE Book Ch.4 SLO + Ch.6 Monitoring,
+  SRE Workbook Ch.5 Alerting (sre.google); receipt `_VERIFIED_2026-06-10_observability.md`. Mechanisms
+  reused from line-verified 11/13/16/17/09/03/10/18. OpenTelemetry/W3C-trace-context/exemplars/RED-credit/
+  tail-sampling/Magpie-X-Trace-Pinpoint attributions `[UNVERIFIED]` carried forward. **ALL of 01-19 now
+  reconciled.**
+
+- **SEDA UPGRADE 2026-06-10 (Wave 8 — finally unblocked):** `www.sosp.org/2001/papers/welsh.pdf` (also
+  `people.eecs.berkeley.edu/~brewer/papers/SEDA-sosp.pdf`) returned HTTP 200 after 8+ sessions blocked.
+  Fetched + verified `seda-sosp01.{pdf,txt}`; the carry-forward `[UNVERIFIED]` SEDA in 18 Cluster B is now
+  VERIFIED (stage=event-handler+bounded-incoming-queue+thread-pool, each managed by a controller; well-
+  conditioned=graceful degradation; dynamic resource controllers = thread-pool sizing/batching/admission;
+  explicit bounded queues for load conditioning). UPGRADE appended to `18-.../_factcheck_phase1.md`;
+  nothing erased. (Note: `eecs.harvard.edu/~mdw` SEDA path is 404 — use sosp.org / berkeley.)
+
 - **BIG CANON HAUL 2026-06-10 (network heal — research.google mirrors + usenix.org/legacy + allthingsdistributed
   + sre.google all HTTP 200):** fetched + extracted (pypdf in a throwaway uv venv, removed after) + verified to
   `meta/fetched_primaries/` (receipt `_VERIFIED_2026-06-10_canon.md`). Upgraded carry-forward `[UNVERIFIED]` ->
@@ -312,6 +341,7 @@ to a non-OneDrive workspace and continue there.
 
 ---
 
+
 ## PROMPT TO RUN NEXT
 
 ```text
@@ -322,87 +352,94 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that ALL of 01-18 are reconciled/factchecked (foundations 01-12 PLUS Part II 13 scaling-fundamentals
-  (A-D), 14 data-modeling-partitioning-sharding (A-C), 15 replication-and-consistency-in-practice (A-D),
-  16 caching-and-cdn-strategies (A-D), 17 async-queues-and-event-driven-architecture (A-D), and
-  18 rate-limiting-backpressure-and-load-shedding/SEDA (A-D)),
-- that Part II 19-21 are still untouched,
+- that ALL of 01-19 are reconciled/factchecked (foundations 01-12 PLUS Part II 13 scaling-
+  fundamentals (A-D), 14 data-modeling-partitioning-sharding (A-C), 15 replication-and-
+  consistency-in-practice (A-D), 16 caching-and-cdn-strategies (A-D), 17 async-queues-and-
+  event-driven-architecture (A-D), 18 rate-limiting-backpressure-and-load-shedding/SEDA (A-D),
+  and 19 observability-tracing-and-slos/Dapper (A-D)),
+- that Part II 20-21 are still untouched,
 - and the exact plan you will run.
 
-Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError recurs,
-stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneDrive workspace. Do not
-reinstall Code Puppy.
+Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError
+recurs, stop and tell me to grant Desktop/OneDrive access or move the repo to a non-OneDrive
+workspace. Do not reinstall Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 18 is reconciled; ALL 9 load-bearing math claims VERIFIED BY RECOMPUTATION (`18.../_recompute.py`):
-  token bucket admit=min(arrival,refill)/instant-burst<=B; leaky bucket smoothing+drop; fixed-window 2x
-  boundary burst; sliding-window-log exact (O(limit)) vs sliding-counter est=curr+prev*(1-frac) worst
-  over-admit prev*frac (O(1)); distributed counter over-admit (cells-1)*batch; bounded-queue added
-  latency Q/drain (SRE 10x-pool 1.0s / 0.5x-pool 0.05s); retry amplification 1/(1-r) (.9->10x,.99->100x)
-  + 3-attempt/10%-budget caps; goodput plateau-at-capacity vs collapse-below-capacity past saturation;
-  Google adaptive-throttle reject p=max(0,(req-K*acc)/(req+1)). PRIMARIES fetched+verified: RFC 6585 §4
-  (429+Retry-After+per-resource/server/fleet counting), Google SRE *Handling Overload* (QPS-pitfall/
-  CPU-signal, per-customer limits, adaptive throttling, criticality 4 tiers + reject-lower-first,
-  graceful degradation, retry budgets 3/10%/"don't retry"), *Addressing Cascading Failures*
-  (queue<=50%pool/reject-early/503, FIFO->LIFO/CoDel[Nichols12], 10K-QPS retry-storm, "capacity planning
-  necessary not sufficient"). Mechanisms reused from line-verified 03/11/13/14/15/16/17/10. Carry-forward
-  `[UNVERIFIED]` (none load-bearing): SEDA SOSP'01 (Welsh) [still blocked: Harvard+usenix-nonlegacy 000];
-  CoDel ACM Queue'12 (Nichols/Jacobson) [queue.acm.org 403]; Hystrix/concurrency-limits/resilience4j/
-  Envoy circuibreaker+bulkhead knobs; GCRA; Redis cell-based limiter; Lyft RLS; Reactive Streams;
-  AWS builders' library backoff-jitter [000]; Nygard "Release It!".
-- BIG CANON HAUL done 2026-06-10 (network heal): Tail-at-Scale CACM'13, Dynamo SOSP'07 (R+W>N verbatim),
-  MapReduce OSDI'04, Bigtable OSDI'06, GFS SOSP'03, Spanner OSDI'12 fetched+verified to
-  meta/fetched_primaries/ (receipt `_VERIFIED_2026-06-10_canon.md`); UPGRADE sections appended to the
-  factcheck files of 18D/15/14/13/12 (carry-forward [UNVERIFIED]->VERIFIED; nothing erased). Deep
-  per-paper factchecks deferred to each sub-course's Phase 2.
-- 17/16/15/14/13 stay reconciled; math verified by recomputation; remaining canon/vendor attributions
-  still `[UNVERIFIED]` except those upgraded above.
-- Network reality at last check: rfc-editor.org + usenix.org/legacy + research.google mirrors
-  (static.googleusercontent.com) + allthingsdistributed.com + sre.google + lamport now HTTP 200.
-  STILL HTTP 000/blocked: arxiv, dl.acm (queue.acm.org 403), raft.github.io, postgresql.org,
-  kafka.apache.org, martin.kleppmann, eecs.harvard.edu (SEDA), aws.amazon.com (builders' library),
-  non-legacy usenix.org.
+- 19 is reconciled; ALL 28 load-bearing math claims VERIFIED BY RECOMPUTATION
+  (`19.../_recompute.py`): error budget=(1-SLO)*window (43.2 min/30d @99.9%) + downtime ladder
+  432/43.2/4.32/0.432; burn_rate=P*period/window (5%/1h=36, 2%/1h=14.4, 5%/6h=6, 10%/3d=1);
+  alert threshold error rate=burn*(1-SLO) (1.44%, 0.6%); naive-tiny-window precision trap
+  (0.1%/10min=0.023% budget); multiwindow short=1/12 long (5m/30m/6h); time-to-exhaust
+  720/35=20.57h; Dapper sampling uniform sampled/s=QPS/1024 + adaptive p=min(1,R/QPS);
+  sampling RSE=1/sqrt(obs) + 102,400 true-events-for-100-samples; cardinality 60->60M.
+  PRIMARIES fetched+verified to meta/fetched_primaries/: Dapper-2010 (research.google mirror),
+  Google SRE Book Ch.4 Service Level Objectives + Ch.6 Monitoring Distributed Systems, SRE
+  Workbook Ch.5 Alerting on SLOs (sre.google); receipt `_VERIFIED_2026-06-10_observability.md`.
+  Mechanisms reused from line-verified 11/13/16/17/09/03/10/18. Carry-forward `[UNVERIFIED]`
+  (none load-bearing): W3C Trace Context/OpenTelemetry/B3/Zipkin/Jaeger; OpenMetrics-Prometheus
+  exemplars + histogram-vs-summary; "RED" credit (Wilkie/Weaveworks); HdrHistogram CO specifics;
+  Honeycomb wide-events critique; tail-sampling pattern; Magpie/X-Trace/Pinpoint.
+- SEDA UPGRADE done 2026-06-10 (Wave 8): `www.sosp.org/2001/papers/welsh.pdf` HTTP 200 after
+  8+ sessions blocked; seda-sosp01.{pdf,txt} fetched+verified; 18 Cluster B carry-forward SEDA
+  `[UNVERIFIED]` -> VERIFIED (UPGRADE appended to 18 factcheck; nothing erased). Tail-at-Scale
+  CACM'13 already fetched+verified (meta/fetched_primaries/, 2026-06-10 canon haul) -> it is
+  the headline primary for 20.
+- 18/17/16/15/14/13 stay reconciled; math verified by recomputation; remaining canon/vendor
+  attributions still `[UNVERIFIED]` except those upgraded.
+- Network reality at last check (2026-06-10 Wave 8): NEW HTTP 200 = research.google Dapper
+  mirror (static.googleusercontent.com), sre.google chapters, www.sosp.org + people.eecs.
+  berkeley.edu (SEDA), martin.kleppmann.com (CAP blog, fetch deferred - not load-bearing),
+  usenix.org/legacy (osdi04 dean.pdf, osdi06 chang.pdf mirrors), rfc-editor.org. STILL HTTP
+  000/403/404/blocked: queue.acm.org 403 (CoDel), raft.github.io 000, arxiv, dl.acm,
+  postgresql.org, kafka.apache.org, eecs.harvard.edu/~mdw SEDA path 404 (use sosp.org),
+  aws.amazon.com builders' library, non-legacy usenix.org.
 
-Run this plan, but only as much as can be completed well in one session. Prefer one clean factchecked
-checkpoint over multiple shallow briefs.
+Run this plan, but only as much as can be completed well in one session. Prefer one clean
+factchecked checkpoint over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. START 19-observability-tracing-and-slos (Dapper) (Phase 1 briefs ONLY - no chapters, no Phase 2). It
-   owns the SIGNALS that 18's controllers act on (shed rate, retry ratio, breaker state, queue depth,
-   latency percentiles, error budgets) and the distributed-tracing model that makes a choreographed 17
-   flow legible. Reuse: 13 (percentiles/histograms/coordinated-omission/tail/Little's Law), 18 (what to
-   measure to drive shedding/backpressure/limits), 17 (tracing async/choreographed flows, consumer lag/
-   DLQ depth as signals), 11 (causality/happens-before underpinning trace spans + clock skew), 03/10
-   (RED at the proxy). Add tightly-scoped clusters, e.g.:
-   - metrics & the signal taxonomy: counters/gauges/histograms; RED (rate/errors/duration) vs USE
-     (from 13) vs the Four Golden Signals (latency/traffic/errors/saturation); cardinality + aggregation;
-     percentiles done right (reuse 13 coordinated omission / HdrHistogram). RECOMPUTE any sampling/
-     percentile/error-budget math.
-   - distributed tracing: spans/trace context propagation; the Dapper model (causal tree, annotations);
-     sampling (head vs tail, probability); overhead; how tracing reconstructs a 17 choreographed flow
-     and a 13 fan-out tail. Fetch the Dapper paper (research.google mirror is now reachable - TRY IT).
-   - logs & events: structured logging; log vs metric vs trace (the three pillars + their cost/cardinality
-     tradeoffs); exemplars linking metrics->traces; sampling/retention (reuse 09/17 log + 16 retention).
-   - SLI/SLO/error budgets: SLI definition; SLO targets; error-budget math + burn-rate alerting;
-     multi-window multi-burn-rate alerts; the SRE error-budget policy. PRIMARY: Google SRE chapters
-     (sre.google is HTTP 200 - fetch *Service Level Objectives* + *Monitoring Distributed Systems* +
-     the SRE Workbook alerting chapter). RECOMPUTE the burn-rate / error-budget math.
-   Prefer primary sources; fetch via `curl` (research.google mirror, sre.google, rfc-editor all now
-   reachable - TRY the Dapper paper + SRE SLO chapters FIRST); mark anything unfetched `[UNVERIFIED]`.
-3. Factcheck each cluster's load-bearing claims (RECOMPUTE all math - percentile/sampling error,
-   error-budget = (1-SLO)*window, burn rate, multi-window alert thresholds; cite source for empirical/
-   historical claims). Patch blockers.
-4. If 19 coverage is honest, reconcile into `19-observability-tracing-and-slos/_research.md` (standard
-   six sections), preserving every logged `[UNVERIFIED]`/residual gap. If thin or a blocker can't clear,
-   stop at a clean cluster checkpoint; do not fake completeness (raccoon-shaped docs forbidden).
-5. Opportunistic: the network healed a lot - aggressively fetch the Dapper paper (research.google
-   mirror), the Google SRE SLO/monitoring/alerting chapters (sre.google), and retry the still-blocked
-   carried-forward primaries (SEDA via any new mirror, CoDel, CAP/PACELC, Herlihy-Wing, Bayou, CRDTs,
-   Keshav, Codd, Kafka paper/KIPs). Upgrade the corresponding `[UNVERIFIED]` flags to verified, saving
-   receipts to meta/fetched_primaries/ and updating the relevant cluster + factcheck files.
-6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update `meta/NEXT_SESSION.md`
-   with the exact next-session prompt (then 20-21 remain), keep files under 600 lines where reasonable,
-   run `git status --short`, commit, and report remaining gaps + next batch.
+2. START 20-resilience-failure-and-capacity-planning (The Tail at Scale) (Phase 1 briefs ONLY -
+   no chapters, no Phase 2). It is the synthesis sub-course: it takes 18's overload controls +
+   19's signals/SLOs/error-budgets and turns them into a discipline for surviving partial
+   failure and planning capacity. Reuse: 13 (latency tail/fan-out/Little's Law/USL knee/
+   capacity loop/coordinated omission), 18 (timeouts/breakers/bulkheads/hedging/retry budgets/
+   load shedding/graceful degradation), 19 (Four Golden Signals/error budgets/burn rate as the
+   capacity + reliability signals), 15 (failover/split-brain/quorum), 11 (FLP/partitions),
+   17/16/14 (async/cache/shard failure modes). Add tightly-scoped clusters, e.g.:
+   - failure models & partial failure: fault vs error vs failure; independent vs correlated
+     failures; fail-stop vs Byzantine (reuse 11/12); the fallacies of distributed computing;
+     blast radius; cascading failure (reuse 18 retry-storm/queue-collapse) and how it differs
+     from a single fault.
+   - the tail at scale (PRIMARY already fetched: meta/fetched_primaries/tail-at-scale-cacm2013):
+     why one slow component dominates a fan-out (1-0.99^100~63%, reuse 13); latency-tail-
+     tolerating techniques (hedged requests, tied requests, micro-partitioning, selective
+     replication, latency-induced probation). RECOMPUTE the fan-out + hedging math.
+   - resilience patterns & redundancy: redundancy (N+1/N+2), failover, isolation/bulkheads,
+     graceful degradation, cells/shuffle-sharding (blast-radius math - RECOMPUTE), chaos
+     engineering as failure-injection verification.
+   - capacity planning & reliability math: demand forecasting; headroom; the queueing/utilization
+     wall (reuse 13 M/M/1, M/G/1, USL); redundancy and availability math (serial vs parallel
+     availability, A=1-(1-a)^n - RECOMPUTE); correlated-failure caveat; capacity as an SLO input
+     (reuse 19 error budget). RECOMPUTE all availability/headroom math.
+   Prefer primary sources; fetch via `curl` (Tail-at-Scale is already local; retry the still-
+   blocked carry-forwards - CoDel, Nygard "Release It!", AWS builders' shuffle-sharding/backoff,
+   Netflix chaos, fallacies-of-distributed-computing); mark anything unfetched `[UNVERIFIED]`.
+3. Factcheck each cluster's load-bearing claims (RECOMPUTE all math - fan-out tail, hedging
+   improvement, serial/parallel availability A=1-(1-a)^n, shuffle-sharding blast radius
+   combinatorics, headroom/utilization; cite source for empirical/historical claims). Patch
+   blockers.
+4. If 20 coverage is honest, reconcile into `20-resilience-failure-and-capacity-planning/
+   _research.md` (standard six sections), preserving every logged `[UNVERIFIED]`/residual gap.
+   If thin or a blocker can't clear, stop at a clean cluster checkpoint; do not fake completeness
+   (raccoon-shaped docs forbidden).
+5. Opportunistic: retry the still-blocked carried-forward primaries (CoDel, CAP/PACELC,
+   Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, AWS builders', raft.github.io,
+   Kleppmann CAP blog now reachable). Upgrade the corresponding `[UNVERIFIED]` flags to verified,
+   saving receipts to meta/fetched_primaries/ and updating the relevant cluster + factcheck files.
+6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update
+   `meta/NEXT_SESSION.md` with the exact next-session prompt (then 21 remains to finish Part II),
+   keep files under 600 lines where reasonable, run `git status --short`, commit, and report
+   remaining gaps + next batch.
 
 No chapters. No Phase 2. No hand-waving. Cite the source or mark it `[UNVERIFIED]`.
 ```
