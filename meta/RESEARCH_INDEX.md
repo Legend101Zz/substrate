@@ -549,3 +549,39 @@ own compiler/interpreter · own search engine · own message queue · own coding
   17K->1.3K/mcsqueal-CDC/4%. See `16-caching-and-cdn-strategies/_factcheck_phase1.md` section F.
 - Still HTTP 000: arxiv, dl.acm, research.google, raft.github.io, postgresql.org, kafka.apache.org,
   allthingsdistributed, martin.kleppmann. Retry-strategy note: prefer IETF/USENIX-hosted mirrors first.
+
+## 18 — rate-limiting-backpressure-and-load-shedding (SEDA) — anchors (2026-06-10, Wave 7)
+
+- **VERIFIED primaries (fetched):** RFC 6585 §4 (429 Too Many Requests + Retry-After; counting
+  per-resource/server/fleet) `meta/fetched_primaries/rfc6585.txt`; Google SRE *Handling Overload*
+  (`sre_handling_overload.txt`: QPS-pitfall/CPU-signal, per-customer limits, adaptive throttling
+  p=max(0,(req-K*acc)/(req+1)) K=2, criticality 4 tiers + reject-lower-first, graceful degradation,
+  retry budgets 3/10%/"don't retry"); Google SRE *Addressing Cascading Failures*
+  (`sre_cascading_failures.txt`: queue<=50%pool/reject-early/503, FIFO->LIFO/CoDel[Nichols12],
+  10K-QPS retry-storm, capacity-planning-necessary-not-sufficient, GC death spiral).
+- **VERIFIED math (`18.../_recompute.py`, 9/9):** token/leaky bucket sizing; fixed-window 2x boundary;
+  sliding-log O(limit) exact vs sliding-counter O(1) error prev*frac; distributed over-admit
+  (cells-1)*batch; bounded-queue latency Q/drain; retry amplification 1/(1-r); goodput collapse;
+  adaptive throttle reject prob.
+- **Reuse:** 13 (queueing wall/Little's Law/tail/knee), 03 (TCP flow control=credit, AIMD), 17
+  (queue-as-buffer/consumer-lag/retry-budgets/backoff-jitter/idempotency), 16 (jitter/coalescing/
+  stale-degrade), 15 (stale replica), 14 (hot key/sticky), 11 (no free coordination), 10 (proxy).
+- **Residual `[UNVERIFIED]`:** SEDA SOSP'01 (Welsh) [Harvard+usenix-nonlegacy 000]; CoDel ACM Queue'12
+  [queue.acm.org 403]; Hystrix/concurrency-limits/resilience4j/Envoy; GCRA; Redis cell-based limiter;
+  Lyft RLS; Reactive Streams; AWS builders' library [000]; Nygard "Release It!".
+
+## Canon haul (2026-06-10, Wave 7; further network heal) — saved to meta/fetched_primaries/
+
+- research.google mirrors (static.googleusercontent.com) + usenix.org/legacy + allthingsdistributed.com
+  + sre.google returned HTTP 200. Fetched + extracted (pypdf, throwaway uv venv) + verified, receipt at
+  `meta/fetched_primaries/_VERIFIED_2026-06-10_canon.md`:
+  - **Tail at Scale** CACM 2013 (`tail-at-scale-cacm2013.{pdf,txt}`): fan-out 63%(=1-0.99^100);
+    backup=hedged + cancellation=tied; Backup Effects 99.9%ile 994ms->50ms. -> 13/18D/20/12.
+  - **Dynamo** SOSP 2007 (`dynamo-sosp2007.{pdf,txt}`): "R + W > N yields a quorum-like system"
+    verbatim + consistent-hashing/vnodes/vector-clocks/sloppy-quorum/hinted-handoff/Merkle/read-repair/
+    gossip. -> 15/14/06/11/12.
+  - **MapReduce** OSDI 2004, **Bigtable** OSDI 2006, **GFS** SOSP 2003, **Spanner** OSDI 2012
+    (TrueTime/commit-wait/Paxos/external-consistency). -> 14/15/11/12.
+- UPGRADE sections appended to factcheck files of 18D/15/14/13/12. Deep per-paper factchecks deferred
+  to each sub-course's Phase 2. Still blocked: SEDA, CoDel, CAP/PACELC, Herlihy-Wing, Bayou, CRDTs,
+  Keshav, Codd, Kafka paper/KIPs, all vendor docs.

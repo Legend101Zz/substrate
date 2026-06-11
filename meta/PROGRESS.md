@@ -23,8 +23,8 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 15 | replication-and-consistency-in-practice | RESEARCHING | FOUR clusters drafted/factchecked (A topologies+log, B lag anomalies+fixes, C conflicts+quorum-tuning, D failover/split-brain/real-systems) and RECONCILED into `_research.md`; quorum/staleness/failure-tolerance math VERIFIED by recomputation (W+R>N overlap, P(stale), majority tolerance); 06/07/11/13/14 canon reused; DDIA/Dynamo/Bayou/CRDT/CAP-PACELC/vendor-doc attributions `[UNVERIFIED]` network-blocked (carried forward) | brain |
 | 16 | caching-and-cdn-strategies | RESEARCHING | FOUR clusters drafted/factchecked (A placement+patterns, B eviction+sizing, C consistency+invalidation, D CDN+edge) and RECONCILED into `_research.md`; all sizing/stampede math VERIFIED by recomputation; 03/06/08/10/13/14/15 canon reused; **UPGRADE 2026-06-10: RFC 9111/5861/7234/4786 + Nishtala NSDI 2013 FETCHED+VERIFIED (net healed) -> see `_factcheck_phase1.md` §F; also clears matching 08 attributions**; Breslau/XFetch/CMS/ARC/vendor-CDN still `[UNVERIFIED]` | brain |
 | 17 | async-queues-and-event-driven-architecture | RESEARCHING | FOUR clusters drafted/factchecked (A messaging-models+delivery-semantics, B EDA-patterns, C producer/consumer-mechanics+failure, D delivery-infra+tradeoffs) and RECONCILED into `_research.md`; 6 math claims VERIFIED by recomputation (`_recompute.py`: dup certainty N*p, dedup-window=redelivery-horizon, batching tput 1/(c/B+m)->1/m, retention vs compaction floor, parallelism<=partitions, dual-write window); 09/11/13/14/15/16/06/08/03 canon reused; Nishtala NSDI'13 FETCHED+verified (leases 17K->1.3K herd, mcsqueal CDC delete-stream); AMQP/SQS/Kafka-KIP/Sagas-1987/Fowler-CQRS/Kreps-2011 attributions `[UNVERIFIED]` carried forward | brain |
-| 18 | rate-limiting-backpressure-and-load-shedding | TODO | Phase 1 batch 2 | — |
-| 19 | observability-tracing-and-slos | TODO | Phase 1 batch 2 | — |
+| 18 | rate-limiting-backpressure-and-load-shedding | RESEARCHING | FOUR clusters drafted/factchecked (A rate-limiting algorithms, B backpressure/SEDA, C load-shedding/retry-storms, D timeouts/breakers/bulkheads/hedging/adaptive-concurrency) and RECONCILED into `_research.md`; 9 math claims VERIFIED by recomputation (`_recompute.py`: bucket sizing, fixed-window 2x boundary, sliding log-vs-counter, distributed over-admit (cells-1)*batch, bounded-queue Q/drain, retry amplification 1/(1-r), goodput collapse, adaptive-throttle p); PRIMARIES fetched+verified RFC 6585 §4 + Google SRE Handling-Overload + Cascading-Failures; 03/11/13/14/15/16/17/10 canon reused; SEDA/CoDel/Hystrix/GCRA/AWS-builders attributions `[UNVERIFIED]` (still blocked) | brain |
+| 19 | observability-tracing-and-slos | TODO | Phase 1 batch 2 (NEXT) | — |
 | 20 | resilience-failure-and-capacity-planning | TODO | Phase 1 batch 2 | — |
 | 21 | design-case-studies | TODO | Phase 1 batch 2 | — |
 | 22 | the-agent-loop | TODO | Phase 1 batch 3 | — |
@@ -55,3 +55,19 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | M | ai-agent-memory-tools-and-evaluation | TODO | Phase 1 batch 4 | — |
 | N | math-for-systems | TODO | Phase 1 batch 4 | — |
 | O | cloud-infra-basics | TODO | Phase 1 batch 4 | — |
+
+---
+
+## Canon-fetch upgrade note (2026-06-10, Wave 7 — network heal)
+
+Opportunistic primaries fetched + verified to `meta/fetched_primaries/` (receipt
+`_VERIFIED_2026-06-10_canon.md`) and applied as UPGRADE sections in the relevant factcheck files
+(carry-forward `[UNVERIFIED]` -> VERIFIED; nothing erased):
+- **Tail at Scale** CACM 2013 -> 13 (tail/fan-out, straggler), 18D (hedged/tied), 20 (headline), 12.
+- **Dynamo** SOSP 2007 (`R+W>N` verbatim + sloppy quorum/hinted handoff/Merkle/read-repair/vnodes)
+  -> 15, 14, 06 (consistent hashing), 11, 12.
+- **MapReduce** OSDI 2004, **Bigtable** OSDI 2006, **GFS** SOSP 2003, **Spanner** OSDI 2012
+  -> 14, 15, 11, 12 (canon walkthroughs).
+Deep per-paper factchecks deferred to each sub-course's Phase 2; terms + one load-bearing quote per
+paper verified verbatim this session. Still blocked: SEDA SOSP'01, CoDel ACM Queue'12, CAP/PACELC,
+Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, all vendor docs.

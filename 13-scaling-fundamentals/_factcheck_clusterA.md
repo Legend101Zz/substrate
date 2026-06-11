@@ -47,3 +47,22 @@ Amdahl 1967, Gunther USL = **HTTP 000**. Verified by direct `curl` this session.
 **Blockers: 0.** Cluster A's load-bearing content (the capacity *method/math*) is fully
 verified. The empirical *numbers* are honestly deferred — which is exactly why 13 stays a
 clean cluster checkpoint and is NOT reconciled this session.
+
+---
+
+## UPGRADE 2026-06-10 (network heal — Tail at Scale FETCHED + VERIFIED)
+
+`research.google` mirror reachable. Fetched `meta/fetched_primaries/tail-at-scale-cacm2013.{pdf,txt}`
+(Dean & Barroso, CACM 2013; slide/preprint form). **VERIFIED verbatim:**
+- Fan-out tail: "Server with 1 ms avg. but 1 sec 99%ile latency – touch 1 of these: 1% take ≥1
+  sec – **touch 100 of these: 63% of requests take ≥1 sec**" (= `1−0.99^100=0.634`, matches the
+  Cluster A recomputation exactly).
+- **Backup requests** (hedged) + **backup requests w/ cancellation** (tied) latency-tolerating
+  techniques; Backup Requests Effects table: no backups 99.9%ile = **994 ms**, backup-after-10ms
+  99.9%ile = **50 ms** (tiny extra load collapses the tail).
+→ Clears the carried-forward 13 `[UNVERIFIED]` for Dean & Barroso "Tail at Scale" (tail/fan-out,
+straggler mitigation). Also the headline primary for **20** and the hedged/tied source for **18D**.
+Dean & Ghemawat MapReduce (`mapreduce-osdi04`) also fetched — straggler + **backup tasks** verified.
+
+**Still `[UNVERIFIED]`:** Dean latency-numbers gist, Drepper memory, Kleinrock, Amdahl 1967,
+Gunther USL, Gregg USE/flame graphs, AKF cube, Tene CO, HdrHistogram/wrk2, Open-vs-Closed NSDI 2006.

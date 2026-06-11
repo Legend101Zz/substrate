@@ -114,3 +114,25 @@ false precision.
 paying the lag/consistency tax, resolving conflicts, tuning quorums, and surviving leader failure —
 is verified end-to-end by recomputation + reuse. Remaining items are network-blocked attributions
 carried forward; none may harden into Phase-2 prose until fetched.
+
+---
+
+## UPGRADE 2026-06-10 (network heal — Dynamo + Spanner FETCHED + VERIFIED)
+
+The 18-session network heal made `allthingsdistributed.com` + `research.google` mirrors
+reachable. Fetched + extracted to `meta/fetched_primaries/` (see `_VERIFIED_2026-06-10_canon.md`):
+
+- **Dynamo (DeCandia et al., SOSP 2007)** — `dynamo-sosp2007.{pdf,txt}`. **VERIFIED verbatim:**
+  "Setting R and W such that **R + W > N** yields a quorum-like system… latency dictated by the
+  slowest of the R (or W) replicas." Confirms the quorum-overlap claim previously verified only
+  by recomputation. Terms present + verified: consistent hashing, virtual nodes, vector clocks,
+  **sloppy quorum, hinted handoff, Merkle anti-entropy, read repair**, gossip. → Clears the
+  carried-forward 15 `[UNVERIFIED]` for Dynamo (leaderless quorum, sloppy quorum, hinted handoff,
+  Merkle, read repair, sibling version vectors).
+- **Spanner (Corbett et al., OSDI 2012)** — `spanner-osdi2012.{pdf,txt}`. **VERIFIED (terms):**
+  TrueTime, commit wait, Paxos, external consistency, uncertainty interval, `TT.now()`. → Clears
+  the carried-forward 15/14/11 `[UNVERIFIED]` for the Spanner externally-consistent topology.
+
+**Still `[UNVERIFIED]` (carried forward):** Kleppmann DDIA ch.5/8/9; Terry et al. Bayou session
+guarantees PDIS 1994; Shapiro et al. CRDTs; CAP/PACELC primaries (Gilbert-Lynch/Brewer/Abadi);
+all vendor docs (Postgres/MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper).

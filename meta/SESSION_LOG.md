@@ -2,6 +2,51 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 7: START + RECONCILE Part II 18 rate-limiting-backpressure-and-load-shedding (SEDA) (A-D); BIG opportunistic canon fetch (network heal)
+- shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` clean; checkpoint
+  at session start `5eff696`; no `os.getcwd()`/`Path.cwd()` PermissionError; `.code-puppy-venv` NOT touched;
+  Code Puppy NOT reinstalled. Confirmed Wave 2 milestone `4a1cc71` and ALL of 01-17 reconciled; 18-21 untouched.
+- shipped: 18 FOUR cluster briefs — `_research_rate-limiting-algorithms.md` (A: token/leaky bucket; fixed/
+  sliding window log+counter; distributed counters; fairness/burst; enforce at edge/LB/task; 429+Retry-After),
+  `_research_backpressure-and-seda.md` (B: bounded queues; block-vs-drop; credit/flow control = TCP window/
+  request(n)/pull-lag; end-to-end vs hop-by-hop; SEDA stage/queue/controller), `_research_load-shedding-and-
+  retry-storms.md` (C: fail-early-503; CPU-not-QPS; criticality 4 tiers + per-customer limits; brownout/degrade;
+  FIFO/LIFO/CoDel + deadline-drop; retry amplification 1/(1-r) -> storm -> goodput collapse; budgets 3/10%),
+  `_research_timeouts-breakers-bulkheads-hedging.md` (D: timeouts+deadline-propagation; circuit breakers;
+  bulkheads; hedged/tied requests; adaptive concurrency AIMD + Google adaptive throttling).
+- shipped: `_recompute.py` (pure stdlib, 9/9 pass, exit 0) verifying 9 load-bearing math claims — token bucket
+  admit=min(arrival,refill)/burst<=B; leaky bucket smoothing+drop; fixed-window 2x boundary burst; sliding-log
+  exact (O(limit)) vs sliding-counter est=curr+prev*(1-frac) worst over-admit prev*frac (O(1)); distributed
+  over-admit (cells-1)*batch; bounded-queue latency Q/drain (SRE 10x-pool 1.0s / 0.5x-pool 0.05s); retry
+  amplification 1/(1-r) (.9->10x,.99->100x) + 3/10% caps; goodput plateau-vs-collapse; adaptive throttle
+  p=max(0,(req-K*acc)/(req+1)).
+- shipped: `_factcheck_phase1.md` (recompute/primary/reuse buckets; 0 blockers) and RECONCILED `_research.md`
+  (standard six sections + cross-cluster thesis: input->buffer->drop->client). Mechanisms reused from line-
+  verified 03/11/13/14/15/16/17/10; no canon re-derived.
+- shipped (PRIMARY, fetched this session): RFC 6585 §4 (429 + Retry-After + per-resource/server/fleet counting)
+  and Google SRE *Handling Overload* + *Addressing Cascading Failures* — VERIFIED: QPS-pitfall/CPU-signal,
+  per-customer limits, adaptive throttling formula+K, criticality 4 tiers+reject-lower-first, graceful
+  degradation, retry budgets 3/10%/"don't retry", queue<=50%pool/reject-early/503, FIFO->LIFO/CoDel[Nichols12],
+  10K-QPS retry-storm, "capacity planning necessary not sufficient". Saved to `meta/fetched_primaries/`.
+- shipped (BIG OPPORTUNISTIC HAUL — network heal: research.google mirrors + usenix.org/legacy +
+  allthingsdistributed.com + sre.google all HTTP 200): fetched + extracted (pypdf in a throwaway uv venv,
+  removed after) and VERIFIED to `meta/fetched_primaries/` (receipt `_VERIFIED_2026-06-10_canon.md`):
+  **Tail at Scale** CACM 2013 (fan-out 63% / backup=hedged + cancellation=tied / Backup Effects 994ms->50ms),
+  **Dynamo** SOSP 2007 ("R + W > N" verbatim + consistent-hashing/vnodes/vector-clocks/sloppy-quorum/hinted-
+  handoff/Merkle/read-repair/gossip), **MapReduce** OSDI 2004 (straggler+backup tasks), **Bigtable** OSDI 2006
+  (SSTable/tablet/Chubby/compaction), **GFS** SOSP 2003 (chunk/64MB/lease/primary), **Spanner** OSDI 2012
+  (TrueTime/commit-wait/Paxos/external-consistency). Upgraded carry-forward `[UNVERIFIED]` -> VERIFIED in the
+  factcheck files of 18D, 15, 14, 13, and 12 (appended UPGRADE sections).
+- decisions: (ADR-001) per-cluster files reconciled by brain — followed. Used a disposable uv venv (Walmart
+  Artifactory mirror) for pypdf text extraction since no pdftotext; removed it; system Python untouched.
+  Recorded the canon haul as a single receipt file rather than re-running full per-paper factchecks (terms +
+  the one load-bearing quote per paper verified verbatim; deep per-paper factcheck deferred to when those
+  sub-courses reach Phase 2).
+- stopped-at: 18 reconciled; 0 factcheck blockers. NOT started: 19-21 (Phase 1), any chapters, any Phase 2.
+  Remaining 18 gaps = vendor/paper attributions (SEDA SOSP'01 [still blocked: Harvard+usenix non-legacy 000],
+  CoDel ACM Queue'12 [queue.acm.org 403], Hystrix/concurrency-limits/resilience4j/Envoy, GCRA, AWS builders'
+  library [000]) — all `[UNVERIFIED]`, none load-bearing. Next batch: 19 (observability-tracing-and-slos/Dapper).
+
 ## 2026-06-10 — Phase 1 Wave 6: START Part II 17 async-queues-and-event-driven-architecture (A/B/C/D) + RECONCILE 17; opportunistic 16/08 RFC+Nishtala upgrade
 - shipped: started safely from `/Users/m0t0hu6/Desktop/substrate`; `git status --short` was clean; current
   checkpoint at session start was `59dc7c5`; no `os.getcwd()`/`Path.cwd()` PermissionError occurred and

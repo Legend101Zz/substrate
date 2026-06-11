@@ -63,3 +63,17 @@ unfetched storage/ops canon is honestly flagged.
 - Cluster B: 9 VERIFIED (incl. 4 fresh Lamport primaries + cross-refs), 2 properly-flagged NEEDS-SOURCE groups, 0 blockers.
 - Total: 0 blockers. 12 has honest, primary-anchored coverage sufficient to reconcile into `_research.md` — with every
   unfetched method/storage source preserved as `[UNVERIFIED]`.
+
+---
+
+## UPGRADE 2026-06-10 (network heal — storage trilogy + Dynamo + Spanner + Tail-at-Scale FETCHED)
+
+`research.google` mirrors + `usenix.org/legacy` + `allthingsdistributed.com` reachable. Fetched +
+extracted to `meta/fetched_primaries/` (full receipts in `_VERIFIED_2026-06-10_canon.md`):
+- **MapReduce** OSDI 2004, **Bigtable** OSDI 2006, **GFS** SOSP 2003, **Dynamo** SOSP 2007,
+  **Spanner** OSDI 2012, **Tail at Scale** CACM 2013 — all PDF + text saved; key terms/claims
+  verified verbatim (see canon receipt). → Clears the carried-forward 12 canon-walkthrough
+  `[UNVERIFIED]` for the Google storage trilogy + Dynamo + Spanner + Tail-at-Scale.
+
+**Still `[UNVERIFIED]`:** Keshav "How to Read a Paper" CCR 2007; Dapper; Chubby/ZooKeeper;
+Saltzer/Reed/Clark End-to-End; Lampson "Hints"; ACM-record pagination re-pins.

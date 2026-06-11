@@ -78,3 +78,20 @@ by reuse/recomputation above. None may harden into Phase-2 prose until fetched.
 **Network retry this session (step 5):** arXiv, raw.githubusercontent, allthingsdistributed,
 research.google all HTTP 000; only `lamport.azurewebsites.net` (200). No new primary fetchable.
 Every `[UNVERIFIED]` flag from 13/12/11 also stands unchanged — none erased.
+
+---
+
+## UPGRADE 2026-06-10 (network heal — Bigtable/MapReduce/Dynamo/Spanner FETCHED + VERIFIED)
+
+`research.google` mirrors + `usenix.org/legacy` + `allthingsdistributed.com` reachable. Fetched
++ extracted to `meta/fetched_primaries/` (see `_VERIFIED_2026-06-10_canon.md`):
+- **Bigtable (Chang et al., OSDI 2006)** — verified terms: SSTable, tablet, GFS, Chubby, column
+  family, minor compaction, commit log → clears 14 wide-column + Bigtable attribution.
+- **MapReduce (Dean & Ghemawat, OSDI 2004)** — verified terms: map/reduce, master/worker,
+  re-execution, locality, straggler + backup tasks → clears 14 scatter-gather/MapReduce lineage.
+- **Dynamo (SOSP 2007)** — verified consistent hashing + virtual nodes → clears 14/06 consistent-
+  hashing attribution (also `R+W>N`, see 15 factcheck upgrade).
+- **Spanner (OSDI 2012)** — TrueTime/commit-wait/Paxos verified → re-pins 14 Spanner reference.
+
+**Still `[UNVERIFIED]`:** Codd CACM 1970 + normal forms + Kent 1983; Karger consistent-hashing
+STOC 1997; Sagas SIGMOD 1987; Avro/Protobuf/Thrift evolution; all vendor docs; Kleppmann DDIA.
