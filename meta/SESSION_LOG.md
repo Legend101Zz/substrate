@@ -2,6 +2,54 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 15: Part III batch 3 COMPLETE — 33 safety-and-proactive-self-evolving-agents + 34 design-your-own-agentic-system reconciled (Greshake indirect-prompt-injection fetched/verified). PART III (22-34) DONE.
+- rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
+  DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `31b7377`; no `os.getcwd()`/
+  `Path.cwd()` PermissionError (CWD accessible via OneDrive physical path).
+- **DISCREPANCY HANDLED:** the launch prompt described the Wave-13 baseline ("22-30 reconciled,
+  31 NEXT untouched"), but disk/PROGRESS showed Wave 14 had ALREADY reconciled 31 + 32. Per the
+  constitution ("never guess — rehydrate from PROGRESS.md") + NEXT_SESSION.md, proceeded with the
+  TRUE next untouched sub-course **33**, then **34**. Reported the discrepancy up front.
+- shipped: **33 safety-and-proactive-self-evolving-agents RECONCILED** (the THREAT + EVOLUTION
+  layer). Bespoke **threat-model → defence-in-depth → controlled-evolution walkthrough**. NEW
+  primary **Greshake et al. "Not what you've signed up for: ... Indirect Prompt Injection" (AISec
+  '23, arXiv 2302.12173) FETCHED+VERIFIED** — root cause "blur the line between data and
+  instructions" (L33-34); retrieved prompts = arbitrary code / API control (L44-46); injection-
+  method taxonomy (Passive/Active/User-driven/Hidden-multistage §3.1) + threat taxonomy (data-theft/
+  fraud/intrusion/malware/manipulation/availability/**worming** §3.2) + persistence-via-memory
+  (L424-448) + no-silver-bullet/"Whack-A-Mole"/alignment-insufficient stance (L1271/1273-4). The
+  carried FORWARD injection `[UNVERIFIED]` pointers from **23 (tool-result) / 25 (memory) / 29
+  (server) / 30 (passage)** all land here on ONE verified root cause. Self-evolution half REUSES
+  local+VERIFIED **Reflexion (2303.11366)**. `_recompute.py` **15/15** (injection blast-radius
+  1-write-many-reads 12→62; sandbox-as-cell 20× containment + least-privilege 4×; defence-in-depth
+  0.8% escape vs 5.9% over-refusal tax; self-improve converges+gated-by-31-eval / ungated reward-
+  hacks; risk-based approval gate 20× cheaper catches 100% damage; prompt-worm R0=2.0>1 vs
+  0.5<1 sanitized; composed defences multiply). `_factcheck_phase1.md` 0 blockers. Reuses
+  18/19/20/23/25/27/29/30/31/32.
+- shipped: **34 design-your-own-agentic-system RECONCILED** (PART III CAPSTONE DESIGN CANVAS, the
+  agentic 21). Bespoke **forced-moves decision-tree / design canvas**. **NO new primary** (capstone
+  application, like 21). Thesis: a design is a SEQUENCE OF FORCED MOVES — task shape + arithmetic
+  pick the primitives (small task forces {22}; big task forces {22,24,33,26,27,31,32}).
+  `_recompute.py` **13/13** re-deriving the cross-cutting budget ledger: 22 O(T²), 24 compaction
+  (per-call window vs cumulative cost kept distinct), 25 AMAT, 26 checkpoint knee I*=√(2N·c),
+  27 Amdahl/join-tail/YAGNI, 31 eval CI ≈1068 tasks, 32 $, 33 defence-per-channel. `_factcheck_
+  phase1.md` 0 blockers; no NEW `[UNVERIFIED]` (inherits home-course gaps). Reuses 22-33.
+- PRIMARY fetched+verified to `meta/fetched_primaries/`: `greshake-injection-2302.12173.{pdf,txt}`
+  (33 pp, 116,724 chars; receipt `_VERIFIED_2026-06-10_injection.md`). Extracted via throwaway
+  `/tmp/pdfx-venv` (uv+pypdf from Walmart external-pypi); `~/.code-puppy-venv` NEVER touched.
+- **PART III (Agentic System Design, 22-34) is COMPLETE.** With 01-12 + 13-21 complete, the entire
+  **Phase-1 spine corpus (01-34) is DONE**.
+- opportunistic: Kafka (kafka.apache.org 200) attempted — `/documentation/#design` returns a thin
+  19KB JS-rendered shell (only 4 keyword hits), NOT a usable primary; discarded (no misleading
+  receipt). Kafka paper/KIPs for 09/17 remain effectively blocked (JS-rendered). CoDel
+  (queue.acm.org 403) + raft.github.io (000) retried, STILL blocked. DPR (2004.04906→30) not
+  fetched (time-boxed; non-load-bearing, 30 already anchored by RAG 2005.11401).
+- decisions: none structural (ADR log unchanged). Proceeded on true PROGRESS state over the stale
+  launch-prompt baseline, per constitution.
+- stopped-at: clean checkpoint after 33 + 34 reconciled + committed. Next batch = **Phase 1 batch 4
+  (Appendices A-O)** OR Phase 2 (`_structure.md`, which STOPS for sign-off). No chapters. No
+  Phase 2 started this session.
+
 ## 2026-06-10 — Phase 1 Wave 14: Part III batch 3 continued — 31 evaluation-tracing-and-guardrails + 32 cost-observability-and-ops reconciled (SWE-bench fetched/verified; 28 upgraded)
 - shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/
   SESSION_LOG/DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `302f6c5`; no
