@@ -149,3 +149,18 @@ Network healed for two CAP primaries during 20 work; fetched + verified to
 - The CAP `[UNVERIFIED]` in 15 is now **partially upgraded** (statement + partition-mode framing
   primary-anchored via Brewer + Kleppmann); **Gilbert-Lynch 2002 formal proof and Abadi 2012
   PACELC remain blocked / carried forward.** PACELC itself is unchanged-pending.
+
+## UPGRADE 2026-06-10 (Wave 10) — Gilbert-Lynch formal CAP + Abadi PACELC UNBLOCKED
+
+Both returned HTTP 200 this session; fetched + verified verbatim to `meta/fetched_primaries/`
+(receipt `_VERIFIED_2026-06-10_cap-pacelc.md`). Carry-forward `[UNVERIFIED]` -> VERIFIED; nothing
+above erased.
+- **Gilbert & Lynch "Perspectives on the CAP Theorem" (2012)** (`gilbert-lynch-2002.{pdf,txt}`):
+  VERIFIED — formal CAP = cannot guarantee both safety(C) + liveness(A) in a partitionable async
+  system, modeled as an atomic/linearizable register; CAP ⇒ no consensus under partition. Anchors
+  15 Cluster D's "failover forfeits A to keep C under partition" (claim B9).
+- **Abadi PACELC (2012)** (`abadi-pacelc-2012.{pdf,txt}`): VERIFIED verbatim — "if Partition (P):
+  trade A vs C; **else (E)**: trade **Latency (L) vs Consistency (C)**." PA/EL (Dynamo/Cassandra/
+  Riak) vs PC/EC (ACID) vs PC/EL (PNUTS). Anchors claim B9's "PACELC = latency tax when healthy";
+  the carry-forward PACELC `[UNVERIFIED]` in 15 is now VERIFIED. (Synchronous-quorum replication is
+  the PC/EC latency tax; tunable async quorums are the PA/EL choice — 15 Cluster C/D made concrete.)

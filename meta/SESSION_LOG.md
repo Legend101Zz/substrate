@@ -2,6 +2,51 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 10: START + RECONCILE Part II 21 design-case-studies (CAPSTONE) — PART II (13-21) COMPLETE; Gilbert-Lynch formal CAP + Abadi PACELC unblocked + upgraded into 11 & 15
+- shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
+  PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `os.getcwd()`/`Path.cwd()` worked (no PermissionError);
+  `git status --short` clean; checkpoint was `f382551`. Confirmed Wave 2 milestone `4a1cc71` ("Phase 1
+  Wave 2 research and factcheck fixes") and that ALL of 01-20 were reconciled/factchecked.
+- shipped: **21 design-case-studies RECONCILED** (Part II CAPSTONE; the application course — NO new
+  primitives, applies the 13-20 toolkit to six concrete designs via a bespoke per-case-study
+  structure):
+  - `_case_url-shortener.md` — write-once/read-heavy (100:1); KGS vs hash key-gen; base62^7 floor;
+    cache/CDN is the whole design (16/14); origin-load=(1-h).
+  - `_case_news-feed.md` — fan-out-on-write vs read; celebrity = 14 hot key (1e8 single-post
+    fan-out); hybrid push/pull; async fan-out (17); read-your-writes (15).
+  - `_case_chat-messaging.md` — 1000 connection gateways; per-conversation sequencer (11/17);
+    at-least-once+dedup = exactly-once-effect; presence shedding (18); reconnect+resync (20).
+  - `_case_search-typeahead.md` — inverted index (06/12); document-partition 100 shards;
+    scatter-gather tail 1-(1-p)^100=63.4%; hedged/tied requests + partial results (20).
+  - `_case_payments-ledger.md` — double-entry append-only ledger; idempotency=exactly-once-effect
+    (17); 2PC vs saga (11/14); sync quorum W+R>N (15); CAP forfeit-A + PACELC PC/EC (VERIFIED).
+  - `_case_rate-limiter.md` — direct 18 application; token bucket; cell counters; distributed
+    over-admit (M-1)*B=35; shard by key (14); fail-open vs SPOF (20).
+  - `_recompute.py` (32/32 back-of-envelope estimates PASS — every QPS/storage/keyspace/cache/shard/
+    fan-out-tail recomputed); `_factcheck_phase1.md` (0 blockers); `_research.md` (RECONCILED:
+    design-method 6-step spine + toolkit-usage matrix + cross-case reconciliations + gap ledger).
+- shipped: **CAP/PACELC primaries UNBLOCKED + verified** (Wave 10 network heal). `groups.csail.mit.edu`
+  (Gilbert-Lynch "Perspectives on the CAP Theorem" 2012) + `cs.umd.edu/~abadi` (Abadi PACELC 2012)
+  returned HTTP 200 after many blocked sessions. Fetched + text-extracted (throwaway uv venv + pypdf,
+  removed after) + verified verbatim to `meta/fetched_primaries/` (`gilbert-lynch-2002.{pdf,txt}`,
+  `abadi-pacelc-2012.{pdf,txt}`; receipt `_VERIFIED_2026-06-10_cap-pacelc.md`). Upgraded carry-forward
+  `[UNVERIFIED]` -> VERIFIED in 11 (`_factcheck_cluster4.md`: formal CAP = safety-vs-liveness
+  impossibility on an atomic register, CAP⇒no-consensus-under-partition) and 15 (`_factcheck_phase1.md`:
+  PACELC "if P: A-vs-C; else: L-vs-C", PA/EL vs PC/EC vs PC/EL). Nothing erased.
+- decisions: 21 uses a BESPOKE per-case-study structure (not the four-cluster shape of 13-20) because
+  it is an application/capstone course — plan-sanctioned; consistent with ADR-001's spirit (cluster/
+  case files reconciled by brain into `_research.md`). The design-method spine + toolkit-usage matrix
+  in `_research.md` is the actual teachable capstone payload.
+- decisions: 21 needed exactly ONE genuinely new primary (CAP/PACELC for the payments case); fetched +
+  verified this session. All other claims are RECOMPUTED math or REUSE of line-verified 06/09/11/12/13-20.
+  Community design idioms (KGS, push/pull feed, vendor chat/search/payment designs, GCRA) flagged
+  `[UNVERIFIED]` as idioms — mechanisms grounded in the line-verified primitives; none load-bearing.
+- stopped-at: clean checkpoint after 21 reconciled + Part II complete. `git status --short` then commit.
+  **PART II (System Design, 13-21) IS COMPLETE.** Next batch = Part III Agentic System Design
+  (22-the-agent-loop onward) per COURSE_MAP "Phase 1 batch 3". Opportunistic note for next session:
+  arxiv.org / kafka.apache.org / postgresql.org are now HTTP 200 (deferred, time-boxed); still blocked
+  queue.acm.org 403 (CoDel), raft.github.io 000, dl.acm.org 403. Do NOT start chapters or Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 9: START + RECONCILE Part II 20 resilience-failure-and-capacity-planning (The Tail at Scale) (A-D); CAP primaries (Brewer/Kleppmann) unblocked + upgraded into 11 & 15
 - shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
   PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `os.getcwd()`/`Path.cwd()` worked (no PermissionError);

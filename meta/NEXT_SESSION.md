@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (20 reconciled — ALL of 01-20 done; Part II synthesis course complete; Tail-at-Scale + AWS shuffle-sharding/backoff + Brewer/Kleppmann CAP + Netflix Simian Army fetched+verified; CAP upgraded into 11 & 15) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (21 reconciled — **PART II System Design (13-21) COMPLETE**; six capstone case-study briefs applying the 13-20 toolkit; Gilbert-Lynch formal CAP + Abadi PACELC fetched+verified and upgraded into 11 & 15) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -35,6 +35,14 @@ to a non-OneDrive workspace and continue there.
 
 ## Things DONE
 
+- **Phase 1 / Wave 10 — 21 design-case-studies RECONCILED = PART II (System Design, 13-21) COMPLETE.**
+  CAPSTONE application course (NO new primitives): six per-case-study briefs applying the 13-20
+  toolkit — `_case_url-shortener.md`, `_case_news-feed.md`, `_case_chat-messaging.md`,
+  `_case_search-typeahead.md`, `_case_payments-ledger.md`, `_case_rate-limiter.md`; `_recompute.py`
+  (32/32 back-of-envelope estimates pass); `_factcheck_phase1.md` (0 blockers); `_research.md`
+  (RECONCILED: 6-step design-method spine + toolkit-usage matrix + cross-case reconciliations).
+  Gilbert-Lynch formal CAP + Abadi PACELC fetched+verified (Case 5 payments) and upgraded into 11 &
+  15 (carry-forward `[UNVERIFIED]` -> VERIFIED; receipt `_VERIFIED_2026-06-10_cap-pacelc.md`).
 - **Phase 0** — scaffold + constitution files + subagent personas + living-state files; git initialized.
 - **Phase 1 / Wave 1 — 01, 02, 03 researched and reconciled.** Factcheck report
   `meta/factcheck_wave1_01-03.md` exists; fixes were applied in milestone commit `4a1cc71`. Residual gaps remain
@@ -300,6 +308,17 @@ to a non-OneDrive workspace and continue there.
 ## Things LEFT / current gaps
 
 - **Do not start chapters. Do not start Phase 2.** Phase 1 research corpus is still incomplete.
+- **CURRENT FRONTIER (post-Wave-10):** Foundations 01-12 + **all of Part II System Design 13-21 are
+  reconciled/factchecked — Part II is COMPLETE.** The next batch is **Part III Agentic System Design
+  (22-the-agent-loop → 34-design-your-own-agentic-system)** per COURSE_MAP "Phase 1 batch 3", then
+  Appendices A-O (batch 4). 21's residual `[UNVERIFIED]` are community design idioms (KGS, push/pull
+  feed, vendor chat/search/payment designs, GCRA) — mechanisms grounded in line-verified 06-20, none
+  load-bearing. 21 Case 5 is primary-anchored on CAP (Gilbert-Lynch) + PACELC (Abadi), both fetched
+  this session.
+- **Opportunistic for next session (newly HTTP 200, deferred/time-boxed this session):** arxiv.org,
+  kafka.apache.org, postgresql.org. Use to upgrade carried `[UNVERIFIED]` in 09/17 (Kafka paper/KIPs),
+  07/15 (Postgres WAL/replication docs), and any arxiv-hosted canon. STILL blocked: queue.acm.org 403
+  (CoDel), raft.github.io 000, dl.acm.org 403 (DOI landing).
 - **10 residual gaps:** reverify exact nginx.org wording before Phase 2 prose; trace `reuseport`/`EPOLLEXCLUSIVE`
   operational interaction, `ngx_thread_pool.c`, full HTTP phase engine, `X-Accel-Buffering`, cache-specific proxy paths,
   TLS termination/OpenSSL, HTTP/2 stream multiplexing/flow control, HTTP/3/QUIC, and commercial/open-source boundaries
@@ -375,7 +394,6 @@ to a non-OneDrive workspace and continue there.
 
 ---
 
-
 ## PROMPT TO RUN NEXT
 
 ```text
@@ -386,13 +404,14 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that ALL of 01-20 are reconciled/factchecked (foundations 01-12 PLUS Part II 13-20:
-  13 scaling-fundamentals (A-D), 14 data-modeling-partitioning-sharding (A-C), 15
-  replication-and-consistency-in-practice (A-D), 16 caching-and-cdn-strategies (A-D),
-  17 async-queues-and-event-driven-architecture (A-D), 18 rate-limiting-backpressure-and-
-  load-shedding/SEDA (A-D), 19 observability-tracing-and-slos/Dapper (A-D), and 20
-  resilience-failure-and-capacity-planning/Tail-at-Scale (A-D)),
-- that Part II 21 (design-case-studies) is the LAST untouched sub-course in Part II,
+- that ALL of 01-21 are reconciled/factchecked: foundations 01-12 PLUS Part II 13-21
+  COMPLETE (13 scaling-fundamentals, 14 data-modeling-partitioning-sharding, 15
+  replication-and-consistency, 16 caching-and-cdn, 17 async-queues-and-EDA, 18 rate-limiting-
+  backpressure-shedding/SEDA, 19 observability-tracing-SLOs/Dapper, 20 resilience-failure-
+  capacity/Tail-at-Scale, 21 design-case-studies CAPSTONE with six case-study briefs +
+  `_recompute.py` 32/32 + design-method matrix),
+- that Part III Agentic System Design (22-the-agent-loop onward) is the NEXT untouched batch
+  ("Phase 1 batch 3" per COURSE_MAP),
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError
@@ -400,74 +419,65 @@ recurs, stop and tell me to grant Desktop/OneDrive access or move the repo to a 
 workspace. Do not reinstall Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 20 is reconciled; ALL 38 load-bearing math claims VERIFIED BY RECOMPUTATION
-  (`20.../_recompute.py`): fan-out 1-0.99^100=0.634; hedge overhead=1-deadline-pct (5%/1%);
-  hedged tail~p^2; Dean backup p99.9 994/50=19.88x; tied -43%/-38%; plain-shard 1/K;
-  shuffle C(8,2)=28->1/28->7x; Route 53 C(2048,4)=730.9B; full-collision 1/C(n,k); overlap
-  k^2/n; util-wall 1/(1-rho) {2/5/10/20x}; headroom C=D/rho*; USL knee 98.49; serial
-  prod(a_i)=0.99501; parallel 1-(1-a)^n {2->4 nines, 3->6}; CORRELATED-FAILURE 6-nines->3-
-  nines (1001x worse, the headline result); headroom-to-survive-f = f/n (N+1/N+2); Little's-
-  Law sizing ->5 servers; retry amplification (1+r)^L=1024x + 1/(1-r). PRIMARIES fetched+
-  verified to meta/fetched_primaries/: Dean Tail-at-Scale; AWS shuffle-sharding (C(8,2)=28,
-  Route 53 730B) + AWS timeouts/retries/backoff-with-jitter; Brewer PODC 2000 CAP keynote;
-  Kleppmann CAP blog 2015; Netflix Simian Army; receipt `_VERIFIED_2026-06-10_resilience.md`.
-  Carry-forward `[UNVERIFIED]` (none load-bearing): Nygard "Release It!"; Avizienis fault/
-  error/failure taxonomy; Deutsch/Gosling fallacies of distributed computing; CACM-2013
-  pagination; Gunther USL + Kleinrock pagination; AZ-correlation stats.
-- CAP UPGRADE done 2026-06-10 (Wave 9): Brewer PODC 2000 + Kleppmann 2015 HTTP 200 after
-  8+ sessions blocked; fetched+verified; upgraded carry-forward CAP `[UNVERIFIED]` -> VERIFIED
-  in 11 (`_factcheck_cluster4.md`) and 15 (`_factcheck_phase1.md`): "at most two" of {C,A,P},
-  Forfeit C/A/P, BASE, CAP-as-narrow-theorem. STILL blocked/carried: Gilbert-Lynch 2002 formal
-  proof + Abadi 2012 PACELC.
-- 19/18/17/16/15/14/13 stay reconciled; math verified by recomputation; remaining canon/vendor
+- 21 is reconciled (CAPSTONE; bespoke per-case-study structure, NOT abstract clusters). All 32
+  back-of-envelope estimates VERIFIED BY RECOMPUTATION (`21.../_recompute.py`): URL shortener
+  (writes 1157 QPS, reads 115741 QPS @100:1, base62^7=3.52e12 -> 5.2% full after 5yr, 91 TB,
+  5 GB hot cache, origin read 11574 @90% hit); news feed (feed reads 34722 QPS, fan-out-on-write
+  69444/s =200x, celebrity 1e8 single-post fan-out); chat (23148 msg QPS, 73 TB/yr, 1000 gateway
+  nodes, 500 group fan-out); search/typeahead (23148 prefix QPS, 100 index shards, scatter-gather
+  tail 1-(1-0.01)^100=63.4%); payments (116 txn QPS, 3.74 TB/yr, W+R>N 4>3 strict, idempotency
+  86400s); rate limiter (1M checks/s, over-admit (M-1)*B=35, 64 MB counters). No new primitives -
+  applies 06/09/11/12/13-20; mechanisms REUSED from those line-verified sub-courses.
+- CAP/PACELC UPGRADE done 2026-06-10 (Wave 10): Gilbert-Lynch "Perspectives on the CAP Theorem"
+  (2012) + Abadi PACELC (2012) HTTP 200 after many blocked sessions; fetched+verified to
+  meta/fetched_primaries/ (receipt `_VERIFIED_2026-06-10_cap-pacelc.md`); upgraded carry-forward
+  `[UNVERIFIED]` -> VERIFIED in 11 (`_factcheck_cluster4.md`: formal CAP safety-vs-liveness,
+  atomic register, CAP=>no-consensus-under-partition) and 15 (`_factcheck_phase1.md`: PACELC
+  "if P: A-vs-C; else: L-vs-C", PA/EL vs PC/EC vs PC/EL); anchors 21 Case 5 payments. NOTE the
+  original 2002 SIGACT News PDF is still separately unfetched (2012 retrospective restates it).
+- 21 residual `[UNVERIFIED]` (none load-bearing): community design idioms - KGS key-gen,
+  push/pull/hybrid feed, websocket/XMPP/MQTT + vendor chat (WhatsApp/Signal), search internals
+  (Lucene/Elasticsearch/BM25 = Appendix-P candidate), vendor payment designs (Stripe/Square),
+  GCRA + vendor rate-limiter posts. Mechanisms grounded in line-verified 06-20.
+- 20/19/18/17/16/15/14/13 stay reconciled; math verified by recomputation; remaining canon/vendor
   attributions still `[UNVERIFIED]` except those upgraded.
-- Network reality at last check (2026-06-10 Wave 9): NEW HTTP 200 = aws.amazon.com builders'
-  library, people.eecs.berkeley.edu (Brewer PODC), martin.kleppmann.com, netflixtechblog.com,
-  research.google mirrors, sre.google, usenix.org/legacy, rfc-editor.org, www.sosp.org. STILL
-  HTTP 000/403/blocked: queue.acm.org 403 (CoDel), raft.github.io 000, arxiv, dl.acm,
-  postgresql.org, kafka.apache.org.
+- Network reality at last check (2026-06-10 Wave 10): NEW HTTP 200 = groups.csail.mit.edu
+  (Gilbert-Lynch), cs.umd.edu (Abadi PACELC), arxiv.org, kafka.apache.org, postgresql.org (last
+  three deferred/time-boxed). Earlier-healed: aws.amazon.com builders', berkeley/sosp.org,
+  martin.kleppmann.com, netflixtechblog.com, research.google mirrors, sre.google, usenix.org/legacy,
+  rfc-editor.org. STILL HTTP 403/000/blocked: queue.acm.org 403 (CoDel), raft.github.io 000,
+  dl.acm.org 403 (DOI landing).
 
 Run this plan, but only as much as can be completed well in one session. Prefer one clean
 factchecked checkpoint over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. START 21-design-case-studies (Phase 1 briefs ONLY - no chapters, no Phase 2). This is the
-   CAPSTONE of Part II: it does not introduce new primitives - it APPLIES the entire Part II
-   toolkit (13 back-of-envelope/Little's-Law/USL; 14 data modeling/partitioning/sharding; 15
-   replication/consistency; 16 caching/CDN; 17 async/EDA; 18 rate-limiting/backpressure/shedding;
-   19 observability/SLOs; 20 resilience/tail/capacity) to concrete designs. Because it is an
-   application course, it needs a BESPOKE structure (per-case-study walkthroughs, NOT abstract
-   clusters). Add tightly-scoped case studies, e.g.:
-   - URL shortener (write-once/read-heavy; KGS vs hash; cache; 16/14).
-   - News feed / timeline (fan-out-on-write vs fan-out-on-read; celebrity problem = 14 hot key;
-     17 async fan-out; 16 cache).
-   - Chat / messaging (fan-out, ordering = 11/17, presence, delivery semantics = 17, websockets).
-   - Web search / typeahead (inverted index = 06/12, sharding 14, scatter-gather tail = 13/20).
-   - Payments / ledger (idempotency = 17, exactly-once-effect, 2PC/saga = 11/14, strong
-     consistency = 15, auditability).
-   - Distributed rate limiter (direct 18 application; token bucket; cell counters).
-   Each case study brief = requirements (functional + non-functional + scale estimate via 13
-   back-of-envelope), the data model + API, the bottleneck analysis, the design with explicit
-   cross-links to 13-20, the failure modes (20), and the tradeoffs. RECOMPUTE every back-of-
-   envelope estimate (QPS, storage/yr, bandwidth, cache working set, shard count, fan-out tail).
-   Reuse line-verified canon from 13-20; primary sources where a specific design claim needs one
-   (e.g. consistent hashing 06, Dynamo 15, Kafka log 09/17, Bigtable 14). Mark anything unfetched
-   `[UNVERIFIED]`.
-3. Factcheck each case study's load-bearing claims (RECOMPUTE all back-of-envelope math; cite the
-   reused canon by sub-course + the primary where applicable). Patch blockers.
-4. If 21 coverage is honest, reconcile into `21-design-case-studies/_research.md` (bespoke
-   structure is fine - synthesize the case studies + a cross-cutting "design method" section +
-   consolidated sources/gaps). Preserve every logged `[UNVERIFIED]`/residual gap. If thin or a
-   blocker can't clear, stop at a clean case-study checkpoint; do not fake completeness.
-5. Opportunistic: retry the still-blocked carried-forward primaries (CoDel queue.acm.org,
-   Gilbert-Lynch formal CAP, Abadi PACELC, Kafka paper/KIPs, raft.github.io, Codd, Keshav).
-   Upgrade the corresponding `[UNVERIFIED]` flags, saving receipts to meta/fetched_primaries/
-   and updating the relevant cluster + factcheck files.
+2. START Part III Agentic System Design "Phase 1 batch 3" (briefs ONLY - no chapters, no Phase 2).
+   Begin with 22-the-agent-loop (the foundational primitive: call -> observe -> decide -> repeat),
+   then proceed in dependency order through 23-tools-and-tool-contracts, 24-prompts-and-context-
+   engineering, 25-memory-short-term-long-term-and-safety, etc., as far as one clean checkpoint
+   allows. Part III has its OWN bespoke structures per sub-course (the agent loop is a control-loop
+   walkthrough; tools is a contract/schema walkthrough; etc.) - do NOT blindly reuse the four-
+   cluster shape. Cross-link DOWN into the Part I/II primitives where an agent system reuses them
+   (e.g. 25 memory <-> 08/16 caching + 06 data structures; 26 state-persistence-and-resume <->
+   15 replication/durability + 09 the log; 27 multi-agent orchestration <-> 11 consensus/ordering +
+   17 async/EDA + 20 resilience/tail; 31 evaluation/tracing <-> 19 observability; 32 cost-obs <->
+   13 capacity + 18 rate-limiting/budgets).
+3. For each sub-course: draft cluster/section briefs; RECOMPUTE any quantitative claims (context-
+   window token budgets, cost-per-call math, retry/timeout budgets, memory eviction sizing) in a
+   `_recompute.py`; factcheck load-bearing claims; reuse line-verified Part I/II canon; fetch
+   primaries where a specific claim needs one (e.g. ReAct, Toolformer, MCP spec, RAG/retrieval
+   papers, function-calling docs). Mark anything unfetched `[UNVERIFIED]`.
+4. Reconcile each finished sub-course into `<subcourse>/_research.md` (bespoke structure fine).
+   Preserve every logged `[UNVERIFIED]`/residual gap. If thin or blocked, stop at a clean
+   checkpoint; do not fake completeness.
+5. Opportunistic: fetch the newly-unblocked primaries (arxiv.org, kafka.apache.org,
+   postgresql.org) to upgrade carried `[UNVERIFIED]` in 09/17 (Kafka paper/KIPs), 07/15 (Postgres
+   WAL/replication), and arxiv-hosted canon. Retry still-blocked CoDel/raft/dl.acm. Save receipts
+   to meta/fetched_primaries/ and update the relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update
-   `meta/NEXT_SESSION.md` with the exact next-session prompt. With 21 done, **Part II
-   (System Design, 13-21) is COMPLETE** - the next batch is Part III Agentic System Design
-   (22-the-agent-loop onward) per the COURSE_MAP "Phase 1 batch 3". Keep files under 600 lines
-   where reasonable, run `git status --short`, commit, and report remaining gaps + next batch.
+   `meta/NEXT_SESSION.md` with the exact next-session prompt. Keep files under 600 lines where
+   reasonable, run `git status --short`, commit, and report remaining gaps + next batch.
 
 No chapters. No Phase 2. No hand-waving. Cite the source or mark it `[UNVERIFIED]`.
 ```

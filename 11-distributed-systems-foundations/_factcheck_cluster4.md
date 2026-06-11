@@ -128,6 +128,30 @@ these carry-forward `[UNVERIFIED]` flags are UPGRADED:
   primary-anchored via Brewer + Kleppmann; only the formal proof construction (Gilbert/Lynch) and
   the PACELC extension (Abadi) are still pending.
 
+## UPGRADE 2026-06-10 (Wave 10) — Gilbert-Lynch formal CAP + Abadi PACELC UNBLOCKED
+
+Both long-blocked primaries returned HTTP 200 this session and were fetched + text-extracted +
+verified verbatim to `meta/fetched_primaries/` (receipt `_VERIFIED_2026-06-10_cap-pacelc.md`).
+Carry-forward `[UNVERIFIED]` -> VERIFIED; nothing above erased.
+- **Gilbert & Lynch, "Perspectives on the CAP Theorem" (2012)** (`gilbert-lynch-2002.{pdf,txt}`,
+  from groups.csail.mit.edu/tds/papers/Gilbert/Brewer2.pdf). VERIFIED: the CAP theorem is the
+  formalized impossibility of guaranteeing both **safety (consistency)** and **liveness
+  (availability)** in an unreliable (partitionable) asynchronous system; the service is modeled as
+  an **atomic / linearizable** read/write register; the proof turns on a process being unable to
+  distinguish a lost message from a slow one during a partition ("cannot determine whether to
+  return"); and **CAP ⇒ you cannot achieve consensus in a system subject to partitions** (ties to
+  FLP). This is the 2012 retrospective that restates & situates the 2002 SIGACT News formalization
+  (its ref [16]); the load-bearing proof statement is now primary-anchored. (The original 2002
+  SIGACT News PDF specifically remains separately unfetched — noted, non-blocking.)
+- **Abadi, "Consistency Tradeoffs in Modern Distributed Database System Design" / PACELC (2012)**
+  (`abadi-pacelc-2012.{pdf,txt}`, from cs.umd.edu/~abadi/papers/abadi-pacelc.pdf). VERIFIED
+  verbatim (L476-510): "rewriting CAP as PACELC (pronounced 'pass-elk'): if there is a **partition
+  (P)**, how does the system trade off **availability and consistency (A and C)**; **else (E)**,
+  when running normally in the absence of partitions, how does the system [trade off **latency (L)
+  and consistency (C)**]." Worked classifications: Dynamo/Cassandra/Riak = **PA/EL**; ACID stores
+  (VoltDB/H-Store, BigTable/HBase) = **PC/EC**; PNUTS = **PC/EL**. Brief §1.4 carry-forward
+  `[UNVERIFIED]` is now VERIFIED.
+
 ---
 
 ## Verdict

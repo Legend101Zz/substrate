@@ -26,7 +26,7 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 18 | rate-limiting-backpressure-and-load-shedding | RESEARCHING | FOUR clusters drafted/factchecked (A rate-limiting algorithms, B backpressure/SEDA, C load-shedding/retry-storms, D timeouts/breakers/bulkheads/hedging/adaptive-concurrency) and RECONCILED into `_research.md`; 9 math claims VERIFIED by recomputation (`_recompute.py`: bucket sizing, fixed-window 2x boundary, sliding log-vs-counter, distributed over-admit (cells-1)*batch, bounded-queue Q/drain, retry amplification 1/(1-r), goodput collapse, adaptive-throttle p); PRIMARIES fetched+verified RFC 6585 §4 + Google SRE Handling-Overload + Cascading-Failures; 03/11/13/14/15/16/17/10 canon reused; SEDA/CoDel/Hystrix/GCRA/AWS-builders attributions `[UNVERIFIED]` (still blocked) | brain |
 | 19 | observability-tracing-and-slos | RESEARCHING | FOUR clusters drafted/factchecked (A metrics/signal-taxonomy, B distributed-tracing/Dapper, C logs-events/three-pillars, D SLI/SLO/error-budgets/burn-rate) and RECONCILED into `_research.md`; 28/28 math VERIFIED by recomputation (`_recompute.py`: error-budget=(1-SLO)*window, burn_rate=P*period/window {36,14.4,6,1}, threshold=burn*(1-SLO), naive-window precision trap, 1/12 short windows, sampling RSE, cardinality 60->60M); PRIMARIES fetched+verified Dapper-2010 + SRE Ch.4 SLO + Ch.6 Monitoring + Workbook Ch.5 Alerting; 11/13/16/17/09/03/10/18 canon reused; OpenTelemetry/W3C-trace-context/exemplars/RED-credit/tail-sampling attributions `[UNVERIFIED]` carried forward | brain |
 | 20 | resilience-failure-and-capacity-planning | RESEARCHING | FOUR clusters drafted/factchecked (A failure-models/partial-failure, B the-tail-at-scale, C resilience-patterns/cells/shuffle-sharding/chaos, D capacity/reliability-math) and RECONCILED into `_research.md`; 38/38 math VERIFIED by recomputation (`_recompute.py`: fan-out 1-0.99^100=0.634, hedge overhead=1-deadline-pct, hedged tail~p^2, Dean 994/50=19.88x, tied -43%/-38%, plain 1/K, C(8,2)=28/1/28/7x, C(2048,4)=730.9B, full-collision 1/C(n,k), overlap k^2/n, util-wall 2/5/10/20x, headroom C=D/rho*, USL knee 98.49, serial prod(a_i)=0.99501, parallel 1-(1-a)^n, CORRELATED-FAILURE 6-nines->3-nines 1001x, headroom f/n N+1/N+2, Little's-Law->5 servers, retry amp (1+r)^L=1024x); PRIMARIES fetched+verified Tail-at-Scale + AWS shuffle-sharding + AWS backoff/jitter + Brewer PODC2000 CAP + Kleppmann CAP + Netflix Simian Army; 11/12/13/14/15/16/18/19 canon reused; Nygard/Avizienis/Fallacies/CoDel(403)/Raft(000)/Gilbert-Lynch attributions `[UNVERIFIED]` carried | brain |
-| 21 | design-case-studies | TODO | Phase 1 batch 2 (NEXT — finishes Part II) | — |
+| 21 | design-case-studies | RECONCILED | Phase 1 CAPSTONE of Part II done — six case-study briefs (URL shortener, news feed, chat, search/typeahead, payments/ledger, distributed rate limiter), `_recompute.py` 32/32 back-of-envelope estimates verified, `_factcheck_phase1.md` (0 blockers), reconciled `_research.md` (bespoke per-case structure + cross-cutting design-method spine + toolkit-usage matrix). Gilbert-Lynch formal CAP + Abadi PACELC FETCHED+VERIFIED (Case 5); applies 13-20 toolkit, no new primitives. **Part II (13-21) COMPLETE.** | brain |
 | 22 | the-agent-loop | TODO | Phase 1 batch 3 | — |
 | 23 | tools-and-tool-contracts | TODO | Phase 1 batch 3 | — |
 | 24 | prompts-and-context-engineering | TODO | Phase 1 batch 3 | — |
@@ -121,3 +121,30 @@ Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, all vendor docs.
   (Brewer PODC), martin.kleppmann.com, netflixtechblog.com. STILL blocked: queue.acm.org 403
   (CoDel), raft.github.io 000, arxiv, dl.acm, postgresql.org, kafka.apache.org. **ALL of 01-20 now
   reconciled. Only 21 (design-case-studies) remains to finish Part II.**
+
+## Wave 10 (2026-06-10) — 21 reconciled = PART II COMPLETE + Gilbert-Lynch/Abadi PACELC unblocked
+
+- **21 design-case-studies RECONCILED** (Part II CAPSTONE; ninth and final Part-II sub-course).
+  Introduces NO new primitives — it APPLIES the entire 13-20 toolkit to six concrete designs via a
+  **bespoke per-case-study structure** (not abstract clusters): URL shortener, news feed/timeline,
+  chat/messaging, web search/typeahead, payments/ledger, distributed rate limiter. Artifacts:
+  `_case_url-shortener.md`, `_case_news-feed.md`, `_case_chat-messaging.md`,
+  `_case_search-typeahead.md`, `_case_payments-ledger.md`, `_case_rate-limiter.md`,
+  `_recompute.py` (32/32 back-of-envelope estimates pass), `_factcheck_phase1.md` (0 blockers),
+  `_research.md` (RECONCILED: design-method spine + toolkit-usage matrix + cross-case
+  reconciliations). Every QPS/storage/keyspace/cache/shard/fan-out-tail estimate RECOMPUTED;
+  mechanisms REUSED from line-verified 06/09/11/12/13-20.
+- **CAP/PACELC UPGRADE (Wave 10 — finally unblocked):** `groups.csail.mit.edu` (Gilbert-Lynch
+  "Perspectives on the CAP Theorem" 2012) + `cs.umd.edu/~abadi` (Abadi PACELC 2012) HTTP 200.
+  Fetched + text-extracted (throwaway uv venv + pypdf, removed after) + verified verbatim to
+  `meta/fetched_primaries/` (receipt `_VERIFIED_2026-06-10_cap-pacelc.md`). Upgraded carry-forward
+  `[UNVERIFIED]` -> VERIFIED in 11 (`_factcheck_cluster4.md`: formal CAP = safety-vs-liveness
+  impossibility on an atomic register, CAP⇒no-consensus-under-partition) and 15
+  (`_factcheck_phase1.md`: PACELC "if P: A-vs-C; else: L-vs-C", PA/EL vs PC/EC vs PC/EL); also
+  anchors 21 Case 5 payments. Nothing erased. NOTE: the original 2002 SIGACT News PDF specifically
+  is still separately unfetched (the 2012 retrospective restates its formalization) — non-blocking.
+- Network at session end: NEW HTTP 200 = groups.csail.mit.edu (Gilbert-Lynch), cs.umd.edu (Abadi),
+  **arxiv.org, kafka.apache.org, postgresql.org** (200 but deferred to next session — time-boxed).
+  STILL blocked: queue.acm.org 403 (CoDel), raft.github.io 000, dl.acm.org 403 (DOI landing).
+  **ALL of 01-21 now reconciled — PART II (System Design, 13-21) IS COMPLETE. Next batch: Part III
+  Agentic System Design (22-the-agent-loop onward), per COURSE_MAP "Phase 1 batch 3".**
