@@ -3,6 +3,61 @@
 Resume anchor. Every session begins by reading this file.
 State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 
+> **Phase status:** Phase 1 (research corpus) COMPLETE for all 50 units. Phase 2 (per-sub-course
+> `_structure.md`) COMPLETE for the 35 spine units (00–34). Appendices A–O are reference-only and
+> carry NO `_structure.md` by design (ADR-003) — their bespoke shape lives in `<appendix>/_research.md`.
+> **Awaiting Phase-2 sign-off before any chapter drafting (Phase 3).** No prose written.
+
+## Phase-2 per-chapter table (spine 00–34 → PLANNED; appendices A–O → RECONCILED, reference-only)
+
+`secs` = number of chapter/section specs in that unit's `_structure.md` (the drafting unit of work).
+Full provenance + `[UNVERIFIED]` carry-forward per unit is preserved in the detailed archive below.
+
+| id | title | state | secs | lab | next action |
+|----|-------|-------|------|-----|-------------|
+| 00 | how-to-use-this-course | PLANNED | 6 | — | Phase 3: draft on go |
+| 01 | computers-from-first-principles | PLANNED | 7 | — | Phase 3: draft on go |
+| 02 | terminal-shell-and-dev-environment | PLANNED | 7 | own-shell | Phase 3: draft on go |
+| 03 | networking-from-first-principles | PLANNED | 8 | own-tcp-ip-stack | Phase 3: draft on go (ADR-002 lab choice) |
+| 04 | operating-systems-internals | PLANNED | 9 | — | Phase 3: draft on go |
+| 05 | programming-language-runtime-internals | PLANNED | 9 | own-interpreter | Phase 3: draft on go |
+| 06 | data-structures-for-systems | PLANNED | 8 | — | Phase 3: draft on go |
+| 07 | database-internals | PLANNED | 8 | own-database | Phase 3: draft on go |
+| 08 | caches-and-storage-systems | PLANNED | 8 | own-redis | Phase 3: draft on go |
+| 09 | message-queues-logs-and-kafka | PLANNED | 9 | own-message-queue | Phase 3: draft on go |
+| 10 | nginx-proxies-and-load-balancing | PLANNED | 8 | own-http-server-and-lb | Phase 3: draft on go |
+| 11 | distributed-systems-foundations | PLANNED | 8 | — | Phase 3: draft on go |
+| 12 | research-papers-for-engineers | PLANNED | 6 | — | Phase 3: draft on go |
+| 13 | scaling-fundamentals | PLANNED | 10 | — | Phase 3: draft on go |
+| 14 | data-modeling-partitioning-sharding | PLANNED | 9 | — | Phase 3: draft on go |
+| 15 | replication-and-consistency-in-practice | PLANNED | 10 | — | Phase 3: draft on go |
+| 16 | caching-and-cdn-strategies | PLANNED | 7 | — | Phase 3: draft on go |
+| 17 | async-queues-and-event-driven-architecture | PLANNED | 10 | — | Phase 3: draft on go |
+| 18 | rate-limiting-backpressure-and-load-shedding | PLANNED | 8 | — | Phase 3: draft on go |
+| 19 | observability-tracing-and-slos | PLANNED | 7 | — | Phase 3: draft on go |
+| 20 | resilience-failure-and-capacity-planning | PLANNED | 8 | — | Phase 3: draft on go |
+| 21 | design-case-studies | PLANNED | 8 | (case studies) | Phase 3: draft on go — Part II capstone |
+| 22 | the-agent-loop | PLANNED | 6 | own-coding-agent-harness s0 | Phase 3: draft on go |
+| 23 | tools-and-tool-contracts | PLANNED | 6 | harness s1 | Phase 3: draft on go |
+| 24 | prompts-and-context-engineering | PLANNED | 7 | harness s3 | Phase 3: draft on go |
+| 25 | memory-short-term-long-term-and-safety | PLANNED | 7 | harness s4 | Phase 3: draft on go |
+| 26 | state-persistence-and-resume | PLANNED | 7 | harness s5 | Phase 3: draft on go |
+| 27 | planning-and-multi-agent-orchestration | PLANNED | 7 | harness s6 | Phase 3: draft on go |
+| 28 | build-your-own-coding-harness | PLANNED | 6 | own-coding-agent-harness | Phase 3: draft on go — Part III capstone LAB |
+| 29 | mcp-skills-and-connectors | PLANNED | 7 | harness +MCP | Phase 3: draft on go |
+| 30 | rag-retrieval-and-grounding | PLANNED | 8 | harness +RAG | Phase 3: draft on go |
+| 31 | evaluation-tracing-and-guardrails | PLANNED | 7 | harness +trust | Phase 3: draft on go |
+| 32 | cost-observability-and-ops | PLANNED | 7 | harness +cost | Phase 3: draft on go |
+| 33 | safety-and-proactive-self-evolving-agents | PLANNED | 6 | harness +safety | Phase 3: draft on go |
+| 34 | design-your-own-agentic-system | PLANNED | 6 | design canvas | Phase 3: draft on go — Part III capstone DESIGN |
+| A–O | appendices (15) | RECONCILED | n/a | reference-only | Reference-grade; NO `_structure.md` by design (ADR-003) |
+
+**Spine secs total = 264 chapter/section specs across 35 units** (the Phase-3 drafting backlog).
+
+---
+
+## Detailed provenance archive (Phase 1 — per-unit research/factcheck/recompute state; DO NOT prune)
+
 | id | title | state | next action | owner |
 |----|-------|-------|-------------|-------|
 | 00 | how-to-use-this-course | TODO | Phase 2 design | — |

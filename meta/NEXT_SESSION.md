@@ -4,11 +4,52 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-11 (Wave 19 — **Appendices batch 4 COMPLETE**: C + D + E + O reconciled; recompute 15/13/13/14. Appendices now **15/15** → **ENTIRE PHASE 1 CORPUS COMPLETE** (SPINE 01-34 + Appendices A-O). Next gate: **Phase 2** — per-sub-course `_structure.md`, **STOP for sign-off**.) · Phase: 1 DONE → awaiting Phase-2 go · Harness: **code-puppy**
+Last updated: 2026-06-10 (Wave 20 — **PHASE 2 COMPLETE**: Batch 2e (29–34 structures, commit `402e554`)
++ finalize 2f–2i — COURSE_MAP finalized into a dependency DAG, PROGRESS per-chapter table (35 spine →
+PLANNED, 264 section specs; A–O reference-only), README refreshed, ADR-003 (appendices have no
+`_structure.md`) + ADR-004 (03 TCP lab = Minnow ladder + RFC-9293 state-machine capstone) written. All
+35 spine `_structure.md` done. **Next gate: SIGN-OFF → Phase 3 (draft ONE chapter at a time).**) ·
+Phase: **2 DONE → awaiting sign-off for Phase 3** · Harness: **code-puppy**
 
 ---
 
-## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 20 — PHASE 2, requires sign-off)
+## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 21 — PHASE 3, requires sign-off first)
+
+> You are the BRAIN agent for the Substrate course project. Start safely from
+> `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,
+> meta/RESEARCH_PROTOCOL.md, meta/STYLE.md, meta/QUALITY_BAR.md, meta/COURSE_MAP.md, meta/PROGRESS.md,
+> meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3–4 lines: that
+> **Phase 1 AND Phase 2 are COMPLETE** (50 `_research.md`; 35 spine `_structure.md`; COURSE_MAP DAG;
+> PROGRESS per-chapter; ADR-001–004); Wave-2 milestone `4a1cc71`; current checkpoint from
+> `git rev-parse --short HEAD`; and the proposed Phase-3 batch. Do NOT touch `.code-puppy-venv`. If
+> `Path.cwd()` PermissionError recurs, STOP and tell me to grant Desktop/OneDrive access or move the
+> repo off OneDrive — do not reinstall Code Puppy. Preserve every logged `[UNVERIFIED]`/residual gap.
+>
+> **This is PHASE 3 — BUILD ONE CHAPTER AT A TIME (CONSTITUTION / START_HERE).** Only proceed if I
+> have signed off on the Phase-2 structures. Per chapter run Research → Plan → Implement → Verify:
+> PLAN (write outline from the unit's `_structure.md`, STOP for my annotation) → IMPLEMENT (`writer`
+> drafts per PERSONA + STYLE; `diagrammer` adds diagrams + IMAGE PROMPTs to the manifest) → VERIFY
+> (`factchecker` checks every claim vs source; `critic` (Opus) scores vs QUALITY_BAR — fail loops,
+> pass marks DONE). NEVER mark DONE without a critic pass. Small batches; finish chapters, don't start
+> three shallow ones. Recommended first batch: **00 (how-to-use) + 01 (computers-from-first-principles)**
+> in dependency order — propose the exact chapter list and STOP for annotation before drafting.
+> End the session: append SESSION_LOG, update PROGRESS + NEXT_SESSION, commit.
+>
+> Opportunistic (still owed, ALL blocked as of Wave 20): DPR (arXiv 2004.04906) → 30/M; Kafka paper/
+> KIPs (kafka.apache.org) → 09/17/H; Raft (raft.github.io) → L; CoDel (queue.acm.org 403) → 18/20.
+> Retry each; if any heal, save receipts to meta/fetched_primaries/ and upgrade the carried
+> `[UNVERIFIED]` → VERIFIED, erase nothing.
+>
+> State to preserve (do NOT erase): **Phase 1 + Phase 2 COMPLETE.** 50 `_research.md` reconciled
+> (spine 01–34 + appendices A–O). 35 spine `_structure.md` (batches 2a–2e: 2a `c8f5e66`, 2b `7354c2d`,
+> 2c `c33d627`, 2d `557a69c`, 2e `402e554`). Appendices A–O are reference-only with NO `_structure.md`
+> by design (ADR-003). COURSE_MAP.md is a finalized dependency DAG. ADR-004 fixed 03's TCP lab. Local+
+> VERIFIED primaries unchanged. Carry-forward `[UNVERIFIED]` per unit preserved verbatim in each
+> `_structure.md`/`_research.md` + PROGRESS archive.
+
+---
+
+## ⏮ Superseded prompt (Wave 20 — PHASE 2 gate; ran Batch 2e + finalize 2f–2i → Phase 2 COMPLETE)
 
 > You are the BRAIN agent for the Substrate course project. Start safely from
 > `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,

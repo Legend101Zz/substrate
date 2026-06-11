@@ -2,6 +2,46 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 2 Wave 20: Batch 2e (29–34 structures) + finalize 2f–2i. **PHASE 2 COMPLETE — awaiting sign-off.**
+- rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
+  DECISIONS/NEXT_SESSION/STYLE/QUALITY_BAR; `git status --short` clean at start; checkpoint `557a69c`
+  (= Batch 2d); Wave-2 milestone `4a1cc71` confirmed (commit). CWD accessible, NO `Path.cwd()`
+  PermissionError; `.code-puppy-venv` untouched; no reinstall.
+- **Network retried (opportunistic, still owed) — ALL still blocked:** DPR (arXiv 2004.04906) 000,
+  arxiv.org/abs 000, kafka.apache.org 000, raft.github.io 000, queue.acm.org (CoDel) 403. Nothing
+  healed; every `[UNVERIFIED]` carried forward verbatim, nothing erased. (RAG 2005.11401 already
+  local+VERIFIED for 30.)
+- **SHIPPED — Batch 2e: bespoke `_structure.md` for 29–34** (commit `402e554`), each a distinct shape:
+  29 = protocol/connector walkthrough (every layer an old Part I/II law renamed; MCP-arch VERIFIED);
+  30 = retrieval-pipeline (each stage a data-systems chapter re-applied + embedding primitive +
+  corpus-poisoning failure; RAG VERIFIED, DPR still `[UNVERIFIED]`); 31 = trust-loop define→measure
+  →grade→watch→constrain→close (SWE-bench VERIFIED; reconcile-note: upgrades 28's carried flag, kept);
+  32 = cost-lifecycle account→attribute→budget→optimize→operate ("bill IS the O(T²), priced"; no new
+  primary); 33 = threat-model→defence-in-depth→controlled-evolution (Greshake VERIFIED; resolves
+  23/25/29/30 injection pointers to one root cause, originals kept); 34 = grand capstone design
+  canvas + forced-moves decision tree + budget ledger (no new primary). Each carries dependency
+  position, 3–5-line section specs, paired harness upgrade (7th–11th + capstone), diagrams-needed,
+  and a sources/gaps section preserving every `[UNVERIFIED]` verbatim.
+- **SHIPPED — finalize 2f–2i:**
+  - **2f** COURSE_MAP.md rewritten into a FINALIZED dependency DAG (adjacency list + Mermaid +
+    appendix back-edges + three reading orders; verified the number line is a valid topological sort).
+  - **2g** PROGRESS.md: added authoritative Phase-2 per-chapter table (35 spine units → PLANNED with
+    section counts + paired lab; 264 total section specs = the Phase-3 backlog; appendices A–O →
+    RECONCILED, reference-only). Detailed Phase-1 provenance archive preserved below it (not pruned).
+  - **2h** README.md refreshed: Phase 0 → "Phase 1 complete + Phase 2 spine structures complete; Phase 3
+    drafting after sign-off."
+  - **2i** DECISIONS.md: wrote **ADR-003** (appendices are reference-only, NO `_structure.md` by
+    design — shape lives in their `_research.md`) and **ADR-004** (03 own-tcp-ip lab = CS144 Minnow
+    module ladder + a hand-authored Sponge-Lab-4-style state machine specified from RFC 9293 §3.3.2,
+    not the `[UNVERIFIED]` Sponge handout; congestion control out of lab scope).
+- **DECISIONS:** ADR-003, ADR-004 (above). The owed CS144 Minnow-vs-Sponge decision is now resolved.
+- **State preserved:** all 50 `_research.md` intact; prior Phase-2 batches 2a `c8f5e66` / 2b `7354c2d`
+  / 2c `c33d627` / 2d `557a69c` untouched. NO chapters/prose written (Phase 2 gate honored).
+- **MILESTONE:** **Phase 2 COMPLETE** — 35 spine `_structure.md` files (batches 2a–2e) + finalized
+  COURSE_MAP DAG + per-chapter PROGRESS + README + the two owed ADRs. Next gate is **sign-off**;
+  only after the user annotates and says go does Phase 3 (one chapter at a time) begin.
+- **STOPPED-AT:** presented the full Phase-2 package; awaiting annotation + "go." No drafting until then.
+
 ## 2026-06-11 — Phase 1 Wave 19: APPENDICES batch 4 COMPLETE — C + D + E + O reconciled. **ALL 15 APPENDICES DONE → ENTIRE PHASE 1 CORPUS COMPLETE.**
 - rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
   DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint at start `e2487ff`; Wave-2 milestone
