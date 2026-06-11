@@ -36,8 +36,8 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 28 | build-your-own-coding-harness | RECONCILED | Phase 1 batch 3 — Part III CAPSTONE LAB; bespoke **BUILD PROGRESSION** (the "40-line agent" grown stage-by-stage, broken on purpose at each stage to motivate the next: loop22→tools23→budget(22/18/32)→compaction24→memory25→persistence26→orchestration27). NO new primary (capstone application, like 21). `_recompute.py` 31/31 (all 7 stage walls re-derived in the coding regime: O(T²) overflow sooner for code T*=83 vs 253; selection compounding; 1MB-file overflow; budget caps≠cures; compaction O(T²)→O(T) unbounded win; AMAT 4×; poisoning 1→15; checkpoint knee I*=20; idempotent replay; Amdahl/join-tail/YAGNI). `_factcheck_phase1.md` 0 blockers. Reuses 09/17/18/20/21/22/23/24/25/26/27. Carry `[UNVERIFIED]`: SWE-bench (2310.06770), coding-agent impls, sandbox/ACE (→App I), injection/poisoning (→33) | brain |
 | 29 | mcp-skills-and-connectors | RECONCILED | Phase 1 batch 3 — 23's tool CONTRACT promoted to a wire PROTOCOL; bespoke protocol/connector walkthrough. **MCP architecture spec FETCHED+VERIFIED** (`mcp-arch.txt`, receipt `_VERIFIED_2026-06-10_mcp.md`): host/client/server; two layers; JSON-RPC 2.0 data layer; tools/resources/prompts + sampling/elicitation/logging + Tasks(durable exec); stdio vs Streamable-HTTP; lifecycle/capability negotiation; `*/list` + `list_changed`. `_recompute.py` 18/18 (N×M→N+M collapse; union-toolbox tax K·S; selection compounding; remote-dependency tail 1-(1-p)^s; version/schema compat). `_factcheck_phase1.md` 0 blockers. Reuses 02/03/07/11/17/18/19/20/22/23/24/26/28. Carry `[UNVERIFIED]`: formal /specification JSON-Schema (SPA shell), Agent-Skills depth, OAuth/auth, Registry/SEP, injection-via-server (→33) | brain |
 | 30 | rag-retrieval-and-grounding | RECONCILED | Phase 1 batch 3 — the retrieval mechanism for 25's non-parametric memory tier; bespoke retrieval-pipeline walkthrough (corpus→chunk→embed→index→retrieve→rank→inject/ground). **RAG (Lewis et al. 2020, arXiv 2005.11401) FETCHED+VERIFIED** (`rag-2005.11401.{pdf,txt}`, receipt `_VERIFIED_2026-06-10_rag.md`): parametric vs non-parametric memory; DPR bi-encoder; MIPS top-K sub-linear; FAISS+HNSW; latent-doc marginalize; cures hallucination + provenance + updatable knowledge. `_recompute.py` 15/15 (ANN-vs-scan ~430,000× at 10M; retrieve-vs-stuff budget; K precision/recall/cost knob; embedding cache 1000×; index staleness/lag). `_factcheck_phase1.md` 0 blockers. Reuses 06/07/08/14/15/16/22/23/24/25/28/29. Carry `[UNVERIFIED]`: DPR (2004.04906), FAISS/HNSW primaries, sparse/hybrid/rerank, RAG eval (→31), GraphRAG, injection-via-passage (→33) | brain |
-| 31 | evaluation-tracing-and-guardrails | TODO | Phase 1 batch 3 | — |
-| 32 | cost-observability-and-ops | TODO | Phase 1 batch 3 | — |
+| 31 | evaluation-tracing-and-guardrails | RECONCILED | Phase 1 batch 3 — the TRUST layer (does it work? / what did it do? / can it go off-rails?). Bespoke **trust-loop walkthrough** (Define correct→Measure offline→Grade un-gradeable→Watch live→Constrain inline→feed failures back). **SWE-bench (Jimenez/Yang et al., ICLR 2024, arXiv 2310.06770) FETCHED+VERIFIED** (`swe-bench-2310.06770.{pdf,txt}`, receipt `_VERIFIED_2026-06-10_swe-bench.md`): execution-based "is it useful" — apply patch→run unit+system tests→all pass=resolved; metric=%resolved; tests-as-oracle (fail-to-pass+pass-to-pass); Claude-2 1.96%; lexical≠correctness; saturation motivation. Tracing REUSES local Dapper (19); judging REUSES 27 Condorcet; guardrails REUSE 18 defence-in-depth. `_recompute.py` **19/19** (binomial CI ~1067 tasks for ±3%; pass@k 0.936 vs pass^k 0.216; majority-of-3 judges 1.9–3.6×, backfires <0.5; 49 spans/run + sampling RSE; defence-in-depth 0.8% escape vs 5.9% over-refusal FP tax; lexical≠correct + %resolved; suite cost 837M tok = S·O(T²)). `_factcheck_phase1.md` 0 blockers. Reuses 13/18/19/20/22/23/24/25/27/28/30. **BONUS: SWE-bench fetch upgrades 28's carried `[UNVERIFIED]` → VERIFIED.** Carry `[UNVERIFIED]`: LLM-judge primary (MT-Bench/2306.05685)+bias taxonomy, SWE-bench-Verified/SWE-agent(2405.15793)/HumanEval, RAGAS, OTel-GenAI+W3C-trace-context, tail-based sampling, guardrail frameworks | brain |
+| 32 | cost-observability-and-ops | RECONCILED | Phase 1 batch 3 — the 22 O(T²) economics made OPERATIONAL. Bespoke **cost-lifecycle walkthrough** (Account→Attribute→Budget/Cap→Optimize→Operate) = 19 observability + 18 control + 20 capacity denominated in $/tokens. **NO new primary** (operational synthesis like 21; prices already-VERIFIED mechanisms). `_recompute.py` **14/14** (cost O(T²) — doubling turns >2× bill, input term dominates; compaction O(T²)→O(T) saves ~$18.8/run@T=100, grows unbounded; prefix-cache 10× cheaper prefix but leaves quadratic; per-tenant quota=18 over $; cost tail mean 20× median, per-run cap cuts total 10×; cost=attributable signal LLM 80% of bill; model routing 70/30 → $1.04/M vs $3/M). `_factcheck_phase1.md` 0 blockers. Reuses 18/19/20/22/24/26/30/31. Carry `[UNVERIFIED]`: provider pricing/prompt-cache/batch specifics (illustrative knobs), FinOps, cost tooling (Helicone/Langfuse/OTel-GenAI), spot/commit infra (→App O) | brain |
 | 33 | safety-and-proactive-self-evolving-agents | TODO | Phase 1 batch 3 | — |
 | 34 | design-your-own-agentic-system | TODO | Phase 1 batch 3 | — |
 | A | computer-architecture | TODO | Phase 1 batch 4 (appendices) | — |
@@ -263,3 +263,43 @@ Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, all vendor docs.
 - **Next batch: 31-evaluation-tracing-and-guardrails** (↔ 19 observability/Dapper + 27 voting/critic
   + 18 guardrails), then 32 cost-observability-and-ops, 33 safety-and-proactive-self-evolving-agents,
   34 design-your-own-agentic-system. No chapters. No Phase 2.
+
+## Wave 14 (2026-06-10) — Part III batch 3 continued: 31 + 32 reconciled (SWE-bench fetched/verified; 28 upgraded)
+
+- **TWO more agentic sub-courses reconciled** (31, 32), both bespoke (non-four-cluster), same
+  recompute+factcheck discipline as 13-30. Part III now stands at **22-32 done (11 of 13)**.
+  - **31 evaluation-tracing-and-guardrails** — the TRUST layer. Bespoke **trust-loop walkthrough**
+    (Define correct → Measure offline → Grade the un-gradeable → Watch live → Constrain inline →
+    feed failures back). **SWE-bench (Jimenez/Yang et al., ICLR 2024, arXiv 2310.06770)
+    FETCHED+VERIFIED** — the execution-based "is it useful" definition owed from 28/30 (apply
+    patch → run unit+system tests → all pass = resolved; metric = % resolved; tests-as-oracle;
+    Claude-2 1.96%; lexical≠correctness; saturation). Tracing REUSES local Dapper (19); LLM-as-judge
+    REUSES 27's Condorcet majority-of-3; guardrails REUSE 18's defence-in-depth. `_recompute.py`
+    **19/19** (binomial CI ~1067 tasks for ±3%; pass@k 0.936 vs pass^k 0.216; majority-of-3 judges
+    1.9–3.6× fewer errors + backfires <0.5; 49 spans/run + Dapper sampling RSE; defence-in-depth
+    0.8% escape vs 5.9% over-refusal FP tax; lexical≠correct + %resolved; suite cost 837M tok =
+    S·O(T²)). `_factcheck_phase1.md` 0 blockers. Reuses 13/18/19/20/22/23/24/25/27/28/30.
+  - **32 cost-observability-and-ops** — the 22 O(T²) economics made OPERATIONAL. Bespoke
+    **cost-lifecycle walkthrough** (Account → Attribute → Budget/Cap → Optimize → Operate) = 19
+    observability + 18 control + 20 capacity denominated in $/tokens. **NO new primary**
+    (operational synthesis like 21; prices already-VERIFIED mechanisms). `_recompute.py` **14/14**
+    (cost O(T²); compaction O(T²)→O(T) saves ~$18.8/run@T=100; prefix-cache 10× cheaper prefix but
+    leaves the quadratic; per-tenant quota = 18 over $; cost tail mean 20× median, per-run cap cuts
+    total 10×; cost = attributable signal, LLM 80% of bill; model routing 70/30 → $1.04/M vs $3/M).
+    `_factcheck_phase1.md` 0 blockers. Reuses 18/19/20/22/24/26/30/31.
+- **PRIMARY fetched+verified to `meta/fetched_primaries/`**: `swe-bench-2310.06770.{pdf,txt}`
+  (52 pp, receipt `_VERIFIED_2026-06-10_swe-bench.md`). Extracted via the throwaway `/tmp/pdfx-venv`
+  (uv+pypdf from Walmart external-pypi), REMOVED after; `.code-puppy-venv` never touched.
+- **BONUS upgrade:** SWE-bench fetch cleared **28**'s carried `[UNVERIFIED]` SWE-bench note →
+  VERIFIED (annotated in `28-.../_factcheck_phase1.md`; nothing erased).
+- Network at session end: arxiv.org / kafka.apache.org / postgresql.org reachable (200). STILL
+  blocked: queue.acm.org 403 (CoDel), raft.github.io 000 (retried).
+- **Deferred (time-boxed to keep ONE clean checkpoint over shallow briefs):** 33-34 untouched.
+  Opportunistic Kafka(09/17) upgrade NOT done (SWE-bench was the load-bearing budget this session).
+  33 likely wants its own fetched primary (prompt-injection / sandboxing / alignment-oversight) and
+  34 is the Part-III capstone canvas — both deserve careful treatment, not a rushed pass.
+- **Next batch: 33-safety-and-proactive-self-evolving-agents** (prompt-injection via tool-result/
+  memory/retrieved-passage carried from 23/25/29/30; sandboxing/ACE; self-improvement loops
+  Reflexion 25; alignment/oversight), then **34-design-your-own-agentic-system** (the Part III
+  CAPSTONE DESIGN CANVAS, applies all of 22-33 the way 21 applied 13-20; NO new primary). Finishing
+  33+34 COMPLETES Part III (22-34) and thus the agentic-design spine. No chapters. No Phase 2.

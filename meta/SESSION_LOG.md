@@ -2,6 +2,53 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 14: Part III batch 3 continued — 31 evaluation-tracing-and-guardrails + 32 cost-observability-and-ops reconciled (SWE-bench fetched/verified; 28 upgraded)
+- shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/
+  SESSION_LOG/DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `302f6c5`; no
+  `os.getcwd()`/`Path.cwd()` PermissionError. Confirmed Wave 2 milestone `4a1cc71`, 01-12 + Part II
+  13-21 COMPLETE, Part III open with 22-30 reconciled (9/13); 31 NEXT untouched.
+- shipped: **31 evaluation-tracing-and-guardrails RECONCILED** (the TRUST layer). Bespoke
+  **trust-loop walkthrough** (Define correct → Measure offline → Grade the un-gradeable → Watch
+  live → Constrain inline → feed failures back). **SWE-bench (Jimenez/Yang et al., ICLR 2024,
+  arXiv 2310.06770) FETCHED+VERIFIED** — the execution-based "is it useful" definition owed from
+  28/30: "apply the generated patch ... execute the unit and system tests ... If the patch applies
+  successfully and all of these tests pass we consider the proposed solution to have successfully
+  resolved the issue"; "the percentage of task instances that are resolved"; tests-as-oracle
+  (fail-to-pass + pass-to-pass); Claude-2 1.96%; lexical≠correctness; saturation motivation.
+  Tracing REUSES the local Dapper primary (19); LLM-as-judge REUSES 27's Condorcet majority-of-3;
+  guardrails REUSE 18's defence-in-depth. `_recompute.py` **19/19** (binomial CI ~1067 tasks for
+  ±3%; pass@k 0.936 vs pass^k 0.216; majority-of-3 judges 1.9–3.6× fewer errors, backfires <0.5;
+  49 spans/run + Dapper sampling RSE; defence-in-depth 0.8% escape vs 5.9% over-refusal FP tax;
+  lexical≠correct + %resolved; suite cost 837M tok = S·O(T²)). `_factcheck_phase1.md` 0 blockers.
+  Reuses 13/18/19/20/22/23/24/25/27/28/30.
+- shipped: **32 cost-observability-and-ops RECONCILED** (the 22 O(T²) economics made OPERATIONAL).
+  Bespoke **cost-lifecycle walkthrough** (Account → Attribute → Budget/Cap → Optimize → Operate) =
+  19 observability + 18 control + 20 capacity denominated in $/tokens, on top of 22's quadratic.
+  **NO new primary** (operational synthesis like 21; prices already-VERIFIED mechanisms).
+  `_recompute.py` **14/14** (cost O(T²) — doubling turns >2× the bill, input/quadratic term
+  dominates; compaction O(T²)→O(T) saves ~$18.8/run@T=100 and grows unbounded; prefix-cache 10×
+  cheaper prefix but leaves the quadratic transcript [caching≠compaction]; per-tenant quota = 18
+  token-bucket over $; cost tail mean 20× median, per-run turn cap cuts total 10×; cost =
+  attributable signal [LLM 80% of bill]; model routing 70/30 → blended $1.04/M vs $3/M).
+  `_factcheck_phase1.md` 0 blockers. Reuses 18/19/20/22/24/26/30/31.
+- shipped (opportunistic): **SWE-bench (arXiv 2310.06770) FETCHED+VERIFIED** to
+  `meta/fetched_primaries/swe-bench-2310.06770.{pdf,txt}` (52 pp, 153k chars), receipt
+  `_VERIFIED_2026-06-10_swe-bench.md`. Extraction via throwaway `/tmp/pdfx-venv` (uv+pypdf from
+  Walmart external-pypi), REMOVED after; `.code-puppy-venv` never touched. **BONUS:** cleared 28's
+  carried `[UNVERIFIED]` SWE-bench note → VERIFIED (annotated in `28-.../_factcheck_phase1.md`;
+  nothing erased).
+- decisions: NO new ADR — 31 introduces one VERIFIED primary (SWE-bench) + reuses; 32 is an
+  operational synthesis with no new primary (capstone-style, like 21). Both bespoke structures per
+  the constitution's "do not template" rule. Prefer-one-clean-checkpoint honored: stopped after 31+32
+  rather than rushing 33/34.
+- stopped-at: **22-32 reconciled (Part III 11/13).** 33-34 untouched. 33 likely wants its own
+  fetched primary (prompt-injection / sandboxing / alignment-oversight); 34 is the Part-III capstone
+  design canvas (no new primary). Network: arxiv/kafka/postgres 200; queue.acm.org 403 (CoDel) +
+  raft.github.io 000 still blocked (retried). Opportunistic Kafka(09/17) upgrade NOT done (SWE-bench
+  was the load-bearing budget). Next: **33-safety-and-proactive-self-evolving-agents**, then
+  **34-design-your-own-agentic-system** → completes Part III (22-34).
+
+
 ## 2026-06-10 — Phase 1 Wave 13: Part III batch 3 continued — 28 build-your-own-coding-harness, 29 mcp-skills-and-connectors, 30 rag-retrieval-and-grounding reconciled (MCP spec + RAG fetched/verified)
 - shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
   PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `f5dc2a8`;

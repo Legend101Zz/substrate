@@ -4,7 +4,67 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (Wave 13 — **Part III batch 3 continued**: 28 build-your-own-coding-harness + 29 mcp-skills-and-connectors + 30 rag-retrieval-and-grounding reconciled; MCP spec + RAG (arXiv 2005.11401) fetched/verified; recompute 31/31 + 18/18 + 15/15) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (Wave 14 — **Part III batch 3 continued**: 31 evaluation-tracing-and-guardrails + 32 cost-observability-and-ops reconciled; SWE-bench (arXiv 2310.06770) fetched/verified, 28 upgraded; recompute 19/19 + 14/14) · Phase: 1 (deep research) · Harness: **code-puppy**
+
+---
+
+## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 15)
+
+> You are the BRAIN agent for the Substrate course project. Start safely from
+> `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,
+> meta/RESEARCH_PROTOCOL.md, meta/COURSE_MAP.md, meta/PROGRESS.md, meta/SESSION_LOG.md,
+> meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4 lines: current Phase 1 state; Wave 2
+> milestone `4a1cc71`; current checkpoint from `git rev-parse --short HEAD`; that foundations 01-12
+> + Part II 13-21 are COMPLETE and Part III is OPEN with **22-32 reconciled (11/13)** each a BESPOKE
+> structure cross-linking DOWN into Part I/II + earlier Part III primitives; that
+> **33-safety-and-proactive-self-evolving-agents is the NEXT untouched sub-course** (Phase 1 batch
+> 3); and the exact plan you will run. Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If
+> `os.getcwd()`/`Path.cwd()` PermissionError recurs, STOP and tell me to grant Desktop/OneDrive
+> access or move the repo off OneDrive. Do not reinstall Code Puppy. Preserve every logged
+> `[UNVERIFIED]`/residual gap.
+>
+> Then CONTINUE Part III Phase 1 batch 3 (briefs ONLY — no chapters, no Phase 2), in dependency
+> order, as far as ONE clean factchecked checkpoint allows (prefer one clean checkpoint over shallow
+> briefs):
+> 1. `git status --short`; if not clean, inspect before editing.
+> 2. **33-safety-and-proactive-self-evolving-agents** — bespoke structure. The threat+evolution
+>    layer: **prompt-injection** as the cross-cutting attack (via tool-result 23, via memory 25,
+>    via retrieved-passage 29/30 — all carried `[UNVERIFIED]` pointers land here); **sandboxing/ACE**
+>    (capability confinement, containers/cgroups/seccomp → Appendix I) as the blast-radius control
+>    (18/20 over capabilities); **self-improving / proactive agents** = Reflexion's episodic-memory
+>    learning signal (25, already VERIFIED) generalized into a closed self-eval→improve loop that
+>    REUSES 31's eval + 25's memory; **alignment/oversight** (human-in-the-loop gates, the 18/27
+>    approval/critic pattern). Likely wants its OWN fetched primary — candidates (try in order, all
+>    may need arxiv which was 200 last check): prompt-injection (Greshake et al. "Not what you've
+>    signed up for", arXiv 2302.12173), or a sandboxing/agent-safety reference. Reuse Reflexion
+>    (local) for the self-evolving loop; reuse 31 (eval), 18/20 (confinement/blast-radius), 27
+>    (oversight/voting). Draft `_research_*.md`, `_recompute.py` (injection blast-radius over the
+>    23/25/29/30 carriers; sandbox-as-cell 20; self-improvement gain vs eval-cost 31; approval-gate
+>    false-accept/reject 18/27), `_factcheck_phase1.md`, reconcile `_research.md`. Mark anything
+>    unfetched `[UNVERIFIED]`.
+> 3. If a clean checkpoint remains, **34-design-your-own-agentic-system** — the Part III CAPSTONE
+>    DESIGN CANVAS (applies ALL of 22-33 the way 21 applied 13-20; NO new primary, like 21). Bespoke
+>    canvas/decision-tree structure; `_recompute.py` re-deriving the cross-cutting budgets (22 O(T²),
+>    24 compaction, 25 AMAT, 26 checkpoint knee, 27 Amdahl/join-tail/YAGNI, 31 eval CI, 32 $).
+>    Finishing 33+34 COMPLETES Part III (22-34) and the whole agentic-design spine.
+> 4. Opportunistic (still owed): Kafka (kafka.apache.org → 09/17); optionally DPR (arXiv 2004.04906
+>    → 30); retry still-blocked CoDel (queue.acm.org 403) / raft (raft.github.io 000). Save receipts
+>    to meta/fetched_primaries/, update the relevant cluster + factcheck files (carry-forward →
+>    VERIFIED, erase nothing).
+> 5. End cleanly: append meta/SESSION_LOG.md, update meta/PROGRESS.md + meta/NEXT_SESSION.md, run
+>    `git status --short`, commit, report remaining gaps + next batch. No chapters. No Phase 2. No
+>    hand-waving — cite the source or mark `[UNVERIFIED]`.
+>
+> State to preserve (do NOT erase): 22-32 reconciled, each BESPOKE (NOT the 13-20 four-cluster
+> shape). Primaries local+VERIFIED: ReAct/Toolformer/CoT/MemGPT+Reflexion/Postgres-WAL/MCP-arch/
+> RAG(2005.11401)/**SWE-bench(2310.06770, NEW Wave 14)**. `_recompute.py` tallies
+> 18/15/18/13/12/16/31/18/15/**19**/**14** across 22-32. All 01-21 stay reconciled. Carry-forward
+> `[UNVERIFIED]` for 31 (LLM-judge primary MT-Bench/2306.05685 + bias taxonomy; SWE-bench-Verified/
+> SWE-agent 2405.15793/HumanEval; RAGAS; OTel-GenAI + W3C-trace-context; tail-based sampling;
+> guardrail frameworks) and 32 (provider pricing/prompt-cache/batch specifics — illustrative knobs;
+> FinOps; cost tooling Helicone/Langfuse; spot/commit infra → App O) plus ALL prior 22-30 + 01-21
+> gaps. Network last check (Wave 14): arxiv/kafka/postgres 200; queue.acm.org 403 (CoDel) +
+> raft.github.io 000 still blocked.
 
 ---
 

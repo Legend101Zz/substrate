@@ -58,8 +58,12 @@ bulkhead); 20 (tail, partial results, correlated failure); 09 (the log/offset); 
 ## `[UNVERIFIED]` — carry-forward (do NOT harden into prose)
 - Real coding-agent implementations as design references (Claude Code, Aider, OpenAI Codex CLI,
   SWE-agent, Cursor, Code Puppy) — design folklore, not fetched primaries.
-- **SWE-bench** (Jimenez et al., arXiv 2310.06770) as the canonical coding-agent benchmark / the
-  definition of "useful" for Stage 1 + 31 — NOT fetched this session.
+- ~~**SWE-bench** (Jimenez et al., arXiv 2310.06770) ... NOT fetched this session.~~ **UPGRADED
+  2026-06-10 (Wave 14): SWE-bench FETCHED+VERIFIED** while building 31 — `meta/fetched_primaries/
+  swe-bench-2310.06770.{pdf,txt}`, receipt `_VERIFIED_2026-06-10_swe-bench.md`. The canonical
+  coding-agent benchmark + the execution-based definition of "useful" for Stage 1 + 31 is now
+  VERIFIED (execution-based: apply patch → run unit+system tests → all pass = resolved; metric =
+  % resolved; Claude-2 baseline 1.96%). Nothing erased.
 - Sandboxing/ACE-mitigation specifics (containers/cgroups/seccomp → Appendix I) — reuse, deferred.
 - prompt-injection-via-tool-result (→33), memory-poisoning mitigations (→25/33) — carry-forward.
 - All prior 22-27 + 01-21 carried `[UNVERIFIED]` remain logged and untouched.
