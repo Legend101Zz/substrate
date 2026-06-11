@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (Wave 11 — **Part III Agentic System Design OPENED**: 22 the-agent-loop + 23 tools-and-tool-contracts reconciled; ReAct + Toolformer fetched/verified; recompute 18/18 + 15/15) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (Wave 12 — **Part III batch 3 continued**: 24 context-engineering + 25 memory + 26 persistence/resume + 27 orchestration reconciled; CoT + MemGPT + Reflexion + Postgres-WAL fetched/verified; recompute 18/18 + 13/13 + 12/12 + 16/16) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -32,6 +32,34 @@ user to grant the terminal/Code Puppy process Desktop/OneDrive access in macOS P
 to a non-OneDrive workspace and continue there.
 
 ---
+
+## Things DONE
+
+- **Phase 1 / Wave 12 — Part III batch 3 continued: 24, 25, 26, 27 reconciled (Part III now 22-27 = 6/13).**
+  All bespoke (non-four-cluster) structures; same recompute+factcheck discipline as 13-23.
+  - **24 prompts-and-context-engineering** — refines the 22 "assemble context" box; context = a fixed
+    budget to engineer. **CoT (arXiv 2201.11903) FETCHED+VERIFIED** (format/ORDER changes capability;
+    SST-2 54.3%→93.4% on exemplar permutation). `_recompute.py` 18/18 — HEADLINE: **compaction
+    converts 22's O(T²)→O(T)**. Reuses 06/08/16/13/18/22/23. Artifacts:
+    `24-prompts-and-context-engineering/{_research_*.md,_recompute.py,_factcheck_phase1.md,_research.md}`.
+  - **25 memory-short-term-long-term-and-safety** — what 24's compactor externalizes to; memory = OS
+    storage hierarchy over tokens. **MemGPT (arXiv 2310.08560) + Reflexion (arXiv 2303.11366)
+    FETCHED+VERIFIED**. `_recompute.py` 13/13 — AMAT over tokens; poisoning blast radius (1 write,
+    many reads). Reuses 04/06/08/16/09/15/22/23/24. Artifacts:
+    `25-memory-short-term-long-term-and-safety/{...}`.
+  - **26 state-persistence-and-resume** — transcript = Write-Ahead Log; resume IS DB crash recovery.
+    **PostgreSQL WAL docs FETCHED+VERIFIED** (receipt `_VERIFIED_2026-06-10_postgres-wal.md`, also
+    corroborates 07/15). `_recompute.py` 12/12 — checkpoint knee I*=√(2N·c); idempotent replay
+    (17/21). Reuses 07/09/15/17/20/22/24/25. Artifacts: `26-state-persistence-and-resume/{...}`.
+  - **27 planning-and-multi-agent-orchestration** — one loop → many; a multi-agent system IS a
+    distributed system (laws 11/13/17/20). No new load-bearing primary (applies the toolkit, like
+    21). `_recompute.py` 16/16 — Amdahl over agents; join tail 1-(1-p)^N=63.4%@N=100; majority-of-3
+    voting 6.9×; YAGNI payoff condition. Reuses 09/11/13/14/15/17/18/20/22/24/25/26. Artifacts:
+    `27-planning-and-multi-agent-orchestration/{...}`.
+  - Primaries fetched+verified to `meta/fetched_primaries/` (cot/memgpt/reflexion .pdf+.txt +
+    postgres-wal-intro.txt); receipts `_VERIFIED_2026-06-10_agentic.md` (appended) +
+    `_VERIFIED_2026-06-10_postgres-wal.md`. Extraction via throwaway `/tmp/pdfx-venv`;
+    `.code-puppy-venv` untouched.
 
 ## Things DONE
 
@@ -425,10 +453,12 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that foundations 01-12 + Part II 13-21 are COMPLETE, and Part III is OPEN with 22 the-agent-loop
-  + 23 tools-and-tool-contracts reconciled (ReAct arXiv 2210.03629 + Toolformer arXiv 2302.04761
-  fetched/verified; `_recompute.py` 18/18 and 15/15; bespoke per-sub-course structures),
-- that 24-prompts-and-context-engineering is the NEXT untouched sub-course ("Phase 1 batch 3"),
+- that foundations 01-12 + Part II 13-21 are COMPLETE, and Part III is OPEN with 22-27 reconciled
+  (22 the-agent-loop, 23 tools-and-tool-contracts, 24 prompts-and-context-engineering, 25 memory,
+  26 state-persistence-and-resume, 27 planning-and-multi-agent-orchestration; ReAct/Toolformer/CoT/
+  MemGPT/Reflexion + Postgres-WAL fetched/verified; `_recompute.py` 18/15/18/13/12/16; bespoke
+  per-sub-course structures),
+- that 28-build-your-own-coding-harness is the NEXT untouched sub-course ("Phase 1 batch 3"),
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError
@@ -436,59 +466,60 @@ recurs, stop and tell me to grant Desktop/OneDrive access or move the repo to a 
 workspace. Do not reinstall Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 22 the-agent-loop reconciled: an agent is a CONTROL LOOP around an LLM
-  (assemble->call->parse->act->observe->append->decide). Each loop box maps to a downstream Part III
-  sub-course (the dependency spine). Headline math (RECOMPUTED 18/18): agent input tokens are O(T^2)
-  = `T*p + g*T*(T-1)/2` because the transcript is re-sent and grows every turn; this quadratic is
-  the forcing function for 24 (context engineering), 25 (memory), 32 (cost). Also verified: cost,
-  step/cost/time budgets, window-exhaustion turn `T*=floor((W-p)/g)+1`, per-step retry. Primary:
-  ReAct (interleaved Thought/Action/Observation; acting grounds reasoning; +34%/+10% with 1-2
-  exemplars). Reuses 04/09/13/17/18/20.
-- 23 tools-and-tool-contracts reconciled: a tool = an API CONTRACT between a stochastic caller and
-  deterministic code; the hard part is the stochastic caller, so the contract must be advertised +
-  validated/repaired + authorized. Math (RECOMPUTED 15/15): toolbox tax K*S/turn (feeds 22's
-  quadratic), retrieval-over-tools break-even K>k+r/S (->30), tool-result size budget
-  W-(p+(t-1)g), repair-retry bound, selection-error compounding `1-(1-q)^N` (the 13/20/21 fan-out
-  identity over loop steps), idempotency-key retention (17/21). Primary: Toolformer (decide which
-  API/when/what args/how to incorporate; tools offload arithmetic+lookup; self-supervised baking
-  vs in-context use). Reuses 03/07/08/16/17/18/22.
-- Part III structures are BESPOKE per sub-course (22 = loop walkthrough; 23 = contract walkthrough).
-  Do NOT reuse the 13-20 four-cluster shape. Each agent sub-course cross-links DOWN into Part I/II
-  primitives where it reuses them.
-- 22/23 residual `[UNVERIFIED]` (none load-bearing): CoT (Wei 2022, arXiv 2201.11903) as the
-  open-loop contrast in 22; Reflexion (arXiv 2303.11366); provider function-calling/tool-use specs
-  (OpenAI/Anthropic, structured outputs) + JSON Schema spec for 23; MCP transport deferred to 29.
-- All of 01-21 stay reconciled; math verified by recomputation; remaining canon/vendor attributions
-  still `[UNVERIFIED]` except those already upgraded.
-- Network reality at last check (2026-06-10 Wave 11): arxiv.org / kafka.apache.org / postgresql.org
-  reachable (HTTP 200); modelcontextprotocol.io 307 (resolvable). STILL blocked: queue.acm.org 403
-  (CoDel), raft.github.io 000, dl.acm.org 403 (DOI landing).
+- 22-27 reconciled (Part III at 6/13), each a BESPOKE structure (NOT the 13-20 four-cluster shape),
+  each cross-linking DOWN into Part I/II primitives it reuses:
+  - 22 the-agent-loop: agent = control loop around an LLM; input tokens O(T^2)=`T*p+g*T*(T-1)/2`
+    (the forcing function for 24/25/32). Primary ReAct (arXiv 2210.03629). Reuses 04/09/13/17/18/20.
+  - 23 tools-and-tool-contracts: tool = API contract between a stochastic caller & deterministic
+    code; toolbox tax K*S, selection compounding 1-(1-q)^N. Primary Toolformer (arXiv 2302.04761).
+  - 24 prompts-and-context-engineering: context = a fixed budget to engineer; HEADLINE = compaction
+    converts 22's O(T^2)->O(T) (cap transcript at C, summarize). Primary CoT (arXiv 2201.11903):
+    format/ORDER changes capability (SST-2 54.3%->93.4% on exemplar permutation). Reuses 06/08/16/
+    13/18/22/23. `_recompute.py` 18/18.
+  - 25 memory-short-term-long-term-and-safety: memory = OS storage hierarchy over tokens; AMAT over
+    tokens; poisoning blast radius (1 write, many reads). Primaries MemGPT (arXiv 2310.08560) +
+    Reflexion (arXiv 2303.11366). Reuses 04/06/08/16/09/15/22/23/24. `_recompute.py` 13/13.
+  - 26 state-persistence-and-resume: transcript = a Write-Ahead Log; resume IS DB crash recovery;
+    checkpoint knee I*=sqrt(2N*c_ckpt); idempotent replay (17/21). Anchor: PostgreSQL WAL docs
+    (FETCHED+VERIFIED; also corroborates 07/15). Reuses 07/09/15/17/20/22/24/25. `_recompute.py` 12/12.
+  - 27 planning-and-multi-agent-orchestration: a multi-agent system IS a distributed system (laws
+    11/13/17/20); Amdahl over agents, join tail 1-(1-p)^N=63.4%@N=100, majority-of-3 voting 6.9x,
+    YAGNI payoff condition. NO new load-bearing primary (applies the toolkit, like 21). Reuses
+    09/11/13/14/15/17/18/20/22/24/25/26. `_recompute.py` 16/16.
+- Carry-forward `[UNVERIFIED]` (none load-bearing): Lost-in-the-Middle (arXiv 2307.03172) + provider
+  prompt-caching specs (24); vector/embedding retrieval (->30) + memory vendor frameworks +
+  injection-via-memory (->33) (25); Temporal/Step-Functions/DBOS + LangGraph checkpointer + ARIES
+  (Mohan 1992) (26); planning papers (arXiv 2305.04091 / 2205.10625 / 2305.10601), debate
+  (2305.14325), MA frameworks (AutoGen/CrewAI/LangGraph/MetaGPT/Swarm) (27); plus all prior 22/23 +
+  01-21 carried gaps.
+- All of 01-21 stay reconciled; math verified by recomputation.
+- Network reality at last check (2026-06-10 Wave 12): arxiv.org / kafka.apache.org / postgresql.org
+  reachable (HTTP 200); modelcontextprotocol.io 308 (resolvable). STILL blocked: queue.acm.org 403
+  (CoDel), raft.github.io 000.
 
 Run this plan, but only as much as can be completed well in one session. Prefer one clean
 factchecked checkpoint over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
 2. CONTINUE Part III "Phase 1 batch 3" (briefs ONLY - no chapters, no Phase 2). Start with
-   24-prompts-and-context-engineering (refines the "assemble context" box of the 22 loop; its
-   forcing functions are 22's O(T^2) token growth + 23's toolbox tax). Then proceed in dependency
-   order: 25-memory-short-term-long-term-and-safety (<-> 08/16 caching + 06 data structures + 22
-   quadratic), 26-state-persistence-and-resume (<-> 15 replication/durability + 09 the log + the 22
-   transcript-as-log), 27-planning-and-multi-agent-orchestration (<-> 11 consensus/ordering + 17
-   async/EDA + 20 resilience/tail), as far as one clean checkpoint allows. Bespoke structure per
-   sub-course - do NOT reuse the four-cluster shape.
-3. For each sub-course: draft section briefs; RECOMPUTE any quantitative claims (context-window
-   token budgets, compaction ratios, memory eviction/retrieval sizing, cost-per-call, retry/timeout
-   budgets) in a `_recompute.py`; factcheck load-bearing claims; reuse line-verified Part I/II canon;
-   fetch primaries where a claim needs one. For 24 fetch CoT (arXiv 2201.11903); for 25 consider
-   MemGPT (arXiv 2310.08560) + Reflexion (arXiv 2303.11366); for 30 fetch RAG (Lewis et al. 2020,
-   arXiv 2005.11401); for 29 fetch the MCP spec (modelcontextprotocol.io). Mark anything unfetched
-   `[UNVERIFIED]`.
+   28-build-your-own-coding-harness (the CAPSTONE LAB that assembles the whole arc: loop(22) ->
+   tools(23) -> context/compaction(24) -> memory(25) -> persistence/resume(26) ->
+   orchestration(27) -> budgets/cost(32)). This is a build-lab sub-course: its bespoke structure is
+   a BUILD PROGRESSION (the "40-line agent" grown stage by stage, broken on purpose at each stage to
+   motivate the next). Then proceed in dependency order: 29-mcp-skills-and-connectors (FETCH the MCP
+   spec from modelcontextprotocol.io; <-> 23 tool contracts + 03 transport), 30-rag-retrieval-and-
+   grounding (FETCH RAG, Lewis et al. 2020, arXiv 2005.11401; <-> 06 structures + 08/16 caching +
+   24/25 retrieval-into-context + 14 partitioning), 31-evaluation-tracing-and-guardrails (<-> 19
+   observability/Dapper + 27 voting/critic + 18 guardrails), as far as one clean checkpoint allows.
+   Bespoke structure per sub-course - do NOT reuse the four-cluster shape.
+3. For each sub-course: draft section briefs; RECOMPUTE any quantitative claims in a `_recompute.py`;
+   factcheck load-bearing claims; reuse line-verified Part I/II + 22-27 canon; fetch primaries where
+   a claim needs one (29 MCP spec; 30 RAG arXiv 2005.11401). Mark anything unfetched `[UNVERIFIED]`.
 4. Reconcile each finished sub-course into `<subcourse>/_research.md` (bespoke structure fine).
    Preserve every logged `[UNVERIFIED]`/residual gap. If thin or blocked, stop at a clean
    checkpoint; do not fake completeness.
-5. Opportunistic (still owed from Wave 10/11): fetch newly-reachable primaries to upgrade carried
-   `[UNVERIFIED]` - kafka.apache.org (Kafka paper/KIPs -> 09/17), postgresql.org (WAL/replication ->
-   07/15), arxiv-hosted canon. Retry still-blocked CoDel/raft/dl.acm. Save receipts to
+5. Opportunistic (still owed): fetch newly-reachable primaries to upgrade carried `[UNVERIFIED]` -
+   kafka.apache.org (Kafka paper/KIPs -> 09/17). Retry still-blocked CoDel/raft. Save receipts to
    meta/fetched_primaries/ and update the relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update
    `meta/NEXT_SESSION.md` with the exact next-session prompt. Keep files under 600 lines where

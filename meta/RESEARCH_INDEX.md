@@ -633,3 +633,32 @@ own compiler/interpreter · own search engine · own message queue · own coding
   2022, arXiv 2201.11903) for the open-loop contrast in 22; RAG (Lewis 2020, arXiv 2005.11401) for
   30; MCP spec (modelcontextprotocol.io) for 29; provider function-calling/tool-use specs + JSON
   Schema for 23. Opportunistic Kafka/Postgres upgrades (09/17, 07/15) still pending.
+
+## Part III batch 3 continued (Wave 12, 2026-06-10) — 24/25/26/27 primaries fetched + verified
+
+- **Chain-of-Thought** Wei et al., NeurIPS 2022 (arXiv 2201.11903) — `meta/fetched_primaries/cot-2201.11903.{pdf,txt}`
+  (43 pp), arxiv.org/pdf/2201.11903 (HTTP 200). Anchors **24 prompts-and-context-engineering**:
+  prompts = programming-by-example (Brown 2020 in-context lineage); "additional computation can be
+  allocated to problems that require more reasoning steps" (format allocates compute); permuting
+  few-shot exemplars swings GPT-3 SST-2 54.3%->93.4% (ORDER is load-bearing); emergent at ~100B;
+  style-robust. VERIFIED verbatim.
+- **MemGPT** Packer et al., 2023 (arXiv 2310.08560) — `memgpt-2310.08560.{pdf,txt}` (13 pp). Anchors
+  **25 memory**: "virtual context management ... paging between physical memory and disk"; main vs
+  external context; main = system+working+FIFO; function-call pagers. VERIFIED verbatim.
+- **Reflexion** Shinn et al., NeurIPS 2023 (arXiv 2303.11366) — `reflexion-2303.11366.{pdf,txt}`
+  (19 pp). Anchors **25 memory**: reinforce agents "not by updating weights, but ... through
+  linguistic feedback"; "episodic memory buffer" of self-reflections; 91% vs 80% HumanEval.
+  VERIFIED verbatim.
+- **PostgreSQL WAL docs** (postgresql.org/docs/current/wal-intro.html, HTTP 200) —
+  `postgres-wal-intro.txt`, receipt `_VERIFIED_2026-06-10_postgres-wal.md`. Anchors **26 state-
+  persistence-and-resume**: WAL = log-before-data; "only the WAL file needs to be flushed ... to
+  guarantee that a transaction is committed"; roll-forward/REDO recovery. ALSO corroborates 07/15
+  WAL claims (07 already source-verified via bufpage.h). VERIFIED verbatim.
+- **27 planning-and-multi-agent-orchestration** used NO new primary — applies line-verified
+  11/13/17/20 to agent loops (same discipline as 21's capstone).
+- Receipts: `_VERIFIED_2026-06-10_agentic.md` (appended), `_VERIFIED_2026-06-10_postgres-wal.md`.
+  Recompute: 24 (18/18), 25 (13/13), 26 (12/12), 27 (16/16).
+- Carry-forward `[UNVERIFIED]` for remaining Part III: MCP spec (modelcontextprotocol.io, 308) for
+  29; RAG (Lewis 2020, arXiv 2005.11401) for 30; Lost-in-the-Middle (2307.03172) for 24; planning
+  papers (2305.04091/2205.10625/2305.10601) + debate (2305.14325) for 27; ARIES (Mohan 1992) for 26;
+  vendor frameworks throughout. Opportunistic Kafka upgrade (09/17) still pending.

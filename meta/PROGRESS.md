@@ -29,10 +29,10 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 21 | design-case-studies | RECONCILED | Phase 1 CAPSTONE of Part II done — six case-study briefs (URL shortener, news feed, chat, search/typeahead, payments/ledger, distributed rate limiter), `_recompute.py` 32/32 back-of-envelope estimates verified, `_factcheck_phase1.md` (0 blockers), reconciled `_research.md` (bespoke per-case structure + cross-cutting design-method spine + toolkit-usage matrix). Gilbert-Lynch formal CAP + Abadi PACELC FETCHED+VERIFIED (Case 5); applies 13-20 toolkit, no new primitives. **Part II (13-21) COMPLETE.** | brain |
 | 22 | the-agent-loop | RECONCILED | Phase 1 batch 3 OPENED — control-loop walkthrough (call→observe→decide→repeat); ReAct (arXiv 2210.03629) FETCHED+VERIFIED; `_recompute.py` 18/18 (quadratic token growth, budgets, window exhaustion); `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 04/09/13/17/18/20. Carry-forward `[UNVERIFIED]`: CoT (arXiv 2201.11903), Reflexion, provider docs | brain |
 | 23 | tools-and-tool-contracts | RECONCILED | Tool = contract between stochastic caller & deterministic code; Toolformer (arXiv 2302.04761) FETCHED+VERIFIED (four decisions which/when/what-args/how-incorporate); `_recompute.py` 15/15 (toolbox tax K·S, retrieval break-even, result budget, repair bound, selection compounding 1-(1-q)^N); `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 03/07/17/18/22. Carry-forward `[UNVERIFIED]`: provider function-calling specs, JSON Schema, MCP (→29) | brain |
-| 24 | prompts-and-context-engineering | TODO | Phase 1 batch 3 | — |
-| 25 | memory-short-term-long-term-and-safety | TODO | Phase 1 batch 3 | — |
-| 26 | state-persistence-and-resume | TODO | Phase 1 batch 3 | — |
-| 27 | planning-and-multi-agent-orchestration | TODO | Phase 1 batch 3 | — |
+| 24 | prompts-and-context-engineering | RECONCILED | Refines the "assemble context" box; context = a fixed budget to engineer. CoT (arXiv 2201.11903) FETCHED+VERIFIED (format/ORDER changes capability: SST-2 54.3%->93.4% on exemplar permutation). `_recompute.py` 18/18 — HEADLINE: **compaction converts 22's O(T²)->O(T)** (cap transcript at C, summarize); + window budget, few-shot cost, prefix-cache discount, placement band. `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 06/08/16/13/18/22/23. Carry-forward `[UNVERIFIED]`: Lost-in-the-Middle (2307.03172), provider prompt-caching specs, prompt-injection (→33) | brain |
+| 25 | memory-short-term-long-term-and-safety | RECONCILED | What 24's compactor externalizes to; memory = OS storage hierarchy over tokens. MemGPT (arXiv 2310.08560) + Reflexion (arXiv 2303.11366) FETCHED+VERIFIED (virtual context mgmt = paging; main vs external context; episodic memory as learning signal). `_recompute.py` 13/13 (tier partition, 0.1% resident, recall cost, **AMAT over tokens**, consolidation O(T) disk, poisoning blast radius 1-write-many-reads, eviction sizing). `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 04/06/08/16/09/15/22/23/24. Carry-forward `[UNVERIFIED]`: vector retrieval (→30), memory vendor frameworks, injection-via-memory (→33) | brain |
+| 26 | state-persistence-and-resume | RECONCILED | Transcript = a Write-Ahead Log; agent resume IS DB crash recovery. PostgreSQL WAL docs FETCHED+VERIFIED (log-before-data; flush-on-commit; roll-forward/REDO) — receipt `_VERIFIED_2026-06-10_postgres-wal.md` (also confirms 07/15 WAL). `_recompute.py` 12/12 (write-ahead loss bound ≤1 step, **checkpoint knee I*=√(2N·c)**, RTO, idempotent replay 17/21, fsync/group-commit, replication quorum 15). `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 07/09/15/17/20/22/24/25. Carry-forward `[UNVERIFIED]`: Temporal/Step-Functions/DBOS, LangGraph checkpointer, ARIES (Mohan 1992) | brain |
+| 27 | planning-and-multi-agent-orchestration | RECONCILED | One loop → many; a multi-agent system IS a distributed system (laws = 11/13/17/20). No new load-bearing primary (applies the toolkit, like 21). `_recompute.py` 16/16 (plan size W^D, **Amdahl over agents** ceiling 1/s, **join tail 1-(1-p)^N=63.4%@N=100**, aggregation tax N·r, **error compounding + majority-of-3 voting 6.9× better**, payoff/YAGNI condition, C(N,2) conflict pairs). `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 09/11/13/14/15/17/18/20/22/24/25/26. Carry-forward `[UNVERIFIED]`: planning papers (2305.04091/2205.10625/2305.10601), debate (2305.14325), MA frameworks | brain |
 | 28 | build-your-own-coding-harness | TODO | Phase 1 batch 3 | — |
 | 29 | mcp-skills-and-connectors | TODO | Phase 1 batch 3 | — |
 | 30 | rag-retrieval-and-grounding | TODO | Phase 1 batch 3 | — |
@@ -181,3 +181,45 @@ Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, all vendor docs.
   (arXiv 2201.11903) noted for next session.
 - **Next batch: 24-prompts-and-context-engineering** (refines the "assemble context" box; forced by
   22's quadratic + 23's toolbox tax), then 25 memory, 26 resume, 27 orchestration, ... through 34.
+
+## Wave 12 (2026-06-10) — Part III batch 3 continued: 24, 25, 26, 27 reconciled
+
+- **FOUR more agentic sub-courses reconciled** (24-27), all bespoke (non-four-cluster) structures,
+  same recompute+factcheck discipline as 13-23. Part III now stands at **22-27 done (6 of 13)**.
+  - **24 prompts-and-context-engineering** — refines the "assemble context" box; context = a fixed
+    budget to engineer (allocate/compress/place). Primary **CoT (arXiv 2201.11903) FETCHED+VERIFIED**
+    (prompts = programming-by-example; format allocates compute; exemplar ORDER swings SST-2
+    54.3%→93.4%; emergent ~100B; style-robust). `_recompute.py` 18/18 — HEADLINE: **compaction
+    converts 22's O(T²)→O(T)** (cap transcript at ceiling C, summarize); I* trigger; compaction
+    ratio/payoff; prefix-cache discount (helps prefix, NOT the quadratic); placement/"lost-in-the-
+    middle" band. Reuses 06/08/16/13/18/22/23.
+  - **25 memory-short-term-long-term-and-safety** — what 24's compactor externalizes to; memory =
+    OS storage hierarchy over tokens. Primaries **MemGPT (arXiv 2310.08560) + Reflexion (arXiv
+    2303.11366) FETCHED+VERIFIED** (virtual context mgmt = paging between "physical memory and
+    disk"; main vs external context; function-call pagers; episodic memory buffer as a learning
+    signal w/o weight updates; 91% vs 80% HumanEval). `_recompute.py` 13/13 — **AMAT over tokens**
+    (hit 0.80→0.95 cuts effective cost 4×), 0.1% resident, consolidation O(T) on disk, **poisoning
+    blast radius** (1 write, ~15 reads). Reuses 04/06/08/16/09/15/22/23/24.
+  - **26 state-persistence-and-resume** — the agent transcript IS a Write-Ahead Log; resume IS DB
+    crash recovery. **PostgreSQL WAL docs FETCHED+VERIFIED** (log-before-data; flush-on-commit;
+    roll-forward/REDO) — receipt `_VERIFIED_2026-06-10_postgres-wal.md` (corroborates 07/15 WAL,
+    already source-verified in 07 via bufpage.h). `_recompute.py` 12/12 — write-ahead loss ≤1 step,
+    **checkpoint knee I*=√(2N·c_ckpt)**, RTO, idempotent replay (17/21), fsync/group-commit,
+    replication quorum (15). Reuses 07/09/15/17/20/22/24/25.
+  - **27 planning-and-multi-agent-orchestration** — one loop → many; **a multi-agent system is a
+    distributed system** (laws = 11/13/17/20). No new load-bearing primary (applies the toolkit,
+    like 21's capstone). `_recompute.py` 16/16 — plan size W^D, **Amdahl over agents** (ceiling
+    1/s), **join tail 1-(1-p)^N=63.4%@N=100**, aggregation tax N·r (compact → 6.7× less),
+    **error compounding + majority-of-3 voting 6.9× better**, payoff/YAGNI condition (multi-agent
+    LOSES on small tasks), C(N,2) conflict pairs. Reuses 09/11/13/14/15/17/18/20/22/24/25/26.
+- **PRIMARIES fetched+verified to `meta/fetched_primaries/`**: cot-2201.11903, memgpt-2310.08560,
+  reflexion-2303.11366 (.pdf+.txt; receipt appended to `_VERIFIED_2026-06-10_agentic.md`),
+  postgres-wal-intro.txt (receipt `_VERIFIED_2026-06-10_postgres-wal.md`). Extraction via the same
+  throwaway `/tmp/pdfx-venv` (uv+pypdf); `.code-puppy-venv` untouched.
+- Network at session end: arxiv.org / kafka.apache.org / postgresql.org reachable (200);
+  modelcontextprotocol.io 308. STILL blocked: queue.acm.org 403 (CoDel), raft.github.io 000.
+- **Deferred (time-boxed):** 28-34 untouched. Opportunistic Kafka(09/17) upgrade NOT done (Postgres
+  WAL done). 30 RAG primary (Lewis 2020, arXiv 2005.11401) + MCP spec (29) noted for next session.
+- **Next batch: 28-build-your-own-coding-harness** (the capstone lab assembling loop→tools→context→
+  memory→persistence→orchestration→budgets/compaction), then 29 MCP, 30 RAG (fetch 2005.11401),
+  31 eval, 32 cost, 33 safety, 34 design-your-own.

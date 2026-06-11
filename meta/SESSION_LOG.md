@@ -2,6 +2,59 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 12: Part III batch 3 continued — 24 context-engineering, 25 memory, 26 persistence/resume, 27 orchestration reconciled (CoT + MemGPT + Reflexion + Postgres-WAL fetched/verified)
+- shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
+  PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `48a5b5e`;
+  no `os.getcwd()`/`Path.cwd()` PermissionError (CWD resolves through OneDrive, reads fine). Confirmed
+  Wave 2 milestone `4a1cc71`, that 01-12 + Part II 13-21 are COMPLETE, and Part III open w/ 22+23.
+- shipped: **24 prompts-and-context-engineering RECONCILED** (bespoke budget/allocation walkthrough;
+  refines the 22 "assemble context" box). Primary **CoT (Wei et al., NeurIPS 2022, arXiv 2201.11903)
+  FETCHED+VERIFIED** verbatim: prompts = programming-by-example (Brown lineage); "additional
+  computation can be allocated to problems that require more reasoning steps"; permuting few-shot
+  exemplars swings GPT-3 SST-2 **54.3%→93.4%** (ORDER is load-bearing); emergent ~100B; style-robust.
+  `_recompute.py` 18/18 — HEADLINE: **compaction converts 22's O(T²)→O(T)** (cap transcript at C,
+  summarize); + window-as-budget, few-shot cost, compaction ratio/payoff, prefix-cache discount
+  (helps prefix NOT the quadratic), placement band. `_factcheck_phase1.md` 0 blockers. Reuses
+  06/08/16/13/18/22/23.
+- shipped: **25 memory-short-term-long-term-and-safety RECONCILED** (bespoke memory-hierarchy
+  walkthrough; what 24's compactor externalizes to). Primaries **MemGPT (arXiv 2310.08560) +
+  Reflexion (arXiv 2303.11366) FETCHED+VERIFIED** verbatim: "virtual context management ... paging
+  between physical memory and disk"; main vs external context; main=system+working+FIFO; function-
+  call pagers; "episodic memory buffer" learning w/o weight updates; 91% vs 80% HumanEval.
+  `_recompute.py` 13/13 — **AMAT over tokens** (hit 0.80→0.95 = 4× cheaper), 0.1% resident,
+  consolidation O(T) on disk, **poisoning blast radius** (1 write → ~15 reads → validate writes).
+  `_factcheck_phase1.md` 0 blockers. Reuses 04/06/08/16/09/15/22/23/24.
+- shipped: **26 state-persistence-and-resume RECONCILED** (bespoke durability/recovery walkthrough).
+  Insight: the agent transcript is a **Write-Ahead Log** → resume IS DB crash recovery. **PostgreSQL
+  WAL docs FETCHED+VERIFIED** verbatim (log-before-data; "only the WAL file needs to be flushed ...
+  to guarantee that a transaction is committed"; "roll-forward ... REDO"). `_recompute.py` 12/12 —
+  write-ahead loss ≤1 step, **checkpoint knee I*=√(2N·c_ckpt)**, RTO, idempotent replay (17/21),
+  fsync/group-commit, replication quorum (15). `_factcheck_phase1.md` 0 blockers. Reuses
+  07/09/15/17/20/22/24/25.
+- shipped: **27 planning-and-multi-agent-orchestration RECONCILED** (bespoke coordination
+  walkthrough). Strong claim: **a multi-agent system is a distributed system whose nodes are LLM
+  loops** (laws = 11/13/17/20). No new load-bearing primary (applies the toolkit, like 21).
+  `_recompute.py` 16/16 — plan size W^D, **Amdahl over agents** (ceiling 1/s), **join tail
+  1-(1-p)^N=63.4%@N=100**, aggregation tax N·r (compact → 6.7× less), **error compounding +
+  majority-of-3 voting 6.9× better**, payoff/YAGNI condition (multi-agent LOSES on small tasks),
+  C(N,2) conflict pairs. `_factcheck_phase1.md` 0 blockers. Reuses 09/11/13/14/15/17/18/20/22/24/25/26.
+- shipped: PRIMARIES fetched+verified to `meta/fetched_primaries/` (cot-2201.11903.{pdf,txt},
+  memgpt-2310.08560.{pdf,txt}, reflexion-2303.11366.{pdf,txt}, postgres-wal-intro.txt); receipts
+  appended to `_VERIFIED_2026-06-10_agentic.md` + new `_VERIFIED_2026-06-10_postgres-wal.md`.
+  Updated PROGRESS (24-27 rows RECONCILED + Wave 12 note), NEXT_SESSION.
+- decisions: (1) Reused the throwaway `/tmp/pdfx-venv` (uv+pypdf) for PDF text; `.code-puppy-venv`
+  never touched. (2) Each Part III sub-course got a BESPOKE structure (24=budget/allocation,
+  25=memory-hierarchy, 26=durability/recovery, 27=coordination) — NOT the 13-20 four-cluster shape.
+  (3) 27 needed NO new load-bearing primary — its content is the APPLICATION of line-verified
+  11/13/17/20 to loops (same discipline as 21's capstone); planning papers + MA frameworks carried
+  `[UNVERIFIED]`. (4) Opportunistic Postgres-WAL fetch done (corroborates 07/15, already source-
+  verified in 07); Kafka(09/17) upgrade DEFERRED to keep one clean 4-sub-course checkpoint.
+- stopped-at: 24+25+26+27 reconciled (Part III at 22-27 = 6/13). Clean checkpoint; committed. Next:
+  **28-build-your-own-coding-harness** (capstone lab: loop→tools→context→memory→persistence→
+  orchestration→budgets/compaction), then 29 MCP (fetch spec), 30 RAG (fetch Lewis 2020, arXiv
+  2005.11401), 31 eval, 32 cost, 33 safety, 34 design-your-own. Still blocked: queue.acm.org 403
+  (CoDel), raft.github.io 000. No chapters. No Phase 2.
+
 ## 2026-06-10 — Phase 1 Wave 11: OPEN Part III Agentic System Design — 22 the-agent-loop + 23 tools-and-tool-contracts reconciled (ReAct + Toolformer fetched/verified)
 - shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
   PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `384d6dd`;

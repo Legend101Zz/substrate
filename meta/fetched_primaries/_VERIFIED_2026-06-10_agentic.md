@@ -38,6 +38,20 @@ uv venv (`/tmp/pdfx-venv`, pypdf 6.13.2 from the Walmart external-pypi index) �
   which do not reduce the loss Li over the next tokens. All remaining API calls are interleaved"
   back into the dataset, then the LM is finetuned on it.
 
+## Wave 12 (2026-06-10, same day) — batch 3 cont'd: 24/25 primaries
+
+| source | file | what it anchors |
+|--------|------|-----------------|
+| Wei et al., "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models", NeurIPS 2022 (arXiv 2201.11903) | `cot-2201.11903.{pdf,txt}` (43 pp) | 24 prompts-and-context-engineering: prompts = programming-by-example (Brown lineage); "additional computation can be allocated to problems that require more reasoning steps"; permuting few-shot exemplars swings SST-2 54.3%->93.4% (ORDER is load-bearing); emergent at ~100B; style-robust |
+| Packer et al., "MemGPT: Towards LLMs as Operating Systems", 2023 (arXiv 2310.08560) | `memgpt-2310.08560.{pdf,txt}` (13 pp) | 25 memory: virtual context management = OS paging between "physical memory and disk"; main context (system+working+FIFO) vs external context ("analogous to disk"); function-call pagers |
+| Shinn et al., "Reflexion: Language Agents with Verbal Reinforcement Learning", NeurIPS 2023 (arXiv 2303.11366) | `reflexion-2303.11366.{pdf,txt}` (19 pp) | 25 memory: "not by updating weights, but ... through linguistic feedback"; "episodic memory buffer" of self-reflections improves subsequent trials; 91% vs 80% HumanEval |
+
+Verbatim quotes for these are transcribed in each sub-course's `_factcheck_phase1.md` (24, 25).
+Extraction reused the same throwaway `/tmp/pdfx-venv` (uv + pypdf), `.code-puppy-venv` untouched.
+NOTE: 26 (state-persistence-and-resume) anchored on PostgreSQL WAL docs (HTTP 200) — separate
+receipt `_VERIFIED_2026-06-10_postgres-wal.md`, which ALSO upgrades 07/15 carried WAL `[UNVERIFIED]`.
+27 (orchestration) used no new primary (applies 11/13/17/20 toolkit, like 21's capstone).
+
 ## Carry-forward / still to fetch next session
 - **MCP spec** (modelcontextprotocol.io, 307) — deep-fetch the spec text for 29 (mcp-skills-and-
   connectors); this session only confirmed it resolves.
