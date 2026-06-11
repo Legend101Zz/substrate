@@ -2,6 +2,39 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-11 — Phase 1 Wave 18: APPENDICES batch 4 CONTINUED — K + A + B + I + J reconciled (the full systems-infra arc K→A→B→I→J). Appendices now 11/15.
+- rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
+  DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint at start `84d2638`; CWD accessible,
+  NO `os.getcwd()`/`Path.cwd()` PermissionError; `.code-puppy-venv` untouched; no reinstall.
+- **Network retried — ALL still blocked (reuse-only wave):** kafka.apache.org / arxiv.org /
+  raft.github.io / llvm.org / gcc.gnu.org / man7.org / docs.python.org all **000**; queue.acm.org
+  **403**. So NO new primary fetched this wave; every appendix reused line-verified spine canon +
+  local primaries. Opportunistic owed fetches (Kafka paper/KIPs, DPR 2004.04906, Raft, CoDel) retried
+  → STILL BLOCKED, carried `[UNVERIFIED]`, nothing hardened.
+- **SHIPPED — 5 reference appendices (deep info only, NO exercises, bespoke shapes, CONSTITUTION #5):**
+  - **K compilers-interpreters-and-jit** — bespoke 3-stage+JIT pipeline (front-end → stack/register VM
+    → SSA middle-end → codegen/regalloc → JIT profile/specialize/guard/deopt). Reuses 05's line-verified
+    CPython/V8/HotSpot/Crafting-Interpreters reads + 06. `_recompute.py` **15/15**. 0 blockers. Commit `41aa4aa`.
+  - **A computer-architecture** — bespoke performance ladder (the correct-but-slow CPU 01 built → cache/
+    AMAT → pipelining/hazards → branch prediction → superscalar/OOO/ILP → VM/TLB → coherence). Reuses
+    01's nand2tetris+CS:APP+Eater reads + 06/13. `_recompute.py` **15/15**. 0 blockers. Commit `2f3020a`.
+  - **B linux-internals** — bespoke xv6→Linux→isolation diff (clone/COW → CFS/EEVDF → buddy/slab/page-
+    cache → epoll/io_uring → **namespaces+cgroups substrate**). Reuses 04's xv6+TLPI+kernel-source reads
+    + A. `_recompute.py` **14/14**. 0 blockers. **Establishes the ns+cgroups substrate for I/J.** Commit `ecebe1e`.
+  - **I docker-containers-cgroups-namespaces** — bespoke "there is no container" teardown (process + ns
+    + cgroups + overlayfs + caps/seccomp; reassemble in ~4 syscalls). Reuses just-reconciled B + 04/A/03.
+    `_recompute.py` **12/12**. 0 blockers. Commit `26ffa0d`.
+  - **J kubernetes-internals** — bespoke "loops all the way down" (reconciliation loops over I's container
+    unit: store→schedule→run→expose→heal→roll; etcd=Raft). Reuses appendix I + spine 11/15/20 + L.
+    `_recompute.py` **13/13**. 0 blockers. **Closes the B→I→J arc.** Commit `4edc1b4`.
+- Extraction: no PDF this wave; no venv created; `.code-puppy-venv` untouched.
+- **DECISIONS:** none new (followed Wave-16/17 appendix pattern: bespoke per-appendix shape, recompute+
+  factcheck+reconcile, reuse-only since network blocked, carry-forward all gaps). No ADR needed.
+- **State preserved:** SPINE 01-34 reconciled; appendices N/L/M/F/G/H untouched and intact.
+- **STOPPED-AT:** one clean factchecked checkpoint after K+A+B+I+J (preferred a clean checkpoint over
+  starting shallow C/D/E/O). Remaining appendices TODO: **C, D, E, O (4/15)**. Next batch recommended:
+  C-python-internals + D-v8-node-internals + E-jvm-internals (all reuse 05/K), then O-cloud-infra-basics.
+
 ## 2026-06-11 — Phase 1 Wave 17: APPENDICES batch 4 CONTINUED — F-postgres-internals + G-redis-internals + H-kafka-internals reconciled (redis.io eviction+persistence fetched/verified). Appendices now 6/15.
 - rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
   DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint at start `a11be7b`; CWD accessible,

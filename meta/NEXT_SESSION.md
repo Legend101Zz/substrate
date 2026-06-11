@@ -4,64 +4,85 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-11 (Wave 17 — **Appendices batch 4 CONTINUED**: F-postgres-internals + G-redis-internals + H-kafka-internals reconciled; redis.io eviction+persistence fetched/verified; recompute 14/14/13. Appendices now **6/15** done.) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-11 (Wave 18 — **Appendices batch 4 CONTINUED**: K + A + B + I + J reconciled — the full systems-infra arc K→A→B→I→J; reuse-only (network all 000/403); recompute 15/15/14/12/13. Appendices now **11/15** done.) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
-## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 18)
+## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 19)
 
 > You are the BRAIN agent for the Substrate course project. Start safely from
 > `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,
 > meta/RESEARCH_PROTOCOL.md, meta/COURSE_MAP.md, meta/PROGRESS.md, meta/SESSION_LOG.md,
 > meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4 lines: current Phase 1 state; Wave 2
 > milestone `4a1cc71`; current checkpoint from `git rev-parse --short HEAD`; that **the entire
-> Phase-1 SPINE (01-34) is COMPLETE** and **Appendices batch 4 is IN PROGRESS — N, L, M, F, G, H
-> reconciled (6/15); A,B,C,D,E,I,J,K,O still TODO**; and the exact plan you will run. Do not touch
-> `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()`/`Path.cwd()` PermissionError recurs, STOP and
-> tell me to grant Desktop/OneDrive access or move the repo off OneDrive. Do not reinstall Code
+> Phase-1 SPINE (01-34) is COMPLETE** and **Appendices batch 4 is IN PROGRESS — N, L, M, F, G, H, K,
+> A, B, I, J reconciled (11/15); C, D, E, O still TODO**; and the exact plan you will run. Do not
+> touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()`/`Path.cwd()` PermissionError recurs, STOP
+> and tell me to grant Desktop/OneDrive access or move the repo off OneDrive. Do not reinstall Code
 > Puppy. Preserve every logged `[UNVERIFIED]`/residual gap.
 >
 > CONTINUE **Phase 1 batch 4 — the Appendices** as briefs ONLY (no chapters, no Phase 2), as far as
-> ONE clean factchecked checkpoint allows (prefer one clean checkpoint over shallow briefs).
-> Recommended order (local-primary-friendly first): **K-compilers-interpreters-and-jit** (reuse 05),
-> **A-computer-architecture** (reuse 01), **B-linux-internals** (reuse 04),
-> **I-docker-containers-cgroups-namespaces** (reuse 04/B), **J-kubernetes-internals**, then
-> **C/D/E** (python/v8-node/jvm internals, reuse 05/K), **O-cloud-infra-basics**. Bespoke structure
-> per appendix — reference-grade DEEP info only, **NO exercises, NO tests** (CONSTITUTION #5); each
-> goes infinitely deep on ONE real system; spine chapters cross-link DOWN into them. These are NOT
-> spine sub-courses — do NOT reuse the four-cluster or canvas shapes.
+> ONE clean factchecked checkpoint allows (prefer one clean checkpoint over shallow briefs). FOUR
+> appendices remain: **C-python-internals** (reuse 05/K), **D-javascript-v8-nodejs-internals** (reuse
+> 05/K), **E-java-jvm-internals** (reuse 05/K), **O-cloud-infra-basics** (reuse 11/13/14/15/20 + O is
+> the cloud-primitives reference). C/D/E are the three concrete instances of appendix K's generic
+> compiler/JIT pipeline + spine 05's runtime canon — give each a bespoke shape (e.g. C = "GIL +
+> refcount + adaptive specialization" story; D = "event loop + hidden classes + tiered JIT (Ignition→
+> Maglev→TurboFan) + libuv" story; E = "classloading + verifier + tiered C1/C2 + G1/ZGC + safepoints"
+> story). Bespoke structure per appendix — reference-grade DEEP info only, **NO exercises, NO tests**
+> (CONSTITUTION #5); each goes infinitely deep on ONE real system; spine chapters cross-link DOWN into
+> them. NOT spine sub-courses — do NOT reuse the four-cluster or canvas shapes.
 > 1. `git status --short`; if not clean, inspect before editing.
 > 2. Per appendix: draft `_research_*.md` if helpful; RECOMPUTE any quantitative claims in
->    `_recompute.py`; factcheck load-bearing claims; reuse line-verified spine canon + the ~30 local
->    primaries; fetch NEW primaries only where a claim needs one AND the host is reachable. Mark
->    anything unfetched `[UNVERIFIED]`. Reconcile each finished appendix into `<appendix>/_research.md`.
-> 3. Opportunistic (still owed, ALL blocked as of Wave 17): Kafka paper/KIPs (kafka.apache.org 000)
+>    `_recompute.py`; factcheck load-bearing claims; reuse line-verified spine canon (esp. 05 + new
+>    appendix K) + the ~30 local primaries; fetch NEW primaries only where a claim needs one AND the
+>    host is reachable. Mark anything unfetched `[UNVERIFIED]`. Reconcile each finished appendix into
+>    `<appendix>/_research.md`.
+> 3. Opportunistic (still owed, ALL blocked as of Wave 18): Kafka paper/KIPs (kafka.apache.org 000)
 >    → 09/17/H; DPR (arXiv 2004.04906, arxiv 000) → 30/M; Raft (raft.github.io 000) → L; CoDel
 >    (queue.acm.org 403) → 18/20. Retry each; save receipts to meta/fetched_primaries/ if any heal;
 >    carry-forward → VERIFIED, erase nothing. Extraction venv: throwaway `/tmp/pdfx-venv*` only —
 >    NEVER `.code-puppy-venv`.
 > 4. End cleanly: append meta/SESSION_LOG.md, update meta/PROGRESS.md + meta/NEXT_SESSION.md, run
->    `git status --short`, commit, report remaining gaps + next batch. No chapters. No Phase 2. No
->    hand-waving — cite the source or mark `[UNVERIFIED]`.
+>    `git status --short`, commit, report remaining gaps + next batch. **If C/D/E/O all land, batch 4
+>    (all 15 appendices) is COMPLETE — then the whole Phase 1 corpus is done; report that Phase 2
+>    (per-sub-course `_structure.md`, STOP for sign-off) is the next gate.** No chapters. No Phase 2
+>    without sign-off. No hand-waving — cite the source or mark `[UNVERIFIED]`.
 >
 > State to preserve (do NOT erase): SPINE 01-34 reconciled (Part I/II/III, bespoke shapes; 21/28/34
 > capstones w/ no new primary). Appendices done: **N (20/20), L (22/22), M (17/17), F (14/14),
-> G (14/14), H (13/13)** — all reference-grade, exercise-free, bespoke. Local+VERIFIED primaries now
-> include **redis.io eviction+persistence (NEW Wave 17)** + Lamport Paxos/Byzantine (Wave 16)
-> alongside ReAct/Toolformer/CoT/MemGPT+Reflexion/Postgres-WAL/MCP-arch/RAG(2005.11401)/SWE-bench/
-> Greshake/Dynamo/Spanner/Bigtable/GFS/Gilbert-Lynch/Brewer/Kleppmann/Abadi-PACELC/Tail-at-Scale/
-> Dapper/SEDA/Nishtala/SRE-chapters/RFCs. Carry-forward `[UNVERIFIED]` (none load-bearing): F — MVCC
-> heap detail/VACUUM-freeze thresholds/WAL-record-format/planner-deep/ARIES (pg.org 000); G —
-> encoding byte layouts/RESP/cluster-gossip/multi-part-AOF (redis internals-rax 404); H — Kafka
-> paper/KIPs/KRaft-deep/fetch-from-follower (kafka.apache.org 000); plus all prior 01-34 + N/L/M
-> gaps. Network last check (Wave 17): redis.io 200 (eviction+persistence fetched); postgresql.org +
-> kafka.apache.org + raft.github.io + arxiv.org 000; queue.acm.org 403 still blocked.
+> G (14/14), H (13/13), K (15/15), A (15/15), B (14/14), I (12/12), J (13/13)** — all reference-grade,
+> exercise-free, bespoke. Wave 18 was reuse-only (network all 000/403); the systems-infra arc
+> K→A→B→I→J cross-links cleanly (A under B; B's ns+cgroups substrate under I; I's container unit
+> under J; K feeds C/D/E). Local+VERIFIED primaries unchanged from Wave 17 (redis.io eviction+
+> persistence + Lamport Paxos/Byzantine + ReAct/Toolformer/CoT/MemGPT+Reflexion/Postgres-WAL/MCP-arch/
+> RAG(2005.11401)/SWE-bench/Greshake/Dynamo/Spanner/Bigtable/GFS/Gilbert-Lynch/Brewer/Kleppmann/
+> Abadi-PACELC/Tail-at-Scale/Dapper/SEDA/Nishtala/SRE-chapters/RFCs). Carry-forward `[UNVERIFIED]`
+> (none load-bearing): all prior F/G/H/01-34/N/L/M gaps PLUS Wave-18 additions — K: LLVM/GCC text +
+> Chaitin/Cytron/Pratt papers + exact JIT thresholds; A: Hennessy-Patterson + exact uarch (predictors/
+> ROB/MESI) + SAP-1 bit map; B: kernel source/man-pages + io_uring ring layout + exact CFS/EEVDF
+> constants + NUMA/Spectre/THP; I: docker/OCI/runc/containerd docs + overlayfs internals + rootless/
+> gVisor-Kata; J: k8s/etcd docs+source + Borg paper + object semantics + version-dependent constants +
+> CNI/CSI/APF/operators. Network last check (Wave 18): kafka.apache.org + arxiv.org + raft.github.io +
+> llvm.org + gcc.gnu.org + man7.org + docs.python.org all **000**; queue.acm.org **403**. (For C/D/E,
+> docs.python.org being 000 means reuse 05's line-verified CPython source reads + appendix K.)
+
+---
+
+## ⏮ Superseded prompt (Wave 18 — kept for history)
+
+> [Wave 18 ran K/A/B/I/J per this plan; see SESSION_LOG 2026-06-11 Wave 18.]
 
 ---
 
 ## ⏮ Superseded prompt (Wave 17 — kept for history)
 
-> [Wave 17 ran F/G/H per this plan; see SESSION_LOG 2026-06-11 Wave 17.]
+> [Wave 17 ran F/G/H per its plan; see SESSION_LOG 2026-06-11 Wave 17.]
+
+---
+
+## ⏮ Superseded prompt (Wave 16 and earlier — see SESSION_LOG/git history)
+
 
 ---
 
