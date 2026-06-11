@@ -2,6 +2,42 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-11 — Phase 1 Wave 17: APPENDICES batch 4 CONTINUED — F-postgres-internals + G-redis-internals + H-kafka-internals reconciled (redis.io eviction+persistence fetched/verified). Appendices now 6/15.
+- rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
+  DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint at start `a11be7b`; CWD accessible,
+  NO `os.getcwd()`/`Path.cwd()` PermissionError; `.code-puppy-venv` untouched; no reinstall.
+- **Network retried:** redis.io HTTP **200** (reachable!) → fetched eviction + persistence docs.
+  postgresql.org / kafka.apache.org / raft.github.io / arxiv.org all **000**; queue.acm.org **403**
+  (all still blocked, matching Wave 16). So F reused 07's line-verified pg source + WAL intro; H
+  reused 09's line-verified Kafka 3.9 source + 17 + Nishtala; only G got NEW primaries this wave.
+- **SHIPPED — 3 reference appendices (deep info only, NO exercises, bespoke shapes, CONSTITUTION #5):**
+  - **F postgres-internals** — bespoke "life of a row" pipeline (page→tuple→nbtree→cost-planner→
+    executor→WAL→checkpoint→REDO→MVCC→VACUUM/wraparound). WAL roll-forward/REDO + sequential-log-
+    flush VERIFIED verbatim against local `postgres-wal-intro.txt`; page/planner/MVCC constants reused
+    from 07's line-verified PostgreSQL master source. `_recompute.py` **14/14** (fixed page-density
+    claim 66→64 after recompute caught it). `_factcheck_phase1.md` 0 blockers. Reuses 06/07/15/26/L.
+  - **G redis-internals** — bespoke "single-threaded in-memory machine" tier walkthrough (event loop→
+    encodings→expiration→eviction→persistence→replication→cluster). **NEW primaries FETCHED+VERIFIED**
+    (redis.io 200): eviction ("Approximated LRU", `maxmemory-samples 5`) + persistence (RDB
+    point-in-time; AOF everysec=1s/always=0/no=30s) — receipt `_VERIFIED_2026-06-11_redis-docs.md`.
+    `_recompute.py` **14/14**. 0 blockers. Reuses 06/08/16/L/15.
+  - **H kafka-internals** — bespoke "distributed-log machine" layer walkthrough (log→segments→ISR→
+    HW/epochs→groups/offsets→delivery→EOS/txns→KRaft). NO new primary (kafka.apache.org 000);
+    constants reused from 09's line-verified Kafka 3.9 source + 17 delivery math + Nishtala herd.
+    `_recompute.py` **13/13**. 0 blockers. Reuses 09/17/11/15/L+Nishtala.
+- **Opportunistic primaries (still owed) — retried, STILL BLOCKED:** Kafka paper/KIPs
+  (kafka.apache.org 000), DPR arXiv 2004.04906 (arxiv 000), Raft (raft.github.io 000), CoDel
+  (queue.acm.org 403). All carried `[UNVERIFIED]`, nothing hardened. Receipt for the ONE new fetch
+  (redis docs) saved to `meta/fetched_primaries/`.
+- Extraction: plain `curl` + stdlib HTML strip (no PDF this wave); NO venv created;
+  `.code-puppy-venv` untouched.
+- **DECISIONS:** none new (followed Wave-16 appendix pattern: bespoke per-appendix shape, recompute+
+  factcheck+reconcile, fetch only reachable primaries, carry-forward all gaps). No ADR needed.
+- **State preserved:** SPINE 01-34 reconciled; appendices N/L/M untouched and intact.
+- **STOPPED-AT:** one clean factchecked checkpoint after F+G+H. Remaining appendices TODO:
+  A,B,C,D,E,I,J,K,O (9/15). Next batch recommended: K-compilers-and-jit (reuse 05),
+  A-computer-architecture (reuse 01), B-linux-internals (reuse 04), then I/J/C/D/E/O.
+
 ## 2026-06-11 — Phase 1 Wave 16: APPENDICES batch 4 OPENED — N-math-for-systems + L-consensus-replication-and-transactions + M-ai-agent-memory-tools-and-evaluation reconciled (Lamport Paxos + Byzantine Generals fetched/verified).
 - rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/PROGRESS/SESSION_LOG/
   DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `c640d59`; CWD accessible, no
