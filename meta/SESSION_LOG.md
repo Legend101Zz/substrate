@@ -2,6 +2,45 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 11: OPEN Part III Agentic System Design — 22 the-agent-loop + 23 tools-and-tool-contracts reconciled (ReAct + Toolformer fetched/verified)
+- shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
+  PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `384d6dd`;
+  no `os.getcwd()`/`Path.cwd()` PermissionError. Confirmed Wave 2 milestone `4a1cc71` and that ALL of
+  01-21 are reconciled/factchecked (foundations 01-12 + Part II 13-21 COMPLETE).
+- shipped: **22 the-agent-loop RECONCILED** (Part III FOUNDATIONAL primitive; bespoke single-control-
+  loop walkthrough, NOT four clusters). An agent = a control loop around an LLM
+  (assemble→call→parse→act→observe→append→decide); each loop box maps to a downstream Part III
+  sub-course (the dependency spine). Primary **ReAct (Yao et al., ICLR 2023, arXiv 2210.03629)
+  FETCHED + VERIFIED** verbatim: interleaved Thought/Action/Observation; acting grounds reasoning,
+  curing CoT hallucination via an external API; +34%/+10% (ALFWorld/WebShop) with 1-2 exemplars.
+  `_recompute.py` 18/18 — headline: agent input tokens are **O(T²)** (`T*p + g*T*(T-1)/2`, transcript
+  re-sent + grows every turn) → motivates 24/25/32; also cost, step/cost/time budgets, window-
+  exhaustion `T*=floor((W-p)/g)+1`, per-step retry. `_factcheck_phase1.md` 0 blockers. Reuses
+  04/09/13/17/18/20/11.
+- shipped: **23 tools-and-tool-contracts RECONCILED** (bespoke contract walkthrough). A tool = an
+  **API contract between a stochastic caller and deterministic code**; the hard part is the stochastic
+  caller, so the contract must be advertised + validated/repaired. Primary **Toolformer (Schick et al.,
+  NeurIPS 2023, arXiv 2302.04761) FETCHED + VERIFIED** verbatim: the four decisions (which API / when /
+  what args / how to incorporate results); tools offload arithmetic/lookup; self-supervised baking
+  (sample→execute→filter-by-loss→finetune) vs in-context use. `_recompute.py` 15/15 — toolbox tax K·S
+  (feeds 22's quadratic), retrieval-over-tools break-even (→30), tool-result size budget, repair-retry
+  bound, selection-error compounding `1-(1-q)^N` (the 13/20/21 identity over loop steps), idempotency
+  retention (17/21). `_factcheck_phase1.md` 0 blockers. Reuses 03/07/08/16/17/18/22.
+- shipped: PRIMARIES fetched+verified to `meta/fetched_primaries/` (react-2210.03629.{pdf,txt},
+  toolformer-2302.04761.{pdf,txt}); receipt `_VERIFIED_2026-06-10_agentic.md`. Updated PROGRESS
+  (22/23 rows RECONCILED + Wave 11 note), RESEARCH_INDEX (Part III batch 3 section), NEXT_SESSION.
+- decisions: (1) Used a throwaway `/tmp/pdfx-venv` (uv + pypdf 6.13.2 from Walmart external-pypi) to
+  extract arxiv PDF text, REMOVED after; `/Users/m0t0hu6/.code-puppy-venv` never touched. (2) Each
+  Part III sub-course gets a BESPOKE structure (22 = loop walkthrough, 23 = contract walkthrough), per
+  the plan — NOT the 13-20 four-cluster shape. (3) **Stopped at 2 clean sub-courses rather than
+  starting 24** — prefer one clean factchecked checkpoint over multiple shallow briefs; 24 (context
+  engineering) leans on community idiom and deserves its own focused session. (4) Spent the arxiv
+  budget on the load-bearing 22/23 primaries; DEFERRED opportunistic Kafka(09/17)/Postgres(07/15)
+  upgrades + RAG/MCP/CoT fetches to next session (all confirmed reachable).
+- stopped-at: 22 + 23 reconciled (Part III opened, 2/13 done). Committed. Next: **24-prompts-and-
+  context-engineering** (refines the "assemble context" box; forced by 22's quadratic + 23's toolbox
+  tax), then 25→34. Still blocked: queue.acm.org 403 (CoDel), raft.github.io 000, dl.acm.org 403.
+
 ## 2026-06-10 — Phase 1 Wave 10: START + RECONCILE Part II 21 design-case-studies (CAPSTONE) — PART II (13-21) COMPLETE; Gilbert-Lynch formal CAP + Abadi PACELC unblocked + upgraded into 11 & 15
 - shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
   PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `os.getcwd()`/`Path.cwd()` worked (no PermissionError);

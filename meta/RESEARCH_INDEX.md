@@ -614,3 +614,22 @@ own compiler/interpreter · own search engine · own message queue · own coding
   resource controllers (thread-pool sizing, batching, admission control); explicit bounded
   queues for load conditioning. Upgraded the carry-forward `[UNVERIFIED]` in
   `18-.../_factcheck_phase1.md` -> VERIFIED. eecs.harvard.edu/~mdw path is 404; use sosp.org.
+
+## Part III batch 3 (Wave 11, 2026-06-10) — agentic primaries fetched + verified
+
+- **ReAct** Yao et al., ICLR 2023 (arXiv 2210.03629) — `meta/fetched_primaries/react-2210.03629.{pdf,txt}`,
+  fetched from arxiv.org/pdf/2210.03629 (HTTP 200, network healed). Anchors **22 the-agent-loop**:
+  interleaved reasoning(Thought)+acting(Action)+sensing(Observation); acting grounds reasoning and
+  cures CoT hallucination/error-propagation via an external API; +34% (ALFWorld)/+10% (WebShop)
+  absolute success with 1-2 in-context exemplars. VERIFIED verbatim (abstract).
+- **Toolformer** Schick et al., NeurIPS 2023 (arXiv 2302.04761) — `toolformer-2302.04761.{pdf,txt}`,
+  arxiv.org/pdf/2302.04761 (HTTP 200). Anchors **23 tools-and-tool-contracts**: the four tool-use
+  decisions (which API / when / what args / how to incorporate results); tools offload arithmetic +
+  factual lookup; self-supervised baking (sample→execute→filter-by-loss→finetune) vs in-context use.
+  VERIFIED verbatim (abstract + method).
+- Receipt: `meta/fetched_primaries/_VERIFIED_2026-06-10_agentic.md`. Recompute: `22-.../_recompute.py`
+  (18/18), `23-.../_recompute.py` (15/15).
+- Carry-forward `[UNVERIFIED]` for Part III (fetch next session — sources now reachable): CoT (Wei
+  2022, arXiv 2201.11903) for the open-loop contrast in 22; RAG (Lewis 2020, arXiv 2005.11401) for
+  30; MCP spec (modelcontextprotocol.io) for 29; provider function-calling/tool-use specs + JSON
+  Schema for 23. Opportunistic Kafka/Postgres upgrades (09/17, 07/15) still pending.

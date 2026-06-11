@@ -27,8 +27,8 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 19 | observability-tracing-and-slos | RESEARCHING | FOUR clusters drafted/factchecked (A metrics/signal-taxonomy, B distributed-tracing/Dapper, C logs-events/three-pillars, D SLI/SLO/error-budgets/burn-rate) and RECONCILED into `_research.md`; 28/28 math VERIFIED by recomputation (`_recompute.py`: error-budget=(1-SLO)*window, burn_rate=P*period/window {36,14.4,6,1}, threshold=burn*(1-SLO), naive-window precision trap, 1/12 short windows, sampling RSE, cardinality 60->60M); PRIMARIES fetched+verified Dapper-2010 + SRE Ch.4 SLO + Ch.6 Monitoring + Workbook Ch.5 Alerting; 11/13/16/17/09/03/10/18 canon reused; OpenTelemetry/W3C-trace-context/exemplars/RED-credit/tail-sampling attributions `[UNVERIFIED]` carried forward | brain |
 | 20 | resilience-failure-and-capacity-planning | RESEARCHING | FOUR clusters drafted/factchecked (A failure-models/partial-failure, B the-tail-at-scale, C resilience-patterns/cells/shuffle-sharding/chaos, D capacity/reliability-math) and RECONCILED into `_research.md`; 38/38 math VERIFIED by recomputation (`_recompute.py`: fan-out 1-0.99^100=0.634, hedge overhead=1-deadline-pct, hedged tail~p^2, Dean 994/50=19.88x, tied -43%/-38%, plain 1/K, C(8,2)=28/1/28/7x, C(2048,4)=730.9B, full-collision 1/C(n,k), overlap k^2/n, util-wall 2/5/10/20x, headroom C=D/rho*, USL knee 98.49, serial prod(a_i)=0.99501, parallel 1-(1-a)^n, CORRELATED-FAILURE 6-nines->3-nines 1001x, headroom f/n N+1/N+2, Little's-Law->5 servers, retry amp (1+r)^L=1024x); PRIMARIES fetched+verified Tail-at-Scale + AWS shuffle-sharding + AWS backoff/jitter + Brewer PODC2000 CAP + Kleppmann CAP + Netflix Simian Army; 11/12/13/14/15/16/18/19 canon reused; Nygard/Avizienis/Fallacies/CoDel(403)/Raft(000)/Gilbert-Lynch attributions `[UNVERIFIED]` carried | brain |
 | 21 | design-case-studies | RECONCILED | Phase 1 CAPSTONE of Part II done — six case-study briefs (URL shortener, news feed, chat, search/typeahead, payments/ledger, distributed rate limiter), `_recompute.py` 32/32 back-of-envelope estimates verified, `_factcheck_phase1.md` (0 blockers), reconciled `_research.md` (bespoke per-case structure + cross-cutting design-method spine + toolkit-usage matrix). Gilbert-Lynch formal CAP + Abadi PACELC FETCHED+VERIFIED (Case 5); applies 13-20 toolkit, no new primitives. **Part II (13-21) COMPLETE.** | brain |
-| 22 | the-agent-loop | TODO | Phase 1 batch 3 | — |
-| 23 | tools-and-tool-contracts | TODO | Phase 1 batch 3 | — |
+| 22 | the-agent-loop | RECONCILED | Phase 1 batch 3 OPENED — control-loop walkthrough (call→observe→decide→repeat); ReAct (arXiv 2210.03629) FETCHED+VERIFIED; `_recompute.py` 18/18 (quadratic token growth, budgets, window exhaustion); `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 04/09/13/17/18/20. Carry-forward `[UNVERIFIED]`: CoT (arXiv 2201.11903), Reflexion, provider docs | brain |
+| 23 | tools-and-tool-contracts | RECONCILED | Tool = contract between stochastic caller & deterministic code; Toolformer (arXiv 2302.04761) FETCHED+VERIFIED (four decisions which/when/what-args/how-incorporate); `_recompute.py` 15/15 (toolbox tax K·S, retrieval break-even, result budget, repair bound, selection compounding 1-(1-q)^N); `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 03/07/17/18/22. Carry-forward `[UNVERIFIED]`: provider function-calling specs, JSON Schema, MCP (→29) | brain |
 | 24 | prompts-and-context-engineering | TODO | Phase 1 batch 3 | — |
 | 25 | memory-short-term-long-term-and-safety | TODO | Phase 1 batch 3 | — |
 | 26 | state-persistence-and-resume | TODO | Phase 1 batch 3 | — |
@@ -148,3 +148,36 @@ Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, all vendor docs.
   STILL blocked: queue.acm.org 403 (CoDel), raft.github.io 000, dl.acm.org 403 (DOI landing).
   **ALL of 01-21 now reconciled — PART II (System Design, 13-21) IS COMPLETE. Next batch: Part III
   Agentic System Design (22-the-agent-loop onward), per COURSE_MAP "Phase 1 batch 3".**
+
+## Wave 11 (2026-06-10) — Part III OPENED: 22 + 23 reconciled ("Phase 1 batch 3")
+
+- **PART III Agentic System Design BEGUN.** First two sub-courses reconciled with bespoke
+  (non-four-cluster) structures, the same recompute+factcheck discipline as 13-21:
+  - **22 the-agent-loop** — the FOUNDATIONAL primitive: an agent is a CONTROL LOOP around an LLM
+    (assemble→call→parse→act→observe→append→decide). Bespoke single-loop walkthrough. Primary
+    **ReAct (Yao et al., ICLR 2023, arXiv 2210.03629) FETCHED+VERIFIED** (Thought/Action/Observation
+    interleaving; acting grounds reasoning, cures CoT hallucination; +34%/+10% with 1-2 exemplars).
+    `_recompute.py` 18/18 — headline: **input tokens are O(T²)** (`T*p + g*T*(T-1)/2`) because the
+    transcript is re-sent and grows every turn; this quadratic motivates 24/25/32. Also: cost,
+    step/cost/time budgets, window-exhaustion turn `T*=floor((W-p)/g)+1`, per-step retry. Each loop
+    box maps to a downstream sub-course (the Part III dependency spine). Reuses 04/09/13/17/18/20.
+  - **23 tools-and-tool-contracts** — a tool is an **API contract between a stochastic caller and
+    deterministic code**. Bespoke contract walkthrough (schema→selection→validation/repair→
+    execution→failure→security). Primary **Toolformer (Schick et al., NeurIPS 2023, arXiv
+    2302.04761) FETCHED+VERIFIED** (the four decisions: which/when/what-args/how-incorporate; tools
+    offload arithmetic/lookup; self-supervised baking vs in-context use). `_recompute.py` 15/15 —
+    toolbox tax K·S/turn (feeds 22's quadratic), retrieval-over-tools break-even (→30), tool-result
+    size budget, repair-retry bound, selection-error compounding `1-(1-q)^N` (the 13/20/21 identity
+    over loop steps), idempotency retention (17/21). Reuses 03/07/08/16/17/18/22.
+- **PRIMARIES fetched+verified to `meta/fetched_primaries/`** (network heal): ReAct + Toolformer
+  arXiv PDFs + extracted text; receipt `_VERIFIED_2026-06-10_agentic.md`. Extraction used a throwaway
+  `/tmp/pdfx-venv` (uv + pypdf 6.13.2 from Walmart external-pypi), REMOVED after; `.code-puppy-venv`
+  never touched.
+- Network at session end: arxiv.org / kafka.apache.org / postgresql.org / modelcontextprotocol.io
+  (307) all reachable. STILL blocked: queue.acm.org 403 (CoDel), raft.github.io 000, dl.acm.org 403.
+- **Deferred (time-boxed to keep ONE clean checkpoint over shallow briefs):** 24-34 untouched;
+  opportunistic Kafka(09/17)/Postgres(07/15) upgrades NOT done this session (arxiv was spent on the
+  load-bearing 22/23 primaries). 30 RAG primary (Lewis 2020, arXiv 2005.11401) + MCP spec + CoT
+  (arXiv 2201.11903) noted for next session.
+- **Next batch: 24-prompts-and-context-engineering** (refines the "assemble context" box; forced by
+  22's quadratic + 23's toolbox tax), then 25 memory, 26 resume, 27 orchestration, ... through 34.
