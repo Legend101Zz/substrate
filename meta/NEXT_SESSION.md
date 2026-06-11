@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (19 reconciled — ALL foundations 01-12 + Part II 13-19 done; Dapper + 3 SRE chapters fetched+verified; SEDA finally unblocked + upgraded into 18) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (20 reconciled — ALL of 01-20 done; Part II synthesis course complete; Tail-at-Scale + AWS shuffle-sharding/backoff + Brewer/Kleppmann CAP + Netflix Simian Army fetched+verified; CAP upgraded into 11 & 15) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -229,6 +229,40 @@ to a non-OneDrive workspace and continue there.
   tail-sampling/Magpie-X-Trace-Pinpoint attributions `[UNVERIFIED]` carried forward. **ALL of 01-19 now
   reconciled.**
 
+- **Phase 1 / Wave 9 / 20 resilience-failure-and-capacity-planning (The Tail at Scale) — Part II EIGHTH
+  sub-course RECONCILED (four clusters A-D); the SYNTHESIS course. Takes 18's overload controls + 19's
+  signals/SLOs/error-budgets and turns them into a discipline for surviving partial failure + planning
+  capacity.**
+  Artifacts:
+  - `20-.../_research_failure-models-and-partial-failure.md` (A — fault/error/failure chain; partial
+    failure = the defining property (FLP, reuse 11); crash/omission/timing(=tail)/Byzantine taxonomy;
+    independent-vs-correlated failure; fallacies of distributed computing; blast radius; cascade vs
+    single fault (reuse 18); CAP as a failure-model statement).
+  - `20-.../_research_the-tail-at-scale.md` (B — fan-out 1-0.99^100=63%; faults-vs-variability;
+    hedged/backup + tied requests w/ cross-server cancellation + measured Dean tables; micro-
+    partitioning; selective replication; latency-induced probation; canary; tainted partial results).
+  - `20-.../_research_resilience-patterns-and-redundancy.md` (C — 18 toolkit + redundancy N+1/N+2/2N +
+    failover (15) + cells & shuffle-sharding (C(8,2)=28->1/28->7x; Route 53 730B; recursive) + chaos
+    engineering (Netflix monkeys) as failure-injection verification).
+  - `20-.../_research_capacity-planning-and-reliability-math.md` (D — capacity loop; utilization wall;
+    headroom C=D/rho*; M/G/1 variance; USL knee; serial prod(a_i); parallel 1-(1-a)^n; correlated-
+    failure correction; headroom-to-survive-f = f/n; capacity as an SLO input (reuse 19)).
+  - `20-.../_recompute.py` (38/38 pass) + `_factcheck_phase1.md` (0 blockers) + RECONCILED `_research.md`.
+  All 38 load-bearing math claims VERIFIED by recomputation. Headline: the correlated-failure correction
+  collapses naive six-nines parallel redundancy to ~three nines (1001x worse) — correlation, not replica
+  count, sets real availability. PRIMARIES fetched+verified to `meta/fetched_primaries/` (receipt
+  `_VERIFIED_2026-06-10_resilience.md`): Dean Tail-at-Scale; AWS shuffle-sharding + backoff/jitter;
+  Brewer PODC 2000 CAP; Kleppmann CAP 2015; Netflix Simian Army. Mechanisms reused from line-verified
+  11/12/13/14/15/16/18/19. Nygard/Avizienis/fallacies/CoDel(403)/Raft(000)/Gilbert-Lynch/PACELC
+  attributions `[UNVERIFIED]` carried forward. **ALL of 01-20 now reconciled; only 21 remains.**
+
+- **CAP UPGRADE 2026-06-10 (Wave 9 — Brewer + Kleppmann unblocked):** `people.eecs.berkeley.edu`
+  (Brewer PODC 2000 keynote) + `martin.kleppmann.com` (CAP blog 2015) returned HTTP 200 (blocked 8+
+  sessions). Fetched + verified; upgraded carry-forward CAP `[UNVERIFIED]` -> VERIFIED in 11
+  (`_factcheck_cluster4.md`) and 15 (`_factcheck_phase1.md`): "at most two" of {C,A,P}, Forfeit C/A/P,
+  BASE, CAP-as-narrow-theorem. Gilbert-Lynch 2002 formal proof + Abadi 2012 PACELC remain blocked /
+  carried forward; nothing erased.
+
 - **SEDA UPGRADE 2026-06-10 (Wave 8 — finally unblocked):** `www.sosp.org/2001/papers/welsh.pdf` (also
   `people.eecs.berkeley.edu/~brewer/papers/SEDA-sosp.pdf`) returned HTTP 200 after 8+ sessions blocked.
   Fetched + verified `seda-sosp01.{pdf,txt}`; the carry-forward `[UNVERIFIED]` SEDA in 18 Cluster B is now
@@ -352,12 +386,13 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that ALL of 01-19 are reconciled/factchecked (foundations 01-12 PLUS Part II 13 scaling-
-  fundamentals (A-D), 14 data-modeling-partitioning-sharding (A-C), 15 replication-and-
-  consistency-in-practice (A-D), 16 caching-and-cdn-strategies (A-D), 17 async-queues-and-
-  event-driven-architecture (A-D), 18 rate-limiting-backpressure-and-load-shedding/SEDA (A-D),
-  and 19 observability-tracing-and-slos/Dapper (A-D)),
-- that Part II 20-21 are still untouched,
+- that ALL of 01-20 are reconciled/factchecked (foundations 01-12 PLUS Part II 13-20:
+  13 scaling-fundamentals (A-D), 14 data-modeling-partitioning-sharding (A-C), 15
+  replication-and-consistency-in-practice (A-D), 16 caching-and-cdn-strategies (A-D),
+  17 async-queues-and-event-driven-architecture (A-D), 18 rate-limiting-backpressure-and-
+  load-shedding/SEDA (A-D), 19 observability-tracing-and-slos/Dapper (A-D), and 20
+  resilience-failure-and-capacity-planning/Tail-at-Scale (A-D)),
+- that Part II 21 (design-case-studies) is the LAST untouched sub-course in Part II,
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError
@@ -365,81 +400,74 @@ recurs, stop and tell me to grant Desktop/OneDrive access or move the repo to a 
 workspace. Do not reinstall Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 19 is reconciled; ALL 28 load-bearing math claims VERIFIED BY RECOMPUTATION
-  (`19.../_recompute.py`): error budget=(1-SLO)*window (43.2 min/30d @99.9%) + downtime ladder
-  432/43.2/4.32/0.432; burn_rate=P*period/window (5%/1h=36, 2%/1h=14.4, 5%/6h=6, 10%/3d=1);
-  alert threshold error rate=burn*(1-SLO) (1.44%, 0.6%); naive-tiny-window precision trap
-  (0.1%/10min=0.023% budget); multiwindow short=1/12 long (5m/30m/6h); time-to-exhaust
-  720/35=20.57h; Dapper sampling uniform sampled/s=QPS/1024 + adaptive p=min(1,R/QPS);
-  sampling RSE=1/sqrt(obs) + 102,400 true-events-for-100-samples; cardinality 60->60M.
-  PRIMARIES fetched+verified to meta/fetched_primaries/: Dapper-2010 (research.google mirror),
-  Google SRE Book Ch.4 Service Level Objectives + Ch.6 Monitoring Distributed Systems, SRE
-  Workbook Ch.5 Alerting on SLOs (sre.google); receipt `_VERIFIED_2026-06-10_observability.md`.
-  Mechanisms reused from line-verified 11/13/16/17/09/03/10/18. Carry-forward `[UNVERIFIED]`
-  (none load-bearing): W3C Trace Context/OpenTelemetry/B3/Zipkin/Jaeger; OpenMetrics-Prometheus
-  exemplars + histogram-vs-summary; "RED" credit (Wilkie/Weaveworks); HdrHistogram CO specifics;
-  Honeycomb wide-events critique; tail-sampling pattern; Magpie/X-Trace/Pinpoint.
-- SEDA UPGRADE done 2026-06-10 (Wave 8): `www.sosp.org/2001/papers/welsh.pdf` HTTP 200 after
-  8+ sessions blocked; seda-sosp01.{pdf,txt} fetched+verified; 18 Cluster B carry-forward SEDA
-  `[UNVERIFIED]` -> VERIFIED (UPGRADE appended to 18 factcheck; nothing erased). Tail-at-Scale
-  CACM'13 already fetched+verified (meta/fetched_primaries/, 2026-06-10 canon haul) -> it is
-  the headline primary for 20.
-- 18/17/16/15/14/13 stay reconciled; math verified by recomputation; remaining canon/vendor
+- 20 is reconciled; ALL 38 load-bearing math claims VERIFIED BY RECOMPUTATION
+  (`20.../_recompute.py`): fan-out 1-0.99^100=0.634; hedge overhead=1-deadline-pct (5%/1%);
+  hedged tail~p^2; Dean backup p99.9 994/50=19.88x; tied -43%/-38%; plain-shard 1/K;
+  shuffle C(8,2)=28->1/28->7x; Route 53 C(2048,4)=730.9B; full-collision 1/C(n,k); overlap
+  k^2/n; util-wall 1/(1-rho) {2/5/10/20x}; headroom C=D/rho*; USL knee 98.49; serial
+  prod(a_i)=0.99501; parallel 1-(1-a)^n {2->4 nines, 3->6}; CORRELATED-FAILURE 6-nines->3-
+  nines (1001x worse, the headline result); headroom-to-survive-f = f/n (N+1/N+2); Little's-
+  Law sizing ->5 servers; retry amplification (1+r)^L=1024x + 1/(1-r). PRIMARIES fetched+
+  verified to meta/fetched_primaries/: Dean Tail-at-Scale; AWS shuffle-sharding (C(8,2)=28,
+  Route 53 730B) + AWS timeouts/retries/backoff-with-jitter; Brewer PODC 2000 CAP keynote;
+  Kleppmann CAP blog 2015; Netflix Simian Army; receipt `_VERIFIED_2026-06-10_resilience.md`.
+  Carry-forward `[UNVERIFIED]` (none load-bearing): Nygard "Release It!"; Avizienis fault/
+  error/failure taxonomy; Deutsch/Gosling fallacies of distributed computing; CACM-2013
+  pagination; Gunther USL + Kleinrock pagination; AZ-correlation stats.
+- CAP UPGRADE done 2026-06-10 (Wave 9): Brewer PODC 2000 + Kleppmann 2015 HTTP 200 after
+  8+ sessions blocked; fetched+verified; upgraded carry-forward CAP `[UNVERIFIED]` -> VERIFIED
+  in 11 (`_factcheck_cluster4.md`) and 15 (`_factcheck_phase1.md`): "at most two" of {C,A,P},
+  Forfeit C/A/P, BASE, CAP-as-narrow-theorem. STILL blocked/carried: Gilbert-Lynch 2002 formal
+  proof + Abadi 2012 PACELC.
+- 19/18/17/16/15/14/13 stay reconciled; math verified by recomputation; remaining canon/vendor
   attributions still `[UNVERIFIED]` except those upgraded.
-- Network reality at last check (2026-06-10 Wave 8): NEW HTTP 200 = research.google Dapper
-  mirror (static.googleusercontent.com), sre.google chapters, www.sosp.org + people.eecs.
-  berkeley.edu (SEDA), martin.kleppmann.com (CAP blog, fetch deferred - not load-bearing),
-  usenix.org/legacy (osdi04 dean.pdf, osdi06 chang.pdf mirrors), rfc-editor.org. STILL HTTP
-  000/403/404/blocked: queue.acm.org 403 (CoDel), raft.github.io 000, arxiv, dl.acm,
-  postgresql.org, kafka.apache.org, eecs.harvard.edu/~mdw SEDA path 404 (use sosp.org),
-  aws.amazon.com builders' library, non-legacy usenix.org.
+- Network reality at last check (2026-06-10 Wave 9): NEW HTTP 200 = aws.amazon.com builders'
+  library, people.eecs.berkeley.edu (Brewer PODC), martin.kleppmann.com, netflixtechblog.com,
+  research.google mirrors, sre.google, usenix.org/legacy, rfc-editor.org, www.sosp.org. STILL
+  HTTP 000/403/blocked: queue.acm.org 403 (CoDel), raft.github.io 000, arxiv, dl.acm,
+  postgresql.org, kafka.apache.org.
 
 Run this plan, but only as much as can be completed well in one session. Prefer one clean
 factchecked checkpoint over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
-2. START 20-resilience-failure-and-capacity-planning (The Tail at Scale) (Phase 1 briefs ONLY -
-   no chapters, no Phase 2). It is the synthesis sub-course: it takes 18's overload controls +
-   19's signals/SLOs/error-budgets and turns them into a discipline for surviving partial
-   failure and planning capacity. Reuse: 13 (latency tail/fan-out/Little's Law/USL knee/
-   capacity loop/coordinated omission), 18 (timeouts/breakers/bulkheads/hedging/retry budgets/
-   load shedding/graceful degradation), 19 (Four Golden Signals/error budgets/burn rate as the
-   capacity + reliability signals), 15 (failover/split-brain/quorum), 11 (FLP/partitions),
-   17/16/14 (async/cache/shard failure modes). Add tightly-scoped clusters, e.g.:
-   - failure models & partial failure: fault vs error vs failure; independent vs correlated
-     failures; fail-stop vs Byzantine (reuse 11/12); the fallacies of distributed computing;
-     blast radius; cascading failure (reuse 18 retry-storm/queue-collapse) and how it differs
-     from a single fault.
-   - the tail at scale (PRIMARY already fetched: meta/fetched_primaries/tail-at-scale-cacm2013):
-     why one slow component dominates a fan-out (1-0.99^100~63%, reuse 13); latency-tail-
-     tolerating techniques (hedged requests, tied requests, micro-partitioning, selective
-     replication, latency-induced probation). RECOMPUTE the fan-out + hedging math.
-   - resilience patterns & redundancy: redundancy (N+1/N+2), failover, isolation/bulkheads,
-     graceful degradation, cells/shuffle-sharding (blast-radius math - RECOMPUTE), chaos
-     engineering as failure-injection verification.
-   - capacity planning & reliability math: demand forecasting; headroom; the queueing/utilization
-     wall (reuse 13 M/M/1, M/G/1, USL); redundancy and availability math (serial vs parallel
-     availability, A=1-(1-a)^n - RECOMPUTE); correlated-failure caveat; capacity as an SLO input
-     (reuse 19 error budget). RECOMPUTE all availability/headroom math.
-   Prefer primary sources; fetch via `curl` (Tail-at-Scale is already local; retry the still-
-   blocked carry-forwards - CoDel, Nygard "Release It!", AWS builders' shuffle-sharding/backoff,
-   Netflix chaos, fallacies-of-distributed-computing); mark anything unfetched `[UNVERIFIED]`.
-3. Factcheck each cluster's load-bearing claims (RECOMPUTE all math - fan-out tail, hedging
-   improvement, serial/parallel availability A=1-(1-a)^n, shuffle-sharding blast radius
-   combinatorics, headroom/utilization; cite source for empirical/historical claims). Patch
-   blockers.
-4. If 20 coverage is honest, reconcile into `20-resilience-failure-and-capacity-planning/
-   _research.md` (standard six sections), preserving every logged `[UNVERIFIED]`/residual gap.
-   If thin or a blocker can't clear, stop at a clean cluster checkpoint; do not fake completeness
-   (raccoon-shaped docs forbidden).
-5. Opportunistic: retry the still-blocked carried-forward primaries (CoDel, CAP/PACELC,
-   Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, AWS builders', raft.github.io,
-   Kleppmann CAP blog now reachable). Upgrade the corresponding `[UNVERIFIED]` flags to verified,
-   saving receipts to meta/fetched_primaries/ and updating the relevant cluster + factcheck files.
+2. START 21-design-case-studies (Phase 1 briefs ONLY - no chapters, no Phase 2). This is the
+   CAPSTONE of Part II: it does not introduce new primitives - it APPLIES the entire Part II
+   toolkit (13 back-of-envelope/Little's-Law/USL; 14 data modeling/partitioning/sharding; 15
+   replication/consistency; 16 caching/CDN; 17 async/EDA; 18 rate-limiting/backpressure/shedding;
+   19 observability/SLOs; 20 resilience/tail/capacity) to concrete designs. Because it is an
+   application course, it needs a BESPOKE structure (per-case-study walkthroughs, NOT abstract
+   clusters). Add tightly-scoped case studies, e.g.:
+   - URL shortener (write-once/read-heavy; KGS vs hash; cache; 16/14).
+   - News feed / timeline (fan-out-on-write vs fan-out-on-read; celebrity problem = 14 hot key;
+     17 async fan-out; 16 cache).
+   - Chat / messaging (fan-out, ordering = 11/17, presence, delivery semantics = 17, websockets).
+   - Web search / typeahead (inverted index = 06/12, sharding 14, scatter-gather tail = 13/20).
+   - Payments / ledger (idempotency = 17, exactly-once-effect, 2PC/saga = 11/14, strong
+     consistency = 15, auditability).
+   - Distributed rate limiter (direct 18 application; token bucket; cell counters).
+   Each case study brief = requirements (functional + non-functional + scale estimate via 13
+   back-of-envelope), the data model + API, the bottleneck analysis, the design with explicit
+   cross-links to 13-20, the failure modes (20), and the tradeoffs. RECOMPUTE every back-of-
+   envelope estimate (QPS, storage/yr, bandwidth, cache working set, shard count, fan-out tail).
+   Reuse line-verified canon from 13-20; primary sources where a specific design claim needs one
+   (e.g. consistent hashing 06, Dynamo 15, Kafka log 09/17, Bigtable 14). Mark anything unfetched
+   `[UNVERIFIED]`.
+3. Factcheck each case study's load-bearing claims (RECOMPUTE all back-of-envelope math; cite the
+   reused canon by sub-course + the primary where applicable). Patch blockers.
+4. If 21 coverage is honest, reconcile into `21-design-case-studies/_research.md` (bespoke
+   structure is fine - synthesize the case studies + a cross-cutting "design method" section +
+   consolidated sources/gaps). Preserve every logged `[UNVERIFIED]`/residual gap. If thin or a
+   blocker can't clear, stop at a clean case-study checkpoint; do not fake completeness.
+5. Opportunistic: retry the still-blocked carried-forward primaries (CoDel queue.acm.org,
+   Gilbert-Lynch formal CAP, Abadi PACELC, Kafka paper/KIPs, raft.github.io, Codd, Keshav).
+   Upgrade the corresponding `[UNVERIFIED]` flags, saving receipts to meta/fetched_primaries/
+   and updating the relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update
-   `meta/NEXT_SESSION.md` with the exact next-session prompt (then 21 remains to finish Part II),
-   keep files under 600 lines where reasonable, run `git status --short`, commit, and report
-   remaining gaps + next batch.
+   `meta/NEXT_SESSION.md` with the exact next-session prompt. With 21 done, **Part II
+   (System Design, 13-21) is COMPLETE** - the next batch is Part III Agentic System Design
+   (22-the-agent-loop onward) per the COURSE_MAP "Phase 1 batch 3". Keep files under 600 lines
+   where reasonable, run `git status --short`, commit, and report remaining gaps + next batch.
 
 No chapters. No Phase 2. No hand-waving. Cite the source or mark it `[UNVERIFIED]`.
 ```

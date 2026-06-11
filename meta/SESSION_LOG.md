@@ -2,6 +2,48 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 1 Wave 9: START + RECONCILE Part II 20 resilience-failure-and-capacity-planning (The Tail at Scale) (A-D); CAP primaries (Brewer/Kleppmann) unblocked + upgraded into 11 & 15
+- shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
+  PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `os.getcwd()`/`Path.cwd()` worked (no PermissionError);
+  `git status --short` clean; checkpoint was `60115a5`.
+- shipped: **20 resilience-failure-and-capacity-planning RECONCILED** (Part II EIGHTH sub-course, the
+  synthesis course; four clusters A-D):
+  - `_research_failure-models-and-partial-failure.md` (A): fault->error->failure chain; partial failure
+    as the defining property (slow node indistinguishable from dead, FLP reuse 11); taxonomy crash/
+    omission/timing(=tail)/Byzantine; independent-vs-correlated failure; fallacies of distributed
+    computing; blast radius; cascade vs single fault (reuse 18); CAP as a failure-model statement.
+  - `_research_the-tail-at-scale.md` (B): fan-out 1-0.99^100=63%; faults-vs-variability; hedged/backup
+    requests (Dean table 994->50ms p99.9, <5% extra) + tied requests w/ cross-server cancellation
+    (-43%/-38% p99, ~1% extra); micro-partitioning; selective replication; latency-induced probation;
+    canary requests; tainted partial results; synchronized disruption.
+  - `_research_resilience-patterns-and-redundancy.md` (C): the 18 toolkit (timeouts/retries+jitter/
+    breakers/bulkheads/shedding/degradation/hedging) + redundancy N+1/N+2/2N + failover (reuse 15) +
+    cells & shuffle-sharding (C(8,2)=28->1/28->7x; Route 53 2048-choose-4~730B; recursive) + chaos
+    engineering (Netflix Chaos/Latency/Gorilla monkeys) as failure-injection verification.
+  - `_research_capacity-planning-and-reliability-math.md` (D): capacity loop; utilization wall; headroom
+    C=D/rho*; M/G/1 variance; USL knee; serial availability prod(a_i) (erodes); parallel 1-(1-a)^n; the
+    correlated-failure correction; headroom-to-survive-f = f/n; capacity as an SLO input (reuse 19).
+  - `_recompute.py` (38/38 pass) + `_factcheck_phase1.md` (0 blockers) + RECONCILED `_research.md`.
+- shipped: **38/38 load-bearing math claims VERIFIED by recomputation.** Headline: the correlated-failure
+  correction collapses naive six-nines parallel redundancy to ~three nines (1001x worse unavailability)
+  — correlation, not replica count, sets real availability.
+- shipped: **PRIMARIES fetched + verified** to `meta/fetched_primaries/` (receipt
+  `_VERIFIED_2026-06-10_resilience.md`): Dean Tail-at-Scale (already local); AWS Builders' shuffle-sharding
+  + timeouts/retries/backoff-with-jitter; Brewer PODC 2000 CAP keynote; Kleppmann CAP blog 2015; Netflix
+  Simian Army. Brewer PDF extracted via throwaway uv venv at /tmp/pdfv (removed after); nothing under
+  /Users/m0t0hu6/.code-puppy-venv touched.
+- shipped: **CAP UPGRADE (opportunistic):** Brewer PODC 2000 + Kleppmann 2015 returned HTTP 200 (blocked
+  8+ sessions). Upgraded carry-forward CAP `[UNVERIFIED]` -> VERIFIED in 11 (`_factcheck_cluster4.md`)
+  and 15 (`_factcheck_phase1.md`): "at most two" of {C,A,P}, Forfeit C/A/P, BASE, CAP-as-narrow-theorem.
+  Gilbert-Lynch 2002 formal proof + Abadi 2012 PACELC remain blocked/carried forward; nothing erased.
+- decisions: followed the standing per-cluster->reconcile pattern (ADR-001). Kept all `[UNVERIFIED]`
+  (Nygard "Release It!", Avizienis fault/error/failure taxonomy, Deutsch/Gosling fallacies, CoDel,
+  Gilbert-Lynch formal proof, PACELC) as carry-forward; mechanisms verified via 18 + AWS builders'
+  where the book primaries are unavailable. CoDel (queue.acm.org 403) + raft.github.io (000) still
+  blocked but not load-bearing for 20.
+- stopped-at: clean factchecked checkpoint after 20 fully reconciled + CAP upgrades applied. **ALL of
+  01-20 reconciled; only 21 (design-case-studies) remains to finish Part II.** Next session: START 21.
+
 ## 2026-06-10 — Phase 1 Wave 8: START + RECONCILE Part II 19 observability-tracing-and-slos (Dapper) (A-D); SEDA finally unblocked + upgraded into 18
 - shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
   PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `os.getcwd()`/`Path.cwd()` worked (no PermissionError);

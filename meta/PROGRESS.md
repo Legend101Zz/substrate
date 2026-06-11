@@ -25,8 +25,8 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 17 | async-queues-and-event-driven-architecture | RESEARCHING | FOUR clusters drafted/factchecked (A messaging-models+delivery-semantics, B EDA-patterns, C producer/consumer-mechanics+failure, D delivery-infra+tradeoffs) and RECONCILED into `_research.md`; 6 math claims VERIFIED by recomputation (`_recompute.py`: dup certainty N*p, dedup-window=redelivery-horizon, batching tput 1/(c/B+m)->1/m, retention vs compaction floor, parallelism<=partitions, dual-write window); 09/11/13/14/15/16/06/08/03 canon reused; Nishtala NSDI'13 FETCHED+verified (leases 17K->1.3K herd, mcsqueal CDC delete-stream); AMQP/SQS/Kafka-KIP/Sagas-1987/Fowler-CQRS/Kreps-2011 attributions `[UNVERIFIED]` carried forward | brain |
 | 18 | rate-limiting-backpressure-and-load-shedding | RESEARCHING | FOUR clusters drafted/factchecked (A rate-limiting algorithms, B backpressure/SEDA, C load-shedding/retry-storms, D timeouts/breakers/bulkheads/hedging/adaptive-concurrency) and RECONCILED into `_research.md`; 9 math claims VERIFIED by recomputation (`_recompute.py`: bucket sizing, fixed-window 2x boundary, sliding log-vs-counter, distributed over-admit (cells-1)*batch, bounded-queue Q/drain, retry amplification 1/(1-r), goodput collapse, adaptive-throttle p); PRIMARIES fetched+verified RFC 6585 §4 + Google SRE Handling-Overload + Cascading-Failures; 03/11/13/14/15/16/17/10 canon reused; SEDA/CoDel/Hystrix/GCRA/AWS-builders attributions `[UNVERIFIED]` (still blocked) | brain |
 | 19 | observability-tracing-and-slos | RESEARCHING | FOUR clusters drafted/factchecked (A metrics/signal-taxonomy, B distributed-tracing/Dapper, C logs-events/three-pillars, D SLI/SLO/error-budgets/burn-rate) and RECONCILED into `_research.md`; 28/28 math VERIFIED by recomputation (`_recompute.py`: error-budget=(1-SLO)*window, burn_rate=P*period/window {36,14.4,6,1}, threshold=burn*(1-SLO), naive-window precision trap, 1/12 short windows, sampling RSE, cardinality 60->60M); PRIMARIES fetched+verified Dapper-2010 + SRE Ch.4 SLO + Ch.6 Monitoring + Workbook Ch.5 Alerting; 11/13/16/17/09/03/10/18 canon reused; OpenTelemetry/W3C-trace-context/exemplars/RED-credit/tail-sampling attributions `[UNVERIFIED]` carried forward | brain |
-| 20 | resilience-failure-and-capacity-planning | TODO | Phase 1 batch 2 (NEXT) | — |
-| 21 | design-case-studies | TODO | Phase 1 batch 2 | — |
+| 20 | resilience-failure-and-capacity-planning | RESEARCHING | FOUR clusters drafted/factchecked (A failure-models/partial-failure, B the-tail-at-scale, C resilience-patterns/cells/shuffle-sharding/chaos, D capacity/reliability-math) and RECONCILED into `_research.md`; 38/38 math VERIFIED by recomputation (`_recompute.py`: fan-out 1-0.99^100=0.634, hedge overhead=1-deadline-pct, hedged tail~p^2, Dean 994/50=19.88x, tied -43%/-38%, plain 1/K, C(8,2)=28/1/28/7x, C(2048,4)=730.9B, full-collision 1/C(n,k), overlap k^2/n, util-wall 2/5/10/20x, headroom C=D/rho*, USL knee 98.49, serial prod(a_i)=0.99501, parallel 1-(1-a)^n, CORRELATED-FAILURE 6-nines->3-nines 1001x, headroom f/n N+1/N+2, Little's-Law->5 servers, retry amp (1+r)^L=1024x); PRIMARIES fetched+verified Tail-at-Scale + AWS shuffle-sharding + AWS backoff/jitter + Brewer PODC2000 CAP + Kleppmann CAP + Netflix Simian Army; 11/12/13/14/15/16/18/19 canon reused; Nygard/Avizienis/Fallacies/CoDel(403)/Raft(000)/Gilbert-Lynch attributions `[UNVERIFIED]` carried | brain |
+| 21 | design-case-studies | TODO | Phase 1 batch 2 (NEXT — finishes Part II) | — |
 | 22 | the-agent-loop | TODO | Phase 1 batch 3 | — |
 | 23 | tools-and-tool-contracts | TODO | Phase 1 batch 3 | — |
 | 24 | prompts-and-context-engineering | TODO | Phase 1 batch 3 | — |
@@ -99,3 +99,25 @@ Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, all vendor docs.
   raft.github.io 000, arxiv, dl.acm, postgresql.org, kafka.apache.org, eecs.harvard.edu
   (SEDA path 404 — use sosp.org/berkeley instead), aws.amazon.com builders'.
 - **20-21 remain untouched.**
+
+## Wave 9 (2026-06-10) — 20 reconciled + CAP primaries (Brewer/Kleppmann) unblocked
+
+- **20 resilience-failure-and-capacity-planning RECONCILED** (Part II EIGHTH sub-course; the
+  synthesis course — four clusters A-D). Takes 18's overload controls + 19's signals/SLOs/error-
+  budgets and turns them into a discipline for surviving partial failure + planning capacity.
+  All 38/38 math RECOMPUTED in `20.../_recompute.py`. Headline result: the **correlated-failure
+  correction** collapses naive six-nines parallel redundancy to ~three nines (1001x worse
+  unavailability) — correlation, not replica count, sets real availability.
+- **PRIMARIES fetched + verified to `meta/fetched_primaries/`** (receipt
+  `_VERIFIED_2026-06-10_resilience.md`): Dean & Barroso Tail-at-Scale (already local); AWS
+  Builders' "Workload isolation using shuffle-sharding" (C(8,2)=28->1/28->7x; Route 53 2048-choose-4
+  ~730B); AWS Builders' "Timeouts, retries, backoff with jitter"; Brewer PODC 2000 CAP keynote;
+  Kleppmann "Please stop calling databases CP or AP" (2015); Netflix "Simian Army".
+- **CAP UPGRADE (bonus):** Brewer PODC 2000 + Kleppmann 2015 HTTP 200 (blocked for 8+ sessions).
+  Upgraded carry-forward CAP `[UNVERIFIED]` -> VERIFIED in 11 (`_factcheck_cluster4.md`) and 15
+  (`_factcheck_phase1.md`): "at most two" of {C,A,P}, Forfeit C/A/P, BASE, CAP-as-narrow-theorem.
+  **Gilbert-Lynch 2002 formal proof + Abadi 2012 PACELC remain blocked/carried forward.**
+- Network at session end: NEW HTTP 200 = aws.amazon.com builders' library, people.eecs.berkeley.edu
+  (Brewer PODC), martin.kleppmann.com, netflixtechblog.com. STILL blocked: queue.acm.org 403
+  (CoDel), raft.github.io 000, arxiv, dl.acm, postgresql.org, kafka.apache.org. **ALL of 01-20 now
+  reconciled. Only 21 (design-case-studies) remains to finish Part II.**

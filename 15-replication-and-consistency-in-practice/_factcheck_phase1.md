@@ -136,3 +136,16 @@ reachable. Fetched + extracted to `meta/fetched_primaries/` (see `_VERIFIED_2026
 **Still `[UNVERIFIED]` (carried forward):** Kleppmann DDIA ch.5/8/9; Terry et al. Bayou session
 guarantees PDIS 1994; Shapiro et al. CRDTs; CAP/PACELC primaries (Gilbert-Lynch/Brewer/Abadi);
 all vendor docs (Postgres/MySQL/Mongo/Cassandra/Riak/etcd/CockroachDB/ZooKeeper).
+
+## UPGRADE 2026-06-10 (Wave 9 — CAP primaries unblocked via sub-course 20 fetch)
+
+Network healed for two CAP primaries during 20 work; fetched + verified to
+`meta/fetched_primaries/` (receipt `_VERIFIED_2026-06-10_resilience.md`). Nothing erased:
+- **Brewer PODC 2000 keynote** (`brewer-podc-2000.{pdf,txt}`): VERIFIED "at most two" of
+  {C,A,P}; Forfeit C/A/P; BASE = Basically Available, Soft state, Eventual consistency. Confirms
+  15 Cluster D's CAP-made-concrete framing (failover forfeits A via fencing to keep C).
+- **Kleppmann "Please stop calling databases CP or AP" (2015)** (`kleppmann-cap-2015.{html,txt}`):
+  VERIFIED — CAP is a narrow theorem, a poor general taxonomy; a partition is an unchosen fault.
+- The CAP `[UNVERIFIED]` in 15 is now **partially upgraded** (statement + partition-mode framing
+  primary-anchored via Brewer + Kleppmann); **Gilbert-Lynch 2002 formal proof and Abadi 2012
+  PACELC remain blocked / carried forward.** PACELC itself is unchanged-pending.

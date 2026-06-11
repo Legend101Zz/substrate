@@ -1,0 +1,473 @@
+1
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Towards RobustTowards Robust
+Distributed SystemsDistributed Systems
+Dr. Eric A. BrewerDr. Eric A. Brewer
+Professor, UC BerkeleyProfessor, UC Berkeley
+CoCo--Founder & Chief Scientist, InktomiFounder & Chief Scientist, Inktomi
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Inktomi at a GlanceInktomi at a Glance
+Company OverviewCompany Overview
+ “INKT” on NASDAQ“INKT” on NASDAQ
+ Founded 1996 out of UC Founded 1996 out of UC 
+BerkeleyBerkeley
+ ~700 Employees~700 Employees
+ApplicationsApplications
+ Search TechnologySearch Technology
+ Network ProductsNetwork Products
+ Online ShoppingOnline Shopping
+ Wireless SystemsWireless Systems
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Our PerspectiveOur Perspective
+ Inktomi builds two Inktomi builds two 
+distributed systems:distributed systems:
+–– Global Search EnginesGlobal Search Engines
+–– Distributed Web CachesDistributed Web Caches
+ Based on scalable Based on scalable 
+cluster & parallel cluster & parallel 
+computing technologycomputing technology
+ But very little use of But very little use of 
+classic DS research...classic DS research...
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+““Distributed Systems” don’t work...Distributed Systems” don’t work...
+ There exist working DS:There exist working DS:
+–– Simple protocols: DNS, WWWSimple protocols: DNS, WWW
+–– Inktomi search, Content Delivery NetworksInktomi search, Content Delivery Networks
+–– Napster, Verisign, AOLNapster, Verisign, AOL
+ But these are not classic DS:But these are not classic DS:
+–– Not distributed objectsNot distributed objects
+–– No RPCNo RPC
+–– No modularityNo modularity
+–– Complex ones are single owner (except phones)Complex ones are single owner (except phones)
+2
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Three Basic IssuesThree Basic Issues
+Where is the state?Where is the state?
+Consistency vs. AvailabilityConsistency vs. Availability
+Understanding BoundariesUnderstanding Boundaries
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Where’s the state?Where’s the state?
+(not all locations are equal)(not all locations are equal)
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Santa Clara ClusterSanta Clara Cluster
+• Very uniform
+• No monitors
+• No people
+• No cables
+• Working power
+• Working A/C
+• Working BW
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Delivering High AvailabilityDelivering High Availability
+We kept up the service through:We kept up the service through:
+ Crashes & disk failures (weekly)Crashes & disk failures (weekly)
+ Database upgrades (daily)Database upgrades (daily)
+ Software upgrades (weekly to monthly)Software upgrades (weekly to monthly)
+ OS upgrades (twice)OS upgrades (twice)
+ Power outage (several)Power outage (several)
+ Network outages (now have 11 connections)Network outages (now have 11 connections)
+ Physical move of all equipmentPhysical move of all equipment (twice)(twice)
+3
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Persistent State is HARDPersistent State is HARD
+ Classic DS focus on the computation, not the dataClassic DS focus on the computation, not the data
+–– this is WRONG, computation is the easy partthis is WRONG, computation is the easy part
+ Data centers exist for a reasonData centers exist for a reason
+–– can’t have consistency or availability without themcan’t have consistency or availability without them
+ Other locations are for caching only:Other locations are for caching only:
+–– proxies, proxies, basestationsbasestations, set, set--top boxes, desktopstop boxes, desktops
+–– phones, phones, PDAsPDAs, …, …
+ Distributed systems can’t ignore location Distributed systems can’t ignore location 
+distinctionsdistinctions
+AP
+Active Proxy:
+Bootstraps thin devices 
+into infrastructure, runs 
+mobile code
+AP
+Workstations & PCs
+Berkeley Ninja ArchitectureBerkeley Ninja Architecture
+Base: Scalable, highly-
+available platform for 
+persistent-state services
+Internet
+PDAs
+(e.g. IBM Workpad)Cellphones, Pagers, etc.
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Consistency vs. AvailabilityConsistency vs. Availability
+(ACID vs. BASE)(ACID vs. BASE)
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+ACID vs. BASEACID vs. BASE
+ DBMS research is about ACID (mostly)DBMS research is about ACID (mostly)
+ But we forfeit “C” and “I” for availability, But we forfeit “C” and “I” for availability, 
+graceful degradation, and performancegraceful degradation, and performance
+This tradeoff is fundamental.This tradeoff is fundamental.
+BASE:BASE:
+–– BBasically asically AAvailablevailable
+–– SSoftoft--statestate
+–– EEventual consistencyventual consistency
+4
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+ACID vs. BASEACID vs. BASE
+ACIDACID
+ Strong consistencyStrong consistency
+ IsolationIsolation
+ Focus on “commit”Focus on “commit”
+ Nested transactionsNested transactions
+ Availability?Availability?
+ Conservative Conservative 
+(pessimistic)(pessimistic)
+ Difficult evolutionDifficult evolution
+(e.g. schema)(e.g. schema)
+BASEBASE
+ Weak consistencyWeak consistency
+–– stale data OKstale data OK
+ Availability firstAvailability first
+ Best effortBest effort
+ Approximate answers OKApproximate answers OK
+ Aggressive (optimistic)Aggressive (optimistic)
+ Simpler!Simpler!
+ FasterFaster
+ Easier evolutionEasier evolution
+But I think it’s a spectrum
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+The CAP TheoremThe CAP Theorem
+Consistency Availability
+Tolerance to network
+Partitions
+Theorem: You can have at 
+most two of these properties
+for any shared-data system
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Forfeit PartitionsForfeit Partitions
+Consistency Availability
+Tolerance to network
+Partitions
+ExamplesExamples
+ SingleSingle--site databasessite databases
+ Cluster databasesCluster databases
+ LDAPLDAP
+ xFSxFS file systemfile system
+TraitsTraits
+ 22--phase commitphase commit
+ cache validation cache validation 
+protocolsprotocols
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Forfeit AvailabilityForfeit Availability
+Consistency Availability
+Tolerance to network
+Partitions
+ExamplesExamples
+ Distributed databasesDistributed databases
+ Distributed lockingDistributed locking
+ Majority protocolsMajority protocols
+TraitsTraits
+ Pessimistic lockingPessimistic locking
+ Make minority Make minority 
+partitions unavailablepartitions unavailable
+5
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Forfeit ConsistencyForfeit Consistency
+Consistency Availability
+Tolerance to network
+Partitions
+ExamplesExamples
+ CodaCoda
+ Web Web cachingecachinge
+ DNSDNS
+TraitsTraits
+ expirations/leasesexpirations/leases
+ conflict resolutionconflict resolution
+ optimisticoptimistic
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+These Tradeoffs are RealThese Tradeoffs are Real
+ The The wholewhole space is usefulspace is useful
+ Real internet systems are a careful Real internet systems are a careful mixturemixture of of 
+ACID and BASE subsystemsACID and BASE subsystems
+–– We use ACID for user profiles and logging (for revenue)We use ACID for user profiles and logging (for revenue)
+ But there is almost no work in this areaBut there is almost no work in this area
+ Symptom of a deeper problem: systems and Symptom of a deeper problem: systems and 
+database communities are separate but database communities are separate but 
+overlapping (with distinct vocabulary)overlapping (with distinct vocabulary)
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+CAP Take Homes CAP Take Homes 
+ Can have consistency & availability within a Can have consistency & availability within a 
+cluster (foundation of Ninja), but it is still hard in cluster (foundation of Ninja), but it is still hard in 
+practicepractice
+ OS/Networking good at BASE/Availability, but OS/Networking good at BASE/Availability, but 
+terrible at consistencyterrible at consistency
+ Databases better at C than AvailabilityDatabases better at C than Availability
+ WideWide--area databases can’t have botharea databases can’t have both
+ Disconnected clients can’t have bothDisconnected clients can’t have both
+ All systems are probabilistic…All systems are probabilistic…
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Understanding BoundariesUnderstanding Boundaries
+(the RPC hangover)(the RPC hangover)
+6
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+The BoundaryThe Boundary
+ The interface between two modulesThe interface between two modules
+–– client/server, peers, client/server, peers, libarieslibaries, etc…, etc…
+ Basic boundary = the procedure callBasic boundary = the procedure call
+–– thread traverses the boundarythread traverses the boundary
+–– two sides are in the same address spacetwo sides are in the same address space
+C S
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Different Address SpacesDifferent Address Spaces
+ What if the two sides are NOT in the same What if the two sides are NOT in the same 
+address space?address space?
+–– IPC or LRPCIPC or LRPC
+ Can’t do passCan’t do pass--byby--reference (pointers)reference (pointers)
+–– Most IPC screws this up: pass by valueMost IPC screws this up: pass by value--resultresult
+–– There are TWO copies of There are TWO copies of argsargs not onenot one
+ What if they share some memory?What if they share some memory?
+–– Can pass pointers, but…Can pass pointers, but…
+–– Need synchronization between client/serverNeed synchronization between client/server
+–– Not all pointers can be passedNot all pointers can be passed
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Trust the other side?Trust the other side?
+ What if we don’t trust the other side?What if we don’t trust the other side?
+ Have to check Have to check argsargs, no pointer passing, no pointer passing
+ Kernels get this right:Kernels get this right:
+–– copy/check copy/check argsargs
+–– use opaque references (e.g. File Descriptors)use opaque references (e.g. File Descriptors)
+ Most systems do not:Most systems do not:
+–– TCPTCP
+–– NapsterNapster
+–– web browsersweb browsers
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Partial FailurePartial Failure
+ Can the two sides fail independently?Can the two sides fail independently?
+–– RPC, IPC, LRPCRPC, IPC, LRPC
+ Can’t be transparent (like RPC) !!Can’t be transparent (like RPC) !!
+ New exceptions (other side gone)New exceptions (other side gone)
+ Reclaim local resourcesReclaim local resources
+–– e.g. kernels leak sockets over time => reboote.g. kernels leak sockets over time => reboot
+ Can use leases?Can use leases?
+–– Different new exceptions: lease expiredDifferent new exceptions: lease expired
+ RPC tries to hide these issues (but fails)RPC tries to hide these issues (but fails)
+7
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Multiplexing clients?Multiplexing clients?
+ Does the server have to:Does the server have to:
+–– deal with high concurrency?deal with high concurrency?
+–– Say “no” sometimes (graceful degradation)Say “no” sometimes (graceful degradation)
+–– Treat clients equally (fairness)Treat clients equally (fairness)
+–– Bill for resources (and have audit trail)Bill for resources (and have audit trail)
+–– Isolate clients performance, data, ….Isolate clients performance, data, ….
+ These all affect the boundary definitionThese all affect the boundary definition
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Boundary evolution?Boundary evolution?
+ Can the two sides be updated independently? Can the two sides be updated independently? 
+(NO)(NO)
+ The DLL problem...The DLL problem...
+ Boundaries need versionsBoundaries need versions
+ Negotiation protocol for upgrade?Negotiation protocol for upgrade?
+ Promises of backward compatibility?Promises of backward compatibility?
+ Affects naming too (version number)Affects naming too (version number)
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Example: protocols vs. APIsExample: protocols vs. APIs
+ Protocols have been more successful the APIsProtocols have been more successful the APIs
+ Some reasons:Some reasons:
+–– protocols are pass by valueprotocols are pass by value
+–– protocols designed for partial failureprotocols designed for partial failure
+–– not trying to look like local procedure callsnot trying to look like local procedure calls
+–– explicit state machine, rather than call/returnexplicit state machine, rather than call/return
+(this exposes exceptions well)(this exposes exceptions well)
+ Protocols still not good at trust, billing, evolutionProtocols still not good at trust, billing, evolution
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Example: XMLExample: XML
+ XML doesn’t solve any of these issuesXML doesn’t solve any of these issues
+ It is RPC with an extensible type systemIt is RPC with an extensible type system
+ It makes evolution better?It makes evolution better?
+–– two sides need to agree on schematwo sides need to agree on schema
+–– can ignore stuff you don’t understandcan ignore stuff you don’t understand
+ Can mislead us to ignore the real issuesCan mislead us to ignore the real issues
+8
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Boundary SummaryBoundary Summary
+ We have been very sloppy about boundariesWe have been very sloppy about boundaries
+ Leads to fragile systemsLeads to fragile systems
+ Root cause is false transparency: trying to look Root cause is false transparency: trying to look 
+like local procedure callslike local procedure calls
+ Relatively little work in evolution, federation, Relatively little work in evolution, federation, 
+clientclient--based resource allocation, failure recoverybased resource allocation, failure recovery
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+ConclusionsConclusions
+ Classic Distributed Systems are fragileClassic Distributed Systems are fragile
+ Some of the causes:Some of the causes:
+–– focus on computation, not datafocus on computation, not data
+–– ignoring location distinctionsignoring location distinctions
+–– poor definitions of consistency/availability goalspoor definitions of consistency/availability goals
+–– poor understanding of boundaries (RPC in particular)poor understanding of boundaries (RPC in particular)
+ These are all fixable, but need to be far more These are all fixable, but need to be far more 
+commoncommon
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+The DQ PrincipleThe DQ Principle
+DData/query * ata/query * QQueries/sec = constant = ueries/sec = constant = DQDQ
+–– for a given nodefor a given node
+–– for a given app/OS releasefor a given app/OS release
+ A fault can reduce the capacity (Q), completeness A fault can reduce the capacity (Q), completeness 
+(D) or both(D) or both
+ Faults reduce this constant linearly (at best)Faults reduce this constant linearly (at best)
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Harvest & YieldHarvest & Yield
+ YieldYield: Fraction of Answered Queries: Fraction of Answered Queries
+–– Related to uptime but measured by queries, not by timeRelated to uptime but measured by queries, not by time
+–– Drop 1 out of 10 connections => 90% yieldDrop 1 out of 10 connections => 90% yield
+–– At  full utilization: At  full utilization: yield ~ capacity ~ Qyield ~ capacity ~ Q
+ HarvestHarvest: Fraction of the Complete Result: Fraction of the Complete Result
+–– Reflects that some of the data may be missing due to faultsReflects that some of the data may be missing due to faults
+–– Replication: maintain D under faultsReplication: maintain D under faults
+ DQ corollary:DQ corollary: harvest * yield ~ constantharvest * yield ~ constant
+–– ACID => choose 100% harvest (reduce Q but 100% D)ACID => choose 100% harvest (reduce Q but 100% D)
+–– Internet => choose 100% yield (available but reduced D)Internet => choose 100% yield (available but reduced D)
+9
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Harvest OptionsHarvest Options
+1) 1) Ignore lost nodesIgnore lost nodes
+–– RPC gives upRPC gives up
+–– forfeit small part of the databaseforfeit small part of the database
+–– reduce D, keep Qreduce D, keep Q
+2) 2) Pair up nodesPair up nodes
+–– RPC tries alternateRPC tries alternate
+–– survives one fault per pair survives one fault per pair 
+–– reduce Q, keep Dreduce Q, keep D
+3) 3) nn--member replica groupsmember replica groups
+Decide Decide whenwhen you care...you care...
+RAID RAID
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Replica GroupsReplica Groups
+With With nn members:members:
+ Each fault reduces Q by 1/Each fault reduces Q by 1/nn
+ D stable until D stable until nthnth faultfault
+ Added load is 1/(Added load is 1/(nn--1) per fault1) per fault
+–– nn=2 => double load or 50% capacity=2 => double load or 50% capacity
+–– nn=4 => 133% load or 75% capacity=4 => 133% load or 75% capacity
+–– “load redirection problem”“load redirection problem”
+ Disaster tolerance: better have >3 mirrorsDisaster tolerance: better have >3 mirrors
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Graceful DegradationGraceful Degradation
+ Goal: smooth decrease in harvest/yield Goal: smooth decrease in harvest/yield 
+proportional to faultsproportional to faults
+–– we know DQ drops linearlywe know DQ drops linearly
+ Saturation will occurSaturation will occur
+–– high peak/average ratios...high peak/average ratios...
+–– must reduce harvest or yield (or both)must reduce harvest or yield (or both)
+–– must do admission control!!!must do admission control!!!
+ One answer: reduce D dynamicallyOne answer: reduce D dynamically
+–– disaster => redirect load, then reduce D to disaster => redirect load, then reduce D to 
+compensate for extra loadcompensate for extra load
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Thinking ProbabilisticallyThinking Probabilistically
+ Maximize symmetryMaximize symmetry
+–– SPMD + simple replication schemesSPMD + simple replication schemes
+ Make faults independentMake faults independent
+–– requires thoughtrequires thought
+–– avoid cascading errors/faultsavoid cascading errors/faults
+–– understand redirected loadunderstand redirected load
+–– KISSKISS
+ Use randomnessUse randomness
+–– makes worstmakes worst--case and average case the samecase and average case the same
+–– ex: Inktomi spreads data & queries randomlyex: Inktomi spreads data & queries randomly
+–– Node loss implies a random 1% harvest reductionNode loss implies a random 1% harvest reduction
+10
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Server PollutionServer Pollution
+ Can’t fix all memory leaksCan’t fix all memory leaks
+ ThirdThird--party software leaks memory and socketsparty software leaks memory and sockets
+–– so does the OS sometimesso does the OS sometimes
+ Some failures tie up local resourcesSome failures tie up local resources
+Solution: planned periodic “bounce”Solution: planned periodic “bounce”
+–– Not worth the stress to do any betterNot worth the stress to do any better
+–– Bounce time is less than 10 secondsBounce time is less than 10 seconds
+–– Nice to remove load first…Nice to remove load first…
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+EvolutionEvolution
+Three Approaches:Three Approaches:
+ Flash UpgradeFlash Upgrade
+–– Fast reboot into new versionFast reboot into new version
+–– Focus on MTTR (< 10 sec)Focus on MTTR (< 10 sec)
+–– Reduces yield (and uptime)Reduces yield (and uptime)
+ Rolling UpgradeRolling Upgrade
+–– Upgrade nodes one at time in a “wave”Upgrade nodes one at time in a “wave”
+–– Temporary 1/n harvest reduction, 100% yieldTemporary 1/n harvest reduction, 100% yield
+–– Requires coRequires co--existing versionsexisting versions
+ “Big Flip”“Big Flip”
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+The Big FlipThe Big Flip
+ Steps:Steps:
+1) take down 1/2 the nodes 1) take down 1/2 the nodes 
+2) upgrade that half2) upgrade that half
+3) flip the “active half” (site upgraded)3) flip the “active half” (site upgraded)
+4) upgrade second half4) upgrade second half
+5) return to 100%5) return to 100%
+ 50% Harvest, 100% Yield50% Harvest, 100% Yield
+–– or inverse?or inverse?
+ No mixed versionsNo mixed versions
+–– can replace schema, protocols, ...can replace schema, protocols, ...
+ Twice used to change physical locationTwice used to change physical location
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Key New ProblemsKey New Problems
+ Unknown but large growthUnknown but large growth
+–– Incremental & Absolute scalabilityIncremental & Absolute scalability
+–– 1000’s of components1000’s of components
+ Must be truly highly availableMust be truly highly available
+–– Hot swap everything (no recovery time allowed)Hot swap everything (no recovery time allowed)
+–– No “night”No “night”
+–– Graceful degradation under faults & saturationGraceful degradation under faults & saturation
+ Constant evolution (internet time)Constant evolution (internet time)
+–– Software will be buggySoftware will be buggy
+–– Hardware will failHardware will fail
+–– These can’t be emergencies...These can’t be emergencies...
+11
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+ConclusionsConclusions
+ Parallel Programming is very relevant, except…Parallel Programming is very relevant, except…
+–– historically avoids availabilityhistorically avoids availability
+–– no notion of online evolutionno notion of online evolution
+–– limited notions of graceful degradation (checkpointing)limited notions of graceful degradation (checkpointing)
+–– best for CPUbest for CPU--bound tasksbound tasks
+ Must think probabilistically about everythingMust think probabilistically about everything
+–– no such thing as a 100% working systemno such thing as a 100% working system
+–– no such thing as 100% fault toleranceno such thing as 100% fault tolerance
+–– partial results are often OK (and better than none)partial results are often OK (and better than none)
+–– Capacity * Completeness == ConstantCapacity * Completeness == Constant
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+ConclusionsConclusions
+ Winning solution is messageWinning solution is message--passing clusterspassing clusters
+–– finefine--grain communication =>grain communication =>
+finefine--grain exception handlinggrain exception handling
+–– don’t want every load/store to deal with partial failuredon’t want every load/store to deal with partial failure
+ Key open problems:Key open problems:
+–– libraries & data structures for HA shared statelibraries & data structures for HA shared state
+–– support for replication and partial failuresupport for replication and partial failure
+–– better understanding of probabilistic systemsbetter understanding of probabilistic systems
+–– cleaner support for exceptions (graceful degradation)cleaner support for exceptions (graceful degradation)
+–– support for splitsupport for split--phase I/O and many concurrent threadsphase I/O and many concurrent threads
+–– support for 10,000 threads/node (to avoid FSMs)support for 10,000 threads/node (to avoid FSMs)
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Backup slidesBackup slides
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+New Hard Problems...New Hard Problems...
+ Really need to manage Really need to manage disksdisks wellwell
+–– problems are I/O bound, not CPU boundproblems are I/O bound, not CPU bound
+ Lots of Lots of simultaneous connectionssimultaneous connections
+–– 50Kb/s => at least 2000 connections/node50Kb/s => at least 2000 connections/node
+ HAS to be HAS to be highly availablehighly available
+–– no maintenance window, even for upgradesno maintenance window, even for upgrades
+ Continuous Continuous evolutionevolution
+–– constant site changes, always small bugs...constant site changes, always small bugs...
+–– large but unpredictable traffic growthlarge but unpredictable traffic growth
+ Graceful degradationGraceful degradation under saturationunder saturation
+12
+PODC Keynote, July 19, 2000PODC Keynote, July 19, 2000
+Parallel Disk I/OParallel Disk I/O
+ Want 50+ outstanding reads/diskWant 50+ outstanding reads/disk
+–– Provides diskProvides disk--head scheduler with many choiceshead scheduler with many choices
+–– Trades response time for Trades response time for throughputthroughput
+ Pushes towards a Pushes towards a splitsplit--phase approachphase approach to disksto disks
+ General trend: each query is a finiteGeneral trend: each query is a finite--state machinestate machine
+–– splitsplit--phase disk/network operations are state transitionsphase disk/network operations are state transitions
+–– multiplex many FSMs over small number of threadsmultiplex many FSMs over small number of threads
+–– FSM handles state rather than thread stackFSM handles state rather than thread stack

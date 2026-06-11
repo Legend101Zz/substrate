@@ -106,6 +106,30 @@ unattributed assertions.
 
 ---
 
+## UPGRADE 2026-06-10 (Wave 9 — CAP primaries unblocked via sub-course 20 fetch)
+
+During sub-course 20 work the network healed for two CAP primaries. Fetched + verified to
+`meta/fetched_primaries/` (receipt `_VERIFIED_2026-06-10_resilience.md`). Nothing below is erased;
+these carry-forward `[UNVERIFIED]` flags are UPGRADED:
+- **Brewer, "Towards Robust Distributed Systems," PODC 2000 keynote** (`brewer-podc-2000.{pdf,txt}`,
+  HTTP 200). VERIFIED verbatim: "at most two of these properties" over {Consistency, Availability,
+  Partitions}; the three explicit strategies "Forfeit Partitions / Forfeit Availability / Forfeit
+  Consistency"; and BASE = "**B**asically **A**vailable, soft state, **E**ventual consistency" as
+  the availability-first dual of ACID. This confirms brief §1.1 and §1.3 (the original conjecture +
+  the partition-mode framing). The brief's §1.1 carry-forward `[UNVERIFIED from fetched source]` on
+  Brewer PODC 2000 is now VERIFIED.
+- **Kleppmann, "Please stop calling databases CP or AP" (2015)** (`kleppmann-cap-2015.{html,txt}`,
+  HTTP 200). VERIFIED: CAP is a *narrow* formal result (Gilbert/Lynch linearizability + total
+  availability + arbitrary partitions) and a poor general design taxonomy; a partition is a fault
+  you do not get to choose. Confirms brief §1.2 ("C" = linearizability; weaker models dodge it) and
+  the §1.3 "2-of-3 is the misconception" framing.
+- **STILL blocked:** Gilbert & Lynch SIGACT News 2002 (the formal proof) and Abadi 2012 PACELC —
+  remain `[UNVERIFIED]`, carried forward. The CAP *statement* and partition-mode framing are now
+  primary-anchored via Brewer + Kleppmann; only the formal proof construction (Gilbert/Lynch) and
+  the PACELC extension (Abadi) are still pending.
+
+---
+
 ## Verdict
 
 Cluster 4 brief is **accepted as a Phase-1 research brief.** All distributed-commit load-bearing claims (2PC, its
