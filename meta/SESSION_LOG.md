@@ -2,7 +2,62 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
-## 2026-06-10 — Phase 1 Wave 12: Part III batch 3 continued — 24 context-engineering, 25 memory, 26 persistence/resume, 27 orchestration reconciled (CoT + MemGPT + Reflexion + Postgres-WAL fetched/verified)
+## 2026-06-10 — Phase 1 Wave 13: Part III batch 3 continued — 28 build-your-own-coding-harness, 29 mcp-skills-and-connectors, 30 rag-retrieval-and-grounding reconciled (MCP spec + RAG fetched/verified)
+- shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
+  PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `f5dc2a8`;
+  no `os.getcwd()`/`Path.cwd()` PermissionError. Confirmed Wave 2 milestone `4a1cc71`, 01-12 + Part II
+  13-21 COMPLETE, Part III open with 22-27 reconciled (6/13); 28 NEXT untouched.
+- shipped: **28 build-your-own-coding-harness RECONCILED** (Part III CAPSTONE LAB). Bespoke **BUILD
+  PROGRESSION**: the "40-line agent" grown stage-by-stage, **broken on purpose** at each stage so the
+  next primitive is motivated by an observed failure (loop22→tools23→budget(22/18/32)→compaction24→
+  memory25→persistence26→orchestration27). NO new primary (capstone application, like 21 — every
+  mechanism cross-links to an already-VERIFIED anchor: ReAct/Toolformer/CoT/MemGPT/Reflexion/
+  Postgres-WAL + recomputed 27 math). `_recompute.py` **31/31** — all 7 stage walls RE-DERIVED in the
+  CODING regime (p=4000,g=1500): O(T²) overflows SOONER for code (T*=83 vs chat 253); selection
+  compounding; 1MB-file result overflow; budget caps≠cures; **compaction O(T²)→O(T) win grows
+  unbounded**; AMAT 4× (matches 25); poisoning 1→15; checkpoint knee I*=20; idempotent replay;
+  Amdahl/join-tail/**YAGNI** (multi-agent LOSES on small tasks). `_factcheck_phase1.md` 0 blockers.
+  Reuses 09/17/18/20/21/22/23/24/25/26/27.
+- shipped: **29 mcp-skills-and-connectors RECONCILED** (23's tool CONTRACT promoted to a wire
+  PROTOCOL). Bespoke protocol/connector walkthrough. **MCP architecture spec FETCHED+VERIFIED**
+  verbatim: client-server host/client/server; two layers (data=JSON-RPC 2.0 / transport); three
+  server primitives tools/resources/prompts + client sampling/elicitation/logging + experimental
+  Tasks(durable exec); stdio vs Streamable-HTTP; stateful lifecycle/capability negotiation
+  (negotiate-or-terminate); `*/list` discovery + `list_changed` notifications (push>poll).
+  `_recompute.py` **18/18** — **N×M→N+M integration collapse** (why a protocol exists; 400→40),
+  union-toolbox tax K·S, selection compounding over the union, remote-dependency tail 1-(1-p)^s,
+  version/schema compat (11/17). `_factcheck_phase1.md` 0 blockers. Reuses 02/03/07/11/17/18/19/20/
+  22/23/24/26/28.
+- shipped: **30 rag-retrieval-and-grounding RECONCILED** (the retrieval mechanism for 25's
+  non-parametric memory tier). Bespoke retrieval-pipeline walkthrough (corpus→chunk→embed→index→
+  retrieve→rank→inject/ground). **RAG (Lewis et al. 2020, arXiv 2005.11401) FETCHED+VERIFIED**
+  verbatim: parametric vs non-parametric memory; DPR bi-encoder; MIPS top-K "solved in sub-linear
+  time"; FAISS+HNSW; latent-doc marginalize (RAG-Sequence/RAG-Token); cures hallucination + supplies
+  provenance + updatable knowledge; "more specific, diverse and factual". `_recompute.py` **15/15** —
+  ANN-vs-scan ~430,000× at 10M chunks; retrieve-vs-stuff 24 budget; **K precision/recall/cost knob**
+  (don't max K → distractors); embedding cache 1000×; **index staleness/lag** (grounding only as
+  fresh as the index, 15/16). `_factcheck_phase1.md` 0 blockers. Reuses 06/07/08/14/15/16/22/23/24/
+  25/28/29.
+- shipped: PRIMARIES fetched+verified to `meta/fetched_primaries/` — `mcp-arch.txt` (receipt
+  `_VERIFIED_2026-06-10_mcp.md`) + `rag-2005.11401.{pdf,txt}` (receipt `_VERIFIED_2026-06-10_rag.md`).
+  Updated PROGRESS (28/29/30 rows RECONCILED + Wave 13 note), NEXT_SESSION. Three clean commits
+  (`3e623df`, `f1fdb72`, `2d594ce`) — one per sub-course.
+- decisions: (1) 28 needed NO new primary — it is the ASSEMBLY of already-VERIFIED 22-27 primitives
+  into a coding harness via a build progression; all walls RECOMPUTED in the coding regime (same
+  discipline as 21's Part-II capstone). (2) MCP's formal `/specification/2025-11-25` page is a
+  client-rendered SPA shell (no server-side text) — used the authoritative `/docs/learn/architecture`
+  prose instead; verbatim load-bearing semantics captured, field-level JSON-Schema deferred to Phase
+  2 (`[UNVERIFIED]`). (3) RAG PDF extracted via the throwaway `/tmp/pdfx-venv` (uv+pypdf 6.13.2 from
+  Walmart external-pypi), removed after; `.code-puppy-venv` never touched. (4) Each sub-course got a
+  BESPOKE structure (28=build progression, 29=protocol/connector walkthrough, 30=retrieval pipeline)
+  — NOT the 13-20 four-cluster shape. (5) Time-boxed to THREE deep sub-courses + two plan-mandated
+  primary fetches; opportunistic Kafka(09/17) upgrade DEFERRED to keep clean per-sub-course
+  checkpoints over shallow briefs.
+- stopped-at: 28+29+30 reconciled (Part III at 22-30 = 9/13). Clean checkpoint; all committed. Next:
+  **31-evaluation-tracing-and-guardrails** (↔ 19 observability/Dapper + 27 voting/critic + 18
+  guardrails), then 32 cost, 33 safety, 34 design-your-own. Still blocked: queue.acm.org 403 (CoDel),
+  raft.github.io 000. No chapters. No Phase 2.
+
 - shipped: rehydrated from AGENTS/START_HERE/CONSTITUTION/RESEARCH_PROTOCOL/COURSE_MAP/RESEARCH_INDEX/
   PROGRESS/SESSION_LOG/DECISIONS/NEXT_SESSION; `git status --short` clean; checkpoint was `48a5b5e`;
   no `os.getcwd()`/`Path.cwd()` PermissionError (CWD resolves through OneDrive, reads fine). Confirmed

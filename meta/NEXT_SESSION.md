@@ -4,7 +4,7 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (Wave 12 — **Part III batch 3 continued**: 24 context-engineering + 25 memory + 26 persistence/resume + 27 orchestration reconciled; CoT + MemGPT + Reflexion + Postgres-WAL fetched/verified; recompute 18/18 + 13/13 + 12/12 + 16/16) · Phase: 1 (deep research) · Harness: **code-puppy**
+Last updated: 2026-06-10 (Wave 13 — **Part III batch 3 continued**: 28 build-your-own-coding-harness + 29 mcp-skills-and-connectors + 30 rag-retrieval-and-grounding reconciled; MCP spec + RAG (arXiv 2005.11401) fetched/verified; recompute 31/31 + 18/18 + 15/15) · Phase: 1 (deep research) · Harness: **code-puppy**
 
 ---
 
@@ -32,6 +32,33 @@ user to grant the terminal/Code Puppy process Desktop/OneDrive access in macOS P
 to a non-OneDrive workspace and continue there.
 
 ---
+
+## Things DONE
+
+- **Phase 1 / Wave 13 — Part III batch 3 continued: 28, 29, 30 reconciled (Part III now 22-30 = 9/13).**
+  All bespoke (non-four-cluster) structures; same recompute+factcheck discipline as 13-27.
+  - **28 build-your-own-coding-harness** — Part III CAPSTONE LAB; bespoke **BUILD PROGRESSION** (the
+    "40-line agent" grown stage-by-stage, **broken on purpose** at each stage: loop22→tools23→budget
+    (22/18/32)→compaction24→memory25→persistence26→orchestration27). NO new primary (capstone
+    application, like 21). `_recompute.py` **31/31** — all 7 stage walls re-derived in the CODING
+    regime (O(T²) overflows sooner T*=83 vs 253; compaction O(T²)→O(T) win grows unbounded; AMAT 4×;
+    checkpoint knee I*=20; Amdahl/join-tail/YAGNI). Reuses 09/17/18/20/21/22/23/24/25/26/27.
+    Artifacts: `28-build-your-own-coding-harness/{_research_*.md,_recompute.py,_factcheck_phase1.md,_research.md}`.
+  - **29 mcp-skills-and-connectors** — 23's tool CONTRACT promoted to a wire PROTOCOL; bespoke
+    protocol/connector walkthrough. **MCP architecture spec FETCHED+VERIFIED** (host/client/server;
+    two layers; JSON-RPC 2.0; tools/resources/prompts + sampling/elicitation/logging + Tasks; stdio
+    vs Streamable-HTTP; lifecycle/capability negotiation; `*/list` + `list_changed`). `_recompute.py`
+    **18/18** (N×M→N+M collapse; union-toolbox tax; remote-dependency tail; version/schema compat).
+    Reuses 02/03/07/11/17/18/19/20/22/23/24/26/28. Receipt `_VERIFIED_2026-06-10_mcp.md`.
+  - **30 rag-retrieval-and-grounding** — retrieval mechanism for 25's non-parametric memory tier;
+    bespoke retrieval-pipeline walkthrough. **RAG (Lewis et al. 2020, arXiv 2005.11401)
+    FETCHED+VERIFIED** (parametric vs non-parametric memory; DPR; MIPS top-K sub-linear; FAISS+HNSW;
+    cures hallucination + provenance + updatable knowledge). `_recompute.py` **15/15** (ANN-vs-scan
+    ~430,000×; retrieve-vs-stuff budget; K knob; embedding cache 1000×; index staleness). Reuses
+    06/07/08/14/15/16/22/23/24/25/28/29. Receipt `_VERIFIED_2026-06-10_rag.md`.
+  - Primaries fetched+verified to `meta/fetched_primaries/` (`mcp-arch.txt`, `rag-2005.11401.{pdf,txt}`).
+    RAG PDF extracted via throwaway `/tmp/pdfx-venv`; `.code-puppy-venv` untouched. Commits
+    `3e623df` (28), `f1fdb72` (29), `2d594ce` (30).
 
 ## Things DONE
 
@@ -453,12 +480,13 @@ meta/SESSION_LOG.md, meta/DECISIONS.md, and meta/NEXT_SESSION.md. Confirm in 3-4
 - current Phase 1 state,
 - Wave 2 milestone `4a1cc71`,
 - current checkpoint commit from `git rev-parse --short HEAD`,
-- that foundations 01-12 + Part II 13-21 are COMPLETE, and Part III is OPEN with 22-27 reconciled
+- that foundations 01-12 + Part II 13-21 are COMPLETE, and Part III is OPEN with 22-30 reconciled
   (22 the-agent-loop, 23 tools-and-tool-contracts, 24 prompts-and-context-engineering, 25 memory,
-  26 state-persistence-and-resume, 27 planning-and-multi-agent-orchestration; ReAct/Toolformer/CoT/
-  MemGPT/Reflexion + Postgres-WAL fetched/verified; `_recompute.py` 18/15/18/13/12/16; bespoke
-  per-sub-course structures),
-- that 28-build-your-own-coding-harness is the NEXT untouched sub-course ("Phase 1 batch 3"),
+  26 state-persistence-and-resume, 27 planning-and-multi-agent-orchestration,
+  28 build-your-own-coding-harness, 29 mcp-skills-and-connectors, 30 rag-retrieval-and-grounding;
+  ReAct/Toolformer/CoT/MemGPT/Reflexion + Postgres-WAL + MCP-spec + RAG(2005.11401) fetched/verified;
+  `_recompute.py` 18/15/18/13/12/16/31/18/15; bespoke per-sub-course structures),
+- that 31-evaluation-tracing-and-guardrails is the NEXT untouched sub-course ("Phase 1 batch 3"),
 - and the exact plan you will run.
 
 Do not touch `/Users/m0t0hu6/.code-puppy-venv`. If `os.getcwd()` / `Path.cwd()` PermissionError
@@ -466,60 +494,64 @@ recurs, stop and tell me to grant Desktop/OneDrive access or move the repo to a 
 workspace. Do not reinstall Code Puppy.
 
 Current state to preserve (do NOT erase logged `[UNVERIFIED]`/residual gaps):
-- 22-27 reconciled (Part III at 6/13), each a BESPOKE structure (NOT the 13-20 four-cluster shape),
-  each cross-linking DOWN into Part I/II primitives it reuses:
-  - 22 the-agent-loop: agent = control loop around an LLM; input tokens O(T^2)=`T*p+g*T*(T-1)/2`
-    (the forcing function for 24/25/32). Primary ReAct (arXiv 2210.03629). Reuses 04/09/13/17/18/20.
-  - 23 tools-and-tool-contracts: tool = API contract between a stochastic caller & deterministic
-    code; toolbox tax K*S, selection compounding 1-(1-q)^N. Primary Toolformer (arXiv 2302.04761).
-  - 24 prompts-and-context-engineering: context = a fixed budget to engineer; HEADLINE = compaction
-    converts 22's O(T^2)->O(T) (cap transcript at C, summarize). Primary CoT (arXiv 2201.11903):
-    format/ORDER changes capability (SST-2 54.3%->93.4% on exemplar permutation). Reuses 06/08/16/
-    13/18/22/23. `_recompute.py` 18/18.
-  - 25 memory-short-term-long-term-and-safety: memory = OS storage hierarchy over tokens; AMAT over
-    tokens; poisoning blast radius (1 write, many reads). Primaries MemGPT (arXiv 2310.08560) +
-    Reflexion (arXiv 2303.11366). Reuses 04/06/08/16/09/15/22/23/24. `_recompute.py` 13/13.
-  - 26 state-persistence-and-resume: transcript = a Write-Ahead Log; resume IS DB crash recovery;
-    checkpoint knee I*=sqrt(2N*c_ckpt); idempotent replay (17/21). Anchor: PostgreSQL WAL docs
-    (FETCHED+VERIFIED; also corroborates 07/15). Reuses 07/09/15/17/20/22/24/25. `_recompute.py` 12/12.
-  - 27 planning-and-multi-agent-orchestration: a multi-agent system IS a distributed system (laws
-    11/13/17/20); Amdahl over agents, join tail 1-(1-p)^N=63.4%@N=100, majority-of-3 voting 6.9x,
-    YAGNI payoff condition. NO new load-bearing primary (applies the toolkit, like 21). Reuses
-    09/11/13/14/15/17/18/20/22/24/25/26. `_recompute.py` 16/16.
-- Carry-forward `[UNVERIFIED]` (none load-bearing): Lost-in-the-Middle (arXiv 2307.03172) + provider
-  prompt-caching specs (24); vector/embedding retrieval (->30) + memory vendor frameworks +
-  injection-via-memory (->33) (25); Temporal/Step-Functions/DBOS + LangGraph checkpointer + ARIES
-  (Mohan 1992) (26); planning papers (arXiv 2305.04091 / 2205.10625 / 2305.10601), debate
-  (2305.14325), MA frameworks (AutoGen/CrewAI/LangGraph/MetaGPT/Swarm) (27); plus all prior 22/23 +
-  01-21 carried gaps.
+- 22-30 reconciled (Part III at 9/13), each a BESPOKE structure (NOT the 13-20 four-cluster shape),
+  each cross-linking DOWN into Part I/II + earlier Part III primitives it reuses:
+  - 22-27 as previously logged (loop O(T^2); tool contract; context/compaction O(T^2)->O(T); memory
+    AMAT/poisoning; transcript=WAL/resume=crash-recovery; multi-agent=distributed-system Amdahl/join-
+    tail/YAGNI). Primaries ReAct/Toolformer/CoT/MemGPT+Reflexion/Postgres-WAL.
+  - 28 build-your-own-coding-harness: Part III CAPSTONE LAB; bespoke BUILD PROGRESSION (40-line agent
+    grown stage-by-stage, broken on purpose: loop22->tools23->budget->compaction24->memory25->
+    persistence26->orchestration27). NO new primary (capstone, like 21). `_recompute.py` 31/31 (coding
+    regime: O(T^2) sooner T*=83; compaction win unbounded; AMAT 4x; I*=20; Amdahl/join-tail/YAGNI).
+    Reuses 09/17/18/20/21/22/23/24/25/26/27.
+  - 29 mcp-skills-and-connectors: 23's tool CONTRACT promoted to a wire PROTOCOL. MCP architecture
+    spec FETCHED+VERIFIED (host/client/server; data=JSON-RPC 2.0 / transport layers; tools/resources/
+    prompts + sampling/elicitation/logging + Tasks; stdio vs Streamable-HTTP; lifecycle/capability
+    negotiation; */list + list_changed). `_recompute.py` 18/18 (N*M->N+M collapse; union-toolbox tax;
+    remote-dependency tail; version/schema compat). Reuses 02/03/07/11/17/18/19/20/22/23/24/26/28.
+  - 30 rag-retrieval-and-grounding: retrieval mechanism for 25's non-parametric memory tier. RAG
+    (Lewis et al. 2020, arXiv 2005.11401) FETCHED+VERIFIED (parametric vs non-parametric memory; DPR
+    bi-encoder; MIPS top-K sub-linear; FAISS+HNSW; cures hallucination + provenance + updatable
+    knowledge). `_recompute.py` 15/15 (ANN-vs-scan ~430,000x; retrieve-vs-stuff budget; K knob;
+    embedding cache 1000x; index staleness). Reuses 06/07/08/14/15/16/22/23/24/25/28/29.
+- Carry-forward `[UNVERIFIED]` (none load-bearing): all prior 22-27 carried gaps; PLUS
+  28: SWE-bench (arXiv 2310.06770), coding-agent impls (Claude Code/Aider/Codex CLI/SWE-agent),
+  sandbox/ACE specifics (->App I), injection/poisoning (->33);
+  29: formal MCP /specification JSON-Schema (SPA shell), Agent-Skills depth, OAuth/auth, Streamable-
+  HTTP session resumption, Registry/SEP, JSON-RPC/JSON-Schema base specs, injection-via-server (->33);
+  30: DPR (arXiv 2004.04906), FAISS/HNSW (Malkov-Yashunin 2016) primaries, BM25/sparse/hybrid,
+  cross-encoder rerank, chunking, RAG eval RAGAS (->31), GraphRAG, injection-via-passage (->33).
 - All of 01-21 stay reconciled; math verified by recomputation.
-- Network reality at last check (2026-06-10 Wave 12): arxiv.org / kafka.apache.org / postgresql.org
-  reachable (HTTP 200); modelcontextprotocol.io 308 (resolvable). STILL blocked: queue.acm.org 403
-  (CoDel), raft.github.io 000.
+- Network reality at last check (2026-06-10 Wave 13): arxiv.org / kafka.apache.org / postgresql.org
+  reachable (HTTP 200); modelcontextprotocol.io 307->200 (reachable). STILL blocked: queue.acm.org
+  403 (CoDel), raft.github.io 000.
 
 Run this plan, but only as much as can be completed well in one session. Prefer one clean
 factchecked checkpoint over multiple shallow briefs.
 
 1. Check `git status --short`. If not clean, inspect exactly what changed before editing.
 2. CONTINUE Part III "Phase 1 batch 3" (briefs ONLY - no chapters, no Phase 2). Start with
-   28-build-your-own-coding-harness (the CAPSTONE LAB that assembles the whole arc: loop(22) ->
-   tools(23) -> context/compaction(24) -> memory(25) -> persistence/resume(26) ->
-   orchestration(27) -> budgets/cost(32)). This is a build-lab sub-course: its bespoke structure is
-   a BUILD PROGRESSION (the "40-line agent" grown stage by stage, broken on purpose at each stage to
-   motivate the next). Then proceed in dependency order: 29-mcp-skills-and-connectors (FETCH the MCP
-   spec from modelcontextprotocol.io; <-> 23 tool contracts + 03 transport), 30-rag-retrieval-and-
-   grounding (FETCH RAG, Lewis et al. 2020, arXiv 2005.11401; <-> 06 structures + 08/16 caching +
-   24/25 retrieval-into-context + 14 partitioning), 31-evaluation-tracing-and-guardrails (<-> 19
-   observability/Dapper + 27 voting/critic + 18 guardrails), as far as one clean checkpoint allows.
-   Bespoke structure per sub-course - do NOT reuse the four-cluster shape.
-3. For each sub-course: draft section briefs; RECOMPUTE any quantitative claims in a `_recompute.py`;
-   factcheck load-bearing claims; reuse line-verified Part I/II + 22-27 canon; fetch primaries where
-   a claim needs one (29 MCP spec; 30 RAG arXiv 2005.11401). Mark anything unfetched `[UNVERIFIED]`.
+   31-evaluation-tracing-and-guardrails (how you KNOW the agent works + keep it on-rails: offline
+   evals/test sets + golden tasks; LLM-as-judge + the 27 voting/critic ensemble; tracing the loop
+   = 19 Dapper spans over agent steps/tool calls; guardrails = 18 input/output validation + 33
+   safety filters; the SWE-bench-style "is it useful" definition owed from 28/30). Then proceed in
+   dependency order: 32-cost-observability-and-ops (the 22 O(T^2) economics made operational: token/$
+   accounting, budgets, caching ROI 24, per-tenant quotas 18, the cost dashboards 19), 33-safety-and-
+   proactive-self-evolving-agents (prompt-injection incl. via tool-result/memory/retrieved-passage
+   carried from 23/25/29/30; sandboxing/ACE; self-improvement loops Reflexion 25; alignment/oversight),
+   34-design-your-own-agentic-system (the Part III CAPSTONE DESIGN CANVAS - applies all of 22-33 the
+   way 21 applied 13-20; NO new primary), as far as one clean checkpoint allows. Bespoke structure per
+   sub-course - do NOT reuse the four-cluster shape.
+3. For each sub-course: draft section briefs; RECOMPUTE quantitative claims in a `_recompute.py`;
+   factcheck load-bearing claims; reuse line-verified Part I/II + 22-30 canon; fetch primaries where a
+   claim needs one (31 may want a tracing/eval primary; reuse Dapper already local for tracing). Mark
+   anything unfetched `[UNVERIFIED]`.
 4. Reconcile each finished sub-course into `<subcourse>/_research.md` (bespoke structure fine).
-   Preserve every logged `[UNVERIFIED]`/residual gap. If thin or blocked, stop at a clean
-   checkpoint; do not fake completeness.
+   Preserve every logged `[UNVERIFIED]`/residual gap. If thin or blocked, stop at a clean checkpoint;
+   do not fake completeness.
 5. Opportunistic (still owed): fetch newly-reachable primaries to upgrade carried `[UNVERIFIED]` -
-   kafka.apache.org (Kafka paper/KIPs -> 09/17). Retry still-blocked CoDel/raft. Save receipts to
+   kafka.apache.org (Kafka paper/KIPs -> 09/17); optionally DPR (arXiv 2004.04906 -> 30), SWE-bench
+   (arXiv 2310.06770 -> 28/31). Retry still-blocked CoDel/raft. Save receipts to
    meta/fetched_primaries/ and update the relevant cluster + factcheck files.
 6. End cleanly: append `meta/SESSION_LOG.md`, update `meta/PROGRESS.md`, update
    `meta/NEXT_SESSION.md` with the exact next-session prompt. Keep files under 600 lines where

@@ -33,9 +33,9 @@ State enum: TODO → RESEARCHING → PLANNED → DRAFTING → REVIEW → DONE
 | 25 | memory-short-term-long-term-and-safety | RECONCILED | What 24's compactor externalizes to; memory = OS storage hierarchy over tokens. MemGPT (arXiv 2310.08560) + Reflexion (arXiv 2303.11366) FETCHED+VERIFIED (virtual context mgmt = paging; main vs external context; episodic memory as learning signal). `_recompute.py` 13/13 (tier partition, 0.1% resident, recall cost, **AMAT over tokens**, consolidation O(T) disk, poisoning blast radius 1-write-many-reads, eviction sizing). `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 04/06/08/16/09/15/22/23/24. Carry-forward `[UNVERIFIED]`: vector retrieval (→30), memory vendor frameworks, injection-via-memory (→33) | brain |
 | 26 | state-persistence-and-resume | RECONCILED | Transcript = a Write-Ahead Log; agent resume IS DB crash recovery. PostgreSQL WAL docs FETCHED+VERIFIED (log-before-data; flush-on-commit; roll-forward/REDO) — receipt `_VERIFIED_2026-06-10_postgres-wal.md` (also confirms 07/15 WAL). `_recompute.py` 12/12 (write-ahead loss bound ≤1 step, **checkpoint knee I*=√(2N·c)**, RTO, idempotent replay 17/21, fsync/group-commit, replication quorum 15). `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 07/09/15/17/20/22/24/25. Carry-forward `[UNVERIFIED]`: Temporal/Step-Functions/DBOS, LangGraph checkpointer, ARIES (Mohan 1992) | brain |
 | 27 | planning-and-multi-agent-orchestration | RECONCILED | One loop → many; a multi-agent system IS a distributed system (laws = 11/13/17/20). No new load-bearing primary (applies the toolkit, like 21). `_recompute.py` 16/16 (plan size W^D, **Amdahl over agents** ceiling 1/s, **join tail 1-(1-p)^N=63.4%@N=100**, aggregation tax N·r, **error compounding + majority-of-3 voting 6.9× better**, payoff/YAGNI condition, C(N,2) conflict pairs). `_factcheck_phase1.md` 0 blockers; reconciled `_research.md`. Reuses 09/11/13/14/15/17/18/20/22/24/25/26. Carry-forward `[UNVERIFIED]`: planning papers (2305.04091/2205.10625/2305.10601), debate (2305.14325), MA frameworks | brain |
-| 28 | build-your-own-coding-harness | TODO | Phase 1 batch 3 | — |
-| 29 | mcp-skills-and-connectors | TODO | Phase 1 batch 3 | — |
-| 30 | rag-retrieval-and-grounding | TODO | Phase 1 batch 3 | — |
+| 28 | build-your-own-coding-harness | RECONCILED | Phase 1 batch 3 — Part III CAPSTONE LAB; bespoke **BUILD PROGRESSION** (the "40-line agent" grown stage-by-stage, broken on purpose at each stage to motivate the next: loop22→tools23→budget(22/18/32)→compaction24→memory25→persistence26→orchestration27). NO new primary (capstone application, like 21). `_recompute.py` 31/31 (all 7 stage walls re-derived in the coding regime: O(T²) overflow sooner for code T*=83 vs 253; selection compounding; 1MB-file overflow; budget caps≠cures; compaction O(T²)→O(T) unbounded win; AMAT 4×; poisoning 1→15; checkpoint knee I*=20; idempotent replay; Amdahl/join-tail/YAGNI). `_factcheck_phase1.md` 0 blockers. Reuses 09/17/18/20/21/22/23/24/25/26/27. Carry `[UNVERIFIED]`: SWE-bench (2310.06770), coding-agent impls, sandbox/ACE (→App I), injection/poisoning (→33) | brain |
+| 29 | mcp-skills-and-connectors | RECONCILED | Phase 1 batch 3 — 23's tool CONTRACT promoted to a wire PROTOCOL; bespoke protocol/connector walkthrough. **MCP architecture spec FETCHED+VERIFIED** (`mcp-arch.txt`, receipt `_VERIFIED_2026-06-10_mcp.md`): host/client/server; two layers; JSON-RPC 2.0 data layer; tools/resources/prompts + sampling/elicitation/logging + Tasks(durable exec); stdio vs Streamable-HTTP; lifecycle/capability negotiation; `*/list` + `list_changed`. `_recompute.py` 18/18 (N×M→N+M collapse; union-toolbox tax K·S; selection compounding; remote-dependency tail 1-(1-p)^s; version/schema compat). `_factcheck_phase1.md` 0 blockers. Reuses 02/03/07/11/17/18/19/20/22/23/24/26/28. Carry `[UNVERIFIED]`: formal /specification JSON-Schema (SPA shell), Agent-Skills depth, OAuth/auth, Registry/SEP, injection-via-server (→33) | brain |
+| 30 | rag-retrieval-and-grounding | RECONCILED | Phase 1 batch 3 — the retrieval mechanism for 25's non-parametric memory tier; bespoke retrieval-pipeline walkthrough (corpus→chunk→embed→index→retrieve→rank→inject/ground). **RAG (Lewis et al. 2020, arXiv 2005.11401) FETCHED+VERIFIED** (`rag-2005.11401.{pdf,txt}`, receipt `_VERIFIED_2026-06-10_rag.md`): parametric vs non-parametric memory; DPR bi-encoder; MIPS top-K sub-linear; FAISS+HNSW; latent-doc marginalize; cures hallucination + provenance + updatable knowledge. `_recompute.py` 15/15 (ANN-vs-scan ~430,000× at 10M; retrieve-vs-stuff budget; K precision/recall/cost knob; embedding cache 1000×; index staleness/lag). `_factcheck_phase1.md` 0 blockers. Reuses 06/07/08/14/15/16/22/23/24/25/28/29. Carry `[UNVERIFIED]`: DPR (2004.04906), FAISS/HNSW primaries, sparse/hybrid/rerank, RAG eval (→31), GraphRAG, injection-via-passage (→33) | brain |
 | 31 | evaluation-tracing-and-guardrails | TODO | Phase 1 batch 3 | — |
 | 32 | cost-observability-and-ops | TODO | Phase 1 batch 3 | — |
 | 33 | safety-and-proactive-self-evolving-agents | TODO | Phase 1 batch 3 | — |
@@ -223,3 +223,43 @@ Herlihy-Wing, Bayou, CRDTs, Keshav, Codd, Kafka paper/KIPs, all vendor docs.
 - **Next batch: 28-build-your-own-coding-harness** (the capstone lab assembling loop→tools→context→
   memory→persistence→orchestration→budgets/compaction), then 29 MCP, 30 RAG (fetch 2005.11401),
   31 eval, 32 cost, 33 safety, 34 design-your-own.
+
+## Wave 13 (2026-06-10) — Part III batch 3 continued: 28, 29, 30 reconciled (MCP + RAG fetched/verified)
+
+- **THREE more agentic sub-courses reconciled** (28-30), all bespoke (non-four-cluster) structures,
+  same recompute+factcheck discipline as 13-27. Part III now stands at **22-30 done (9 of 13)**.
+  - **28 build-your-own-coding-harness** — Part III CAPSTONE LAB; bespoke **BUILD PROGRESSION** (the
+    "40-line agent" grown stage-by-stage, **broken on purpose** at each stage to motivate the next:
+    loop22→tools23→budget(22/18/32)→compaction24→memory25→persistence26→orchestration27). NO new
+    primary (capstone application, like 21 — every mechanism cross-links to an already-VERIFIED
+    anchor). `_recompute.py` 31/31 — all 7 stage walls re-derived in the CODING regime (bigger
+    p=4000,g=1500): O(T²) overflows SOONER for code (T*=83 vs chat 253); selection compounding;
+    1MB-file overflow; budget caps≠cures; compaction O(T²)→O(T) win grows unbounded; AMAT 4×;
+    poisoning 1→15; checkpoint knee I*=20; idempotent replay; Amdahl/join-tail/YAGNI.
+    `_factcheck_phase1.md` 0 blockers. Reuses 09/17/18/20/21/22/23/24/25/26/27.
+  - **29 mcp-skills-and-connectors** — 23's tool CONTRACT promoted to a wire PROTOCOL; bespoke
+    protocol/connector walkthrough. **MCP architecture spec FETCHED+VERIFIED** (host/client/server;
+    two layers; JSON-RPC 2.0; tools/resources/prompts + sampling/elicitation/logging + Tasks; stdio
+    vs Streamable-HTTP; lifecycle/capability negotiation; `*/list` + `list_changed`). `_recompute.py`
+    18/18 (N×M→N+M collapse; union-toolbox tax; selection compounding; remote-dependency tail
+    1-(1-p)^s; version/schema compat). `_factcheck_phase1.md` 0 blockers. Reuses
+    02/03/07/11/17/18/19/20/22/23/24/26/28.
+  - **30 rag-retrieval-and-grounding** — the retrieval mechanism for 25's non-parametric memory
+    tier; bespoke retrieval-pipeline walkthrough. **RAG (Lewis et al. 2020, arXiv 2005.11401)
+    FETCHED+VERIFIED** (parametric vs non-parametric memory; DPR bi-encoder; MIPS top-K sub-linear;
+    FAISS+HNSW; latent-doc marginalize; cures hallucination + provenance + updatable knowledge).
+    `_recompute.py` 15/15 (ANN-vs-scan ~430,000× at 10M; retrieve-vs-stuff budget; K
+    precision/recall/cost knob; embedding cache 1000×; index staleness/lag). `_factcheck_phase1.md`
+    0 blockers. Reuses 06/07/08/14/15/16/22/23/24/25/28/29.
+- **PRIMARIES fetched+verified to `meta/fetched_primaries/`**: `mcp-arch.txt` (receipt
+  `_VERIFIED_2026-06-10_mcp.md`), `rag-2005.11401.{pdf,txt}` (receipt `_VERIFIED_2026-06-10_rag.md`).
+  RAG PDF extracted via the throwaway `/tmp/pdfx-venv` (uv+pypdf 6.13.2), REMOVED after;
+  `.code-puppy-venv` never touched.
+- Network at session end: arxiv.org / kafka.apache.org / postgresql.org reachable (200);
+  modelcontextprotocol.io 307→200. STILL blocked: queue.acm.org 403 (CoDel), raft.github.io 000.
+- **Deferred (time-boxed to keep ONE clean checkpoint over shallow briefs):** 31-34 untouched.
+  Opportunistic Kafka(09/17) upgrade NOT done (the two plan-mandated primaries MCP+RAG were the
+  budget). CoDel/raft retried, still blocked.
+- **Next batch: 31-evaluation-tracing-and-guardrails** (↔ 19 observability/Dapper + 27 voting/critic
+  + 18 guardrails), then 32 cost-observability-and-ops, 33 safety-and-proactive-self-evolving-agents,
+  34 design-your-own-agentic-system. No chapters. No Phase 2.
