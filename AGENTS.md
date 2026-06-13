@@ -9,6 +9,8 @@ system design. This file is the entry point; the binding rules live in `meta/`.
 3. `meta/PROGRESS.md` — the resume anchor (per-sub-course state).
 4. `START_HERE.md`, `meta/RESEARCH_PROTOCOL.md`, `meta/COURSE_MAP.md`, `meta/RESEARCH_INDEX.md`,
    `meta/SESSION_LOG.md`, `meta/DECISIONS.md` as the task requires.
+5. `meta/CHAPTER_WORKFLOW.md` — **REQUIRED in Phase 3.** The binding collaborative chapter loop
+   (owner-in-the-loop, one chapter at a time, surface every diagram/image need). See ADR-005.
 
 ## Hard rules (from the constitution)
 - First principles, zero hand-waving. Explain WHY before HOW, grounded in a paper/source/constraint,

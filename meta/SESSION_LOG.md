@@ -2,6 +2,20 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-10 — Phase 3 Wave 21b: locked the collaborative chapter loop (ADR-005 + CHAPTER_WORKFLOW.md). Ready to draft 00.
+- Owner confirmed the working style: draft chapters ONE BY ONE; owner reads + edits each with the
+  brain, then finalizes together (so the owner learns + quality stays top-tier); brain must surface
+  every diagram/image need explicitly so the owner decides what to produce.
+- **SHIPPED:** `meta/CHAPTER_WORKFLOW.md` (the binding loop: PLAN→DRAFT→PRESENT→EDIT→VERIFY→FINALIZE,
+  one chapter at a time, `[DIAGRAM: …]` + `<!-- IMAGE PROMPT … -->` markers, owner gates
+  DRAFT→FINALIZE, drafting order = COURSE_MAP DAG). **ADR-005** records the decision. AGENTS.md now
+  lists CHAPTER_WORKFLOW.md as REQUIRED reading in Phase 3. NEXT_SESSION.md updated with the exact
+  Wave-22 prompt to DRAFT chapter 00.
+- Owner defaults accepted: 00 — condensed D1 map, 3–4 prompt templates, contributing inline. 01 —
+  x86-64, keep Hack+SAP-1 both, defer SAP-1 exact bits behind `[UNVERIFIED]`.
+- **DECISIONS:** ADR-005 (above). **STOPPED-AT:** process locked; next action = DRAFT chapter 00 via
+  the loop, then PRESENT + STOP for owner edits (no self-finalize). checkpoint after this entry below.
+
 ## 2026-06-10 — Phase 3 OPENED: sign-off received → PLAN batch for 00 + 01 (outline only). **STOP for annotation before drafting.**
 - User signed off on Phase 2 ("Sign off → start Phase 3 (PLAN only)"). Began Phase 3 per START_HERE:
   PLAN → STOP for annotation → (later) IMPLEMENT → VERIFY. NO prose/chapters written this turn.

@@ -4,14 +4,57 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (Wave 20 — **PHASE 2 COMPLETE**: Batch 2e (29–34 structures, commit `402e554`)
-+ finalize 2f–2i — COURSE_MAP finalized into a dependency DAG, PROGRESS per-chapter table (35 spine →
-PLANNED, 264 section specs; A–O reference-only), README refreshed, ADR-003 (appendices have no
-`_structure.md`) + ADR-004 (03 TCP lab = Minnow ladder + RFC-9293 state-machine capstone) written. All
-35 spine `_structure.md` done. **Next gate: SIGN-OFF → Phase 3 (draft ONE chapter at a time).**) ·
-Phase: **2 DONE → awaiting sign-off for Phase 3** · Harness: **code-puppy**
+Last updated: 2026-06-10 (Wave 21 — **PHASE 3 OPENED**: sign-off received; PLAN outlines for 00 + 01
+written (`64724b6`); **ADR-005 + `meta/CHAPTER_WORKFLOW.md`** added — collaborative owner-in-the-loop
+chapter loop (PLAN→DRAFT→PRESENT→EDIT→VERIFY→FINALIZE, one chapter at a time, surface every diagram/
+image need). Drafting order = COURSE_MAP DAG, starting at 00. Owner defaults accepted for 01 (x86-64;
+keep Hack+SAP-1 both; SAP-1 exact bits deferred behind `[UNVERIFIED]`).) · Phase: **3 — drafting 00
+next** · Harness: **code-puppy**
 
 ---
+
+## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 22 — PHASE 3, draft chapter 00)
+
+> You are the BRAIN agent for the Substrate course project. Start safely from
+> `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,
+> meta/STYLE.md, meta/PERSONA.md, meta/QUALITY_BAR.md, **meta/CHAPTER_WORKFLOW.md (ADR-005 — the
+> binding chapter loop)**, meta/COURSE_MAP.md, meta/PROGRESS.md, meta/SESSION_LOG.md,
+> meta/DECISIONS.md, meta/NEXT_SESSION.md, and `00-how-to-use-this-course/_plan.md` +
+> `00-how-to-use-this-course/_structure.md`. Confirm in 3–4 lines: Phase 1 + Phase 2 COMPLETE; we are
+> in **Phase 3** drafting chapters ONE AT A TIME via the collaborative loop (ADR-005); Wave-2
+> milestone `4a1cc71`; current checkpoint from `git rev-parse --short HEAD` (last was `64724b6`).
+> Do NOT touch `.code-puppy-venv`. If `Path.cwd()` PermissionError recurs, STOP and tell me to grant
+> Desktop/OneDrive access or move the repo off OneDrive — do not reinstall Code Puppy. Preserve every
+> `[UNVERIFIED]`/residual gap.
+>
+> **TASK: DRAFT chapter 00 (how-to-use-this-course)** per `_plan.md` + CHAPTER_WORKFLOW.md. It's the
+> short orientation pamphlet (6 sections). Write the FULL chapter prose in `00-how-to-use-this-course/`
+> (per STYLE/PERSONA: senior-mentor voice, no marketing tone, skimmable). Inline, mark **every diagram
+> needed** with `[DIAGRAM: …]` (D1 course map / D2 anatomy of a chapter / D3 three reading paths — all
+> Mermaid) and any real image with `<!-- IMAGE PROMPT: … -->` logged in assets/diagrams/image-prompts.md.
+> Keep the three reading paths IDENTICAL to COURSE_MAP (source of truth). Then **PRESENT the draft to
+> me** with: (a) a top list of which diagrams/images you recommend + why, (b) open questions, (c)
+> anything `[UNVERIFIED]`. **STOP for my edits — do NOT finalize.** Only after I edit + say "finalize"
+> AND the critic PASSES against QUALITY_BAR do you mark 00 DONE in PROGRESS.md and commit. One chapter
+> at a time; do NOT start 01.
+>
+> Owner defaults already accepted (apply when we reach them): 00 — condensed map in D1 (full DAG stays
+> in COURSE_MAP), 3–4 agent-paired prompt templates in §4, contributing essentials inline in §6.
+> 01 — x86-64 as the real ISA, keep Hack + SAP-1 both in ch.5, teach SAP-1 microcode/T-states
+> conceptually with exact EEPROM bits deferred behind `[UNVERIFIED]` until eater.net is reachable.
+>
+> Opportunistic (still owed, ALL blocked as of Wave 21): DPR (arXiv 2004.04906) → 30/M; eater.net/8bit
+> (+/output) → 01/A; Kafka paper/KIPs → 09/17/H; Raft (raft.github.io) → L; CoDel (queue.acm.org 403)
+> → 18/20. Retry each; if any heal, save receipts to meta/fetched_primaries/ and upgrade the carried
+> `[UNVERIFIED]` → VERIFIED, erase nothing.
+>
+> State to preserve (do NOT erase): Phase 1 + 2 COMPLETE (50 `_research.md`; 35 spine `_structure.md`;
+> COURSE_MAP DAG; PROGRESS per-chapter; ADR-001–005). PLAN files exist for 00 + 01. Appendices A–O are
+> reference-only (ADR-003). End the session: append SESSION_LOG, update PROGRESS + NEXT_SESSION, commit.
+
+---
+
+## ⏮ Superseded prompt (Wave 21 — PLAN gate; ran PLAN 00+01 + ADR-005/CHAPTER_WORKFLOW)
 
 ## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 21 — PHASE 3, requires sign-off first)
 

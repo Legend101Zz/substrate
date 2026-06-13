@@ -72,3 +72,20 @@ Every scope / ordering / cut decision, with its reasoning. Format:
   upgraded only if the handout is later fetched. If we re-fetch Sponge Lab 4 and it diverges from
   our RFC-derived spec, that is a follow-up note here, not a silent change. Scope of 03's lab is now
   fixed for Phase 3 drafting.
+
+## ADR-005 Chapter authoring is a collaborative, owner-in-the-loop loop (one chapter at a time)
+- context: Phase 3 begins. START_HERE implies `writer` drafts a chapter then `factchecker`/`critic`
+  verify. The owner (Mrigesh) wants to be IN THE LOOP on every chapter — read each draft, edit it
+  WITH the brain, and finalize together — so he gains the knowledge AND the quality stays top-tier.
+  He also wants every place that needs a diagram or a real image surfaced explicitly so he can
+  decide what to produce.
+- decision: Adopt the loop in `meta/CHAPTER_WORKFLOW.md`: PLAN → DRAFT (one chapter, with inline
+  `[DIAGRAM: …]` markers + `<!-- IMAGE PROMPT … -->` for real images) → PRESENT+REVIEW (brain lists
+  recommended visuals + open questions + any `[UNVERIFIED]` up top) → EDIT TOGETHER → VERIFY
+  (factchecker + critic vs QUALITY_BAR) → FINALIZE (only when the owner says "finalize" AND the
+  critic PASSES). Strictly one chapter at a time, in COURSE_MAP DAG order unless the owner redirects.
+  Drafting order kicks off with chapter 00, then 01, etc.
+- consequences: Slower than solo drafting, but higher quality and the owner learns the material.
+  The brain never self-finalizes; owner "finalize" + critic PASS are both required (consistent with
+  CONSTITUTION "never DONE without a critic pass"). Every chapter presentation must surface its
+  diagram/image needs. AGENTS.md now points at CHAPTER_WORKFLOW.md so all future sessions load it.
