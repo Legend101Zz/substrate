@@ -4,14 +4,50 @@ Single source of truth for "where we are + what to run next." Update this at the
 session alongside PROGRESS.md and SESSION_LOG.md. Detailed history → SESSION_LOG.md; scope/process
 decisions → DECISIONS.md.
 
-Last updated: 2026-06-10 (Wave 21 — **PHASE 3 OPENED**: sign-off received; PLAN outlines for 00 + 01
-written (`64724b6`); **ADR-005 + `meta/CHAPTER_WORKFLOW.md`** added — collaborative owner-in-the-loop
-chapter loop (PLAN→DRAFT→PRESENT→EDIT→VERIFY→FINALIZE, one chapter at a time, surface every diagram/
-image need). Drafting order = COURSE_MAP DAG, starting at 00. Owner defaults accepted for 01 (x86-64;
-keep Hack+SAP-1 both; SAP-1 exact bits deferred behind `[UNVERIFIED]`).) · Phase: **3 — drafting 00
-next** · Harness: **code-puppy**
+Last updated: 2026-06-15 (Wave 22 — **chapter 00 DONE**: drafted the orientation pamphlet, owner
+added a literary-polish edit pass (6 attributable epigraphs + dry wit), factchecker cleared 5/6
+epigraphs (Torvalds year dropped — unverifiable), critic (code-reviewer/Opus surrogate) **PASSED**
+against QUALITY_BAR, owner said finalize → 00 marked DONE + committed. D1/D2/D3 remain `[DIAGRAM]`
+specs to render later. Next in DAG order = **01 computers-from-first-principles** (`_plan.md` exists).)
+· Phase: **3 — drafting 01 next** · Harness: **code-puppy**
 
 ---
+
+## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 23 — PHASE 3, draft chapter 01)
+
+> You are the BRAIN agent for the Substrate course project. Start safely from
+> `/Users/m0t0hu6/Desktop/substrate`. Read AGENTS.md, START_HERE.md, meta/CONSTITUTION.md,
+> meta/STYLE.md, meta/PERSONA.md, meta/QUALITY_BAR.md, **meta/CHAPTER_WORKFLOW.md (ADR-005 — the
+> binding chapter loop)**, meta/COURSE_MAP.md, meta/PROGRESS.md, meta/SESSION_LOG.md,
+> meta/DECISIONS.md, meta/NEXT_SESSION.md, the finalized `00-how-to-use-this-course/how-to-use-this-course.md`
+> (for voice/format reference), and `01-computers-from-first-principles/_plan.md` + `_structure.md`.
+> Confirm in 3–4 lines: Phase 1 + 2 COMPLETE; chapter **00 DONE** (critic PASS + owner finalize); we
+> are in Phase 3 drafting ONE chapter at a time via ADR-005; current checkpoint from
+> `git rev-parse --short HEAD`. Do NOT touch `.code-puppy-venv`. If `Path.cwd()` PermissionError
+> recurs, STOP and tell me to grant Desktop/OneDrive access or move the repo off OneDrive — do not
+> reinstall Code Puppy. Preserve every `[UNVERIFIED]` gap.
+>
+> **TASK: DRAFT chapter 01 (computers-from-first-principles)** per `_plan.md` + CHAPTER_WORKFLOW.md.
+> Build-up ladder (bits → NAND → ALU → memory → CPU → ISA → program end-to-end). Mark every diagram
+> `[DIAGRAM: …]` and every real image `<!-- IMAGE PROMPT: … -->` (logged in
+> assets/diagrams/image-prompts.md). Honor owner defaults: **x86-64** as the real ISA; **keep Hack +
+> SAP-1 both** in the CPU chapter; teach SAP-1 microcode/T-states conceptually with **exact EEPROM
+> bits deferred behind `[UNVERIFIED]`** until eater.net is reachable. Then PRESENT with (a) recommended
+> diagrams/images + why, (b) open questions, (c) anything `[UNVERIFIED]`. **STOP for my edits — do NOT
+> finalize.** Only after I say "finalize" AND the critic PASSES do you mark 01 DONE + commit. One
+> chapter at a time; do NOT start 02.
+>
+> Opportunistic retries (still owed): eater.net/8bit (+/output) → 01/A; arXiv 2004.04906 (DPR) → 30/M;
+> Kafka paper/KIPs → 09/17/H; Raft (raft.github.io) → L; CoDel → 18/20. If any heal, save receipts to
+> meta/fetched_primaries/ and upgrade the carried `[UNVERIFIED]` → VERIFIED, erase nothing.
+>
+> Process note: the dedicated `critic` (Opus) subagent was never materialized — Wave 22 used
+> `code-reviewer` (Opus) as the critic gate. Either keep using it, or materialize a proper `critic`
+> agent from `meta/subagents/` first.
+
+---
+
+## ⏮ Superseded prompt (Wave 22 — drafted + finalized chapter 00)
 
 ## ⭐ EXACT PROMPT TO RUN NEXT SESSION (Wave 22 — PHASE 3, draft chapter 00)
 

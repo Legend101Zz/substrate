@@ -2,6 +2,30 @@
 
 Append-only, reverse-chronological. Each entry: shipped / decisions / stopped-at.
 
+## 2026-06-15 — Phase 3 Wave 22: DRAFTED + FINALIZED chapter 00 (how-to-use-this-course) via the ADR-005 loop. FIRST chapter DONE.
+- Rehydrated state (Phase 1+2 COMPLETE; Phase 3 one-chapter-at-a-time). Start checkpoint `95dcc43`;
+  `.code-puppy-venv` untouched; no `Path.cwd()` PermissionError; no reinstall.
+- **SHIPPED:** `00-how-to-use-this-course/how-to-use-this-course.md` — 6-section orientation pamphlet
+  per `_plan.md`/`_structure.md`. D1 (course map, condensed) / D2 (anatomy of a chapter) / D3 (three
+  reading paths) all marked as `[DIAGRAM: …]` specs (Mermaid, render later). Zero IMAGE PROMPTs
+  needed; manifest correctly stays empty. Three reading paths copied verbatim from COURSE_MAP.
+- **Owner edit pass:** requested a literary polish — added 6 attributable epigraphs (Feynman blackboard;
+  Spolsky Leaky Abstractions; Hamming; Feynman '74 Cargo Cult Science; Torvalds LKML; SICP), dry wit,
+  and a stronger map→territory metaphor spine. Content/structure/diagrams/paths unchanged.
+- **VERIFY:** factchecker — 5/6 epigraphs SUPPORTED; only blocker was the Torvalds **year "2000"**
+  (LKML mirrors proxy-blocked, wording+attribution uncontested) → fixed by DROPPING the year (kept
+  "Linux Kernel Mailing List"), avoiding an unverified assertion AND an ugly front-page flag. critic
+  (code-reviewer/Opus, critic surrogate — dedicated `critic` agent never materialized) → **PASS**:
+  every applicable DoD line passes; arc/mechanism/lab lines N/A-by-design per the documented pamphlet
+  deviation QUALITY_BAR sanctions; reading paths confirmed identical to COURSE_MAP. Applied its one
+  cosmetic note (example on the `[UNVERIFIED]` bullet for list-rhythm parity).
+- **DECISIONS:** none new (no ADR). Note: dedicated `critic` (Opus) agent was never created in this
+  harness; used `code-reviewer` (Opus) as the critic gate against QUALITY_BAR — flag for a future
+  session to materialize a proper `critic` subagent if desired.
+- **FINALIZE (ADR-005 satisfied):** owner said "finalize" AND critic PASSED → 00 marked DONE in
+  PROGRESS.md, committed. **STOPPED-AT:** 00 DONE. Next chapter in DAG order = **01
+  computers-from-first-principles** (`_plan.md` already exists). Did NOT start 01 (one at a time).
+
 ## 2026-06-10 — Phase 3 Wave 21b: locked the collaborative chapter loop (ADR-005 + CHAPTER_WORKFLOW.md). Ready to draft 00.
 - Owner confirmed the working style: draft chapters ONE BY ONE; owner reads + edits each with the
   brain, then finalizes together (so the owner learns + quality stays top-tier); brain must surface

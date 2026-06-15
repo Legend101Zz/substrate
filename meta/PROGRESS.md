@@ -15,7 +15,7 @@ Full provenance + `[UNVERIFIED]` carry-forward per unit is preserved in the deta
 
 | id | title | state | secs | lab | next action |
 |----|-------|-------|------|-----|-------------|
-| 00 | how-to-use-this-course | PLANNED | 6 | — | Phase 3: `_plan.md` written — STOP for annotation before draft |
+| 00 | how-to-use-this-course | DONE | 6 | — | Phase 3: DRAFTED + critic PASS + owner finalize → DONE. Chapter file: `how-to-use-this-course.md`. D1/D2/D3 = `[DIAGRAM]` specs (render later). |
 | 01 | computers-from-first-principles | PLANNED | 7 | — | Phase 3: `_plan.md` written — STOP for annotation before draft |
 | 02 | terminal-shell-and-dev-environment | PLANNED | 7 | own-shell | Phase 3: draft on go |
 | 03 | networking-from-first-principles | PLANNED | 8 | own-tcp-ip-stack | Phase 3: draft on go (ADR-002 lab choice) |
